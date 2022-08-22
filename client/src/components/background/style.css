@@ -48,3 +48,15 @@ video{
     top: 0;
     z-index:-9999;
 }
+@media only screen and (max-width: 750px) {
+    .deloitte-logo{
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 180px;
+        height: 30px;
+        margin: 20px 0 0 20px ;
+        cursor: pointer;
+    }
+}
