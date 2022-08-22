@@ -21,4 +21,7 @@
     .txt-subtitle{
         font-size: 14px;
     }
+    .app-container > h1{
+        margin-top: 10vh; 
+    }
 }

@@ -14,14 +14,14 @@ export const SearchTerms = ({ searchTerms, setSearchTerms,setSearchValue }) => {
     }
     
   return (
-      <div>
-        <div className='row-c-c'> Search  By: 
+      <div className="terms">
+        <div className='row-c-c term'> Search  By: 
           <select className='search-options' onChange={searchByHandler} >
           <option value='Name'>Name</option>
           <option value='WorkTitle'>Work Title</option>
           </select>
         </div>
-        <div className='row-c-c'> Number of results : 
+        <div className='row-c-c term'> Number of results : 
           <input type="range" min="1" max="50" value={inputType} className='search-options' onChange={numOfResultsHandler} />
           {searchTerms[0]}
           </div>

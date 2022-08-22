@@ -34,7 +34,7 @@ export const Search = ({page}) => {
 
   
   return (
-    <div className={`search-${page} column-fs-c`}>
+    <div className={`column-fs-c search-${page}`}>
       <div className='search-container column-c-c'>
         {(page === 'searchResults' || page === 'home')?(<SearchTerms searchTerms={searchTerms} setSearchValue={setSearchValue} setSearchTerms={setSearchTerms} />):''}
         <input placeholder='Text area' value={searchValue} onChange={(e) => {searchHandler(e.target.value)}} />
