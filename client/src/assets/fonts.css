@@ -1,21 +1,4 @@
-    /* @font-face {
-        font-family: 'Pixel';
-        src: url(./fonts/LLPIXEL3.ttf) format("ttf");
-        font-weight: bold;
-        font-size: bold;
-    } */
-    /* @font-face {
-        font-family: "Amazon Ember";
-        font-weight: 200;
-        src: url(https://m.media-amazon.com/images/S/sash/Dv1WQ5DdeMS5qP7.woff2)
-            format("woff2"),
-          url(https://m.media-amazon.com/images/S/sash/e0LnMbFWJC-TMQz.woff)
-            format("woff");
-      } */
-            
-        /* font_weight */
-    
-    h1{
+     h1{
         font-size: 40px;
         margin: 10px;
     }    

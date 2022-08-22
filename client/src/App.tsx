@@ -1,5 +1,3 @@
-import React from 'react'
-// import { useDispatch } from 'react-redux';
 import { Routes, Route,Link} from "react-router-dom";
 import './assets/display.css';
 import './assets/fonts.css';

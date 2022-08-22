@@ -1,8 +1,5 @@
-import React from 'react'
 import { Background } from '../../components/background/Background'
-import Employees from '../../components/Employees/Employees'
 import { Search } from '../../components/search/Search'
-// import { searchResult } from '../../reducers/employees'
 import './style.css'
 
 const SearchResults = () => {

@@ -19,7 +19,6 @@ export const Search = ({page}) => {
     const getSearchTerms = searchTerms
     const searchObject = { searchValue: value, searchTerms : getSearchTerms}
     dispatch(searchEmployees(searchObject));
-    console.log(getResults)
   }
 
 

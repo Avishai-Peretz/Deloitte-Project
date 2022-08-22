@@ -6,7 +6,7 @@ export const getEmployees = () => async (dispatch) => {
         const { data } = await api.fetchEmployees()
         dispatch({ type : 'FETCH_ALL', payload: data });
     } catch (error) { 
-        console.log(error.message)
+        throw new Error(error.message);
     }
 }
 
@@ -16,7 +16,7 @@ export const createEmployee = (employee) => async (dispatch) => {
 
         dispatch({ type : 'CREATE', payload: data });
     } catch (error) {
-        console.log(error)
+        throw new Error(error.message);
     }
 }
 export const deleteEmployee = (employee) => async (dispatch) => {
@@ -24,7 +24,7 @@ export const deleteEmployee = (employee) => async (dispatch) => {
         const { data } = await api.deleteEmployee(employee)
         dispatch({ type : 'DELETE', payload: data });
     } catch (error) {
-        console.log(error)
+        throw new Error(error.message);
     }
 }
 
@@ -73,6 +73,6 @@ export const searchEmployees = ({ searchValue, searchTerms }) => async (dispatch
         }
         
     } catch (error) {
-        console.log(error)
+        throw new Error(error.message);
     }
  }
