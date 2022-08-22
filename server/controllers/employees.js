@@ -7,7 +7,7 @@ export const SearchEmployees = async (req, res) => {
     if (searchTerms.length > 0 && searchTerms[1] === 'Name') {
         const searchResults = await EmployeeObject.find({ Name: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes } }).limit(searchTerms[0]).exec();
         try { 
-            res.status(200).json(searchResults);
+            res.status(200).json(searchResults.sort((a, b) => a.Name.localeCompare(b.Name)));
         }
         catch (error) {
             res.status(409).json({message: error.message});
@@ -16,7 +16,7 @@ export const SearchEmployees = async (req, res) => {
     if (searchTerms.length > 0 && searchTerms[1] === 'WorkTitle') {
         const searchResults = await EmployeeObject.find({ WorkTitle: { "$regex": searchValue, "$options": "i" }, _id: {$nin: searchExcludes} }).limit(searchTerms[0]).exec();
         try { 
-            res.status(200).json(searchResults);
+            res.status(200).json(searchResults.sort((a, b) => a.WorkTitle.localeCompare(b.WorkTitle)));
         }
         catch (error) {
             res.status(409).json({message: error.message});

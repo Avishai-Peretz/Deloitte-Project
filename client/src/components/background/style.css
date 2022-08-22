@@ -25,6 +25,7 @@
     background-color: black;
     z-index: 1;
     opacity: 0.6;
+    cursor: pointer;
 }
 
 .deloitte-logo{

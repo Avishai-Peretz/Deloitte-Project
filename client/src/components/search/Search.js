@@ -35,7 +35,7 @@ export const Search = ({page}) => {
   return (
     <div className={`search-${page} column-fs-c`}>
       <div className='search-container column-c-c'>
-        {(page === 'searchResults' || page === 'home')?(<SearchTerms searchTerms={searchTerms} setSearchTerms={setSearchTerms} />):''}
+        {(page === 'searchResults' || page === 'home')?(<SearchTerms searchTerms={searchTerms} setSearchValue={setSearchValue} setSearchTerms={setSearchTerms} />):''}
         <input placeholder='Text area' value={searchValue} onChange={(e) => {searchHandler(e.target.value)}} />
         {(page === 'searchResults' || page === 'home')?(<div className='search-btn-container column-c-c'> <Link to='/search-results' ><button className='search-btn'></button></Link></div>):''}
         {page === "home" ? (<Employees page='home' searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />) : '' }

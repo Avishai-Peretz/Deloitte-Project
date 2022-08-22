@@ -10,23 +10,24 @@ const Employees = ({page, searchTerms, searchValue}) => {
   
   
   useEffect(() => {
-    if (page === 'home' || page === 'searchResults') {
+    if (page === 'home') {
+    searchValue.length> 0 ? setEmployees(getResults) : setEmployees([])
+    }
+    if (page === 'searchResults') {
       setEmployees(getResults)
     }
-  }, [searchValue, getResults])
-  
-  useEffect(() => {
     if (page === 'admin' ) {
       if (searchValue.length === 0) {
         setEmployees(getEmployees);
-      }else setEmployees(getResults);
+      }
     }
-  }, [searchValue,getEmployees])
+  }, [searchValue, getResults,getEmployees])
+  
   
   return (
     <>   
       <div className={`employees-container ${page}`}>
-          { !employees ? "" : employees.map((employee, index) =>
+          { !employees  ? "" : employees.map((employee, index) =>
           searchTerms[0] > index ? (
           <div key={employee._id} className={`employee-${page} row-c-sb`} >
             <Employee employee={employee} employees={employees} index={index} />
