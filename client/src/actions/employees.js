@@ -29,23 +29,39 @@ export const deleteEmployee = (employee) => async (dispatch) => {
 }
 
 
-export const searchEmployees = ({searchValue, searchTerms}) => async (dispatch) => {
+export const searchEmployees = ({ searchValue, searchTerms }) => async (dispatch) => {
+    const sortInputFirst = (input, data) => {
+        let first = [];
+        let others = [];
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].Name.toLowerCase().indexOf(input.toLowerCase()) === 0) {
+                first.push(data[i]);
+            }
+            else {
+                others.push(data[i]);
+            }
+        }
+        first.sort();
+        others.sort();
+        return(first.concat(others));
+    }
     try {
         if (localStorage.getItem('searchResults')) {
-            const localData = await JSON.parse(localStorage.getItem('searchResults'));       
+            const localData = await JSON.parse(localStorage.getItem('searchResults'))       
             let filterFromLocal = []
             if (searchTerms[1] === 'Name') {
-                filterFromLocal = localData.filter(employee => employee.Name.toLowerCase().includes(searchValue.toLowerCase()));
+                filterFromLocal = localData.filter(employee => employee.Name.toLowerCase().includes(searchValue.toLowerCase()))                   
             }
             if (searchTerms[1] === 'WorkTitle') {
-                filterFromLocal = localData.filter(employee => employee.WorkTitle.toLowerCase().includes(searchValue.toLowerCase()));
+                filterFromLocal = localData.filter(employee => employee.WorkTitle.toLowerCase().includes(searchValue.toLowerCase()))
             }
+            const a = sortInputFirst(searchValue, filterFromLocal );
             const filterFromLocalId = filterFromLocal.map(employee => employee._id)   
-            dispatch({ type: 'SEARCH', payload: [...filterFromLocal] });  
-            
-            if ( searchValue.length > 1) {
+            dispatch({ type: 'SEARCH', payload: [...a] });             
+            if (searchValue.length > 1) {
                 const { data } = await api.searchEmployees({ searchValue: searchValue, searchExcludes: filterFromLocalId, searchTerms: searchTerms});
-                dispatch({ type: 'SEARCH', payload: [...filterFromLocal,...data] });
+                const resultsData = [...a,...data]
+                dispatch({ type: 'SEARCH', payload: resultsData});
                 const stringifyData =JSON.stringify([...localData,...data]);
                 localStorage.setItem('searchResults', stringifyData)
             }
