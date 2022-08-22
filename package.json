@@ -10,7 +10,7 @@
     "server": "nodemon index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "copy": "cp -r client/build server",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client && npm run copy"
+    "heroku-postbuild": "npm install && cd ./server && npm i && cd ../client && npm install && cd ../ --prefix client && npm run build --prefix client && npm run copy"
   },
   "dependencies": {
     "@heroku-cli/plugin-buildpacks": "^7.60.0",
