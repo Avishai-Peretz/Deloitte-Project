@@ -30,7 +30,7 @@ const Employees = ({page, searchTerms, searchValue}) => {
           searchTerms[0] > index ? (
           <div key={employee._id} className={`employee-${page} row-c-sb`} >
             <Employee employee={employee} employees={employees} index={index} />
-            { page === 'admin' ? <h4>ID : {employee._id}</h4> : '' }
+            { page === 'admin' ? <h6>ID : {employee._id}</h6> : '' }
           </div>
           ) : (<></>)
           )}

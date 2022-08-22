@@ -9,22 +9,23 @@ import './style.css'
 
 const Admin = () => {
   const [createEmployeeData, setCreateEmployeeData] = useState({  ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
-  const [deleteEmployeeData, setDeleteEmployeeData] = useState({ _id: String("")})
+  const [deleteEmployeeData, setDeleteEmployeeData] = useState({ id: String("")})
 
   const dispatch = useDispatch();
-  const getEmployees = useSelector((state) => state.employees);
+
   const handleCreateSubmit = (e) => {
     e.preventDefault();
+    setCreateEmployeeData({  ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
     dispatch(createEmployee(createEmployeeData));
-   };
-  const handleDeleteSubmit = (e) => {
-    e.preventDefault();
-    dispatch(deleteEmployee(deleteEmployeeData));
+    localStorage.clear()
   };
   
-  useEffect(() => {}, [getEmployees])
-  
-  const clear = () => { };
+  const handleDeleteSubmit = (e) => {
+    dispatch(deleteEmployee(deleteEmployeeData));
+    setDeleteEmployeeData({id: String("")});
+    localStorage.clear()
+    e.preventDefault();
+  };
   
   return (
     <div className='admin-container column-c-c' >
@@ -39,17 +40,14 @@ const Admin = () => {
             <FileBase name="ImageUrl" type="file" multiple={false} onDone={({ base64 }) => setCreateEmployeeData({ ...createEmployeeData, ImageUrl: base64 })} />
           </div>
           <button className={""} >Submit</button>
-          <button onClick={clear}>Clear</button>
         </div>
       </form>
       <form style={{margin:'20px'}} onSubmit={handleDeleteSubmit}>
         <h3 >Delete Employee</h3>
         <input name="id"  label='id' placeholder='id' value={deleteEmployeeData.id} onChange={(e) => setDeleteEmployeeData({ _id: e.target.value})} />
         <button className={""} >Submit</button>
-        <button onClick={clear}>Clear</button>
       </form>
       <Search page='admin' />
-      {/* <Employees page='admin' searchResult={[]} searchValue={''} searchTerms={[100,'Name']} /> */}
     </div>
   )
 }
