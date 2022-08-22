@@ -3,26 +3,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import Employee from './Employee/Employee.js'
 import './style.css'
 
-const Employees = ({page, searchTerms, searchValue, searchResult}) => {
+const Employees = ({page, searchTerms, searchValue}) => {
   const [employees, setEmployees] = useState([])
   const getEmployees = useSelector((state) => state.employees);
+  const getResults = useSelector((state) => state.searchResult);
+  
   
   useEffect(() => {
-    console.log(getEmployees)
-    if (page === 'admin') {
-      const fetchAll = async () => setEmployees(await getEmployees);
-      fetchAll();  
-      }
-    }, [,getEmployees])
+    if (page === 'home' || page === 'searchResults') {
+      setEmployees(getResults)
+    }
+  }, [searchValue, getResults])
+  
   useEffect(() => {
-    if (page === 'home' || 'searchResults') { setEmployees(searchResult) }
-    }, [searchResult, searchValue])
+    if (page === 'admin') {
+      console.log('sssssssssss',getEmployees)
+      setEmployees(getEmployees);
+    }
+  }, [searchValue,getEmployees])
   
   return (
     <>   
-    {!employees.length ? "Loading..." : (
       <div className={`employees-container ${page}`}>
-          {!employees.length ? "Loading..." : employees.map((employee, index) =>
+          { !employees ? "" : employees.map((employee, index) =>
           searchTerms[0] > index ? (
           <div key={employee._id} className={`employee-${page} row-c-sb`} >
             <Employee employee={employee} employees={employees} index={index} />
@@ -31,7 +34,6 @@ const Employees = ({page, searchTerms, searchValue, searchResult}) => {
           ) : (<></>)
           )}
       </div>
-     )}
     </>
   )
 }

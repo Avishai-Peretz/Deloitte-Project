@@ -41,8 +41,9 @@ export const searchEmployees = ({searchValue, searchTerms}) => async (dispatch) 
                 filterFromLocal = localData.filter(employee => employee.WorkTitle.toLowerCase().includes(searchValue.toLowerCase()));
             }
             const filterFromLocalId = filterFromLocal.map(employee => employee._id)   
-            dispatch({ type: 'SEARCH', payload: [...filterFromLocal] });                              
-            if ( searchValue.length > 0) {
+            dispatch({ type: 'SEARCH', payload: [...filterFromLocal] });  
+            
+            if ( searchValue.length > 1) {
                 const { data } = await api.searchEmployees({ searchValue: searchValue, searchExcludes: filterFromLocalId, searchTerms: searchTerms});
                 dispatch({ type: 'SEARCH', payload: [...filterFromLocal,...data] });
                 const stringifyData =JSON.stringify([...localData,...data]);

@@ -12,8 +12,7 @@ export const employees = (employees = [], action) => {
 }
 export const searchResult = (searchResult = [], action) => {
     switch (action.type)  {        
-        case 'SEARCH':        
-        console.log(action.payload)    
+        case 'SEARCH':          
             return action.payload;   
         default: 
             return searchResult;            

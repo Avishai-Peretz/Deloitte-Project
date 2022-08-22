@@ -17,8 +17,8 @@ export const SearchTerms = ({ searchTerms, setSearchTerms }) => {
       <div>
           <div className='row-c-c'> Search  By: 
             <select className='search-options' onChange={searchByHandler} >
-            <option value='Name'>By Name</option>
-            <option value='WorkTitle'>By Work Title</option>
+            <option value='Name'>Name</option>
+            <option value='WorkTitle'>Work Title</option>
             </select>
         </div>
         <div className='row-c-c'> Number of results : 

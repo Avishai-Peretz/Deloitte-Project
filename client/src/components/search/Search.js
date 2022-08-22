@@ -14,7 +14,6 @@ export const Search = ({page}) => {
   
   const dispatch = useDispatch()
   const getResults = useSelector((state) => state.searchResult);
-  const getEmployees = useSelector((state) => state.employees)
   
   const searchHandler = (value) => {
     setSearchValue(value)
@@ -25,22 +24,12 @@ export const Search = ({page}) => {
 
 
   const resultsHandler = async () => {
-    searchValue.length > 0 ? setSearchResult(await getResults) : setSearchResult([])
+    console.log(getResults)
+    searchValue > 0 ? setSearchResult(await getResults) : setSearchResult([]);
   }
-  const adminHandler = async () => {
-    setSearchResult(await getEmployees)
-  }
-
-  useEffect(() => {
-    if (page === 'admin') {
-      console.log(searchResult)
-      adminHandler()
-      setSearchTerms([100, "Name" ])
-    }
-  }, [getEmployees])
   
   useEffect(() => {
-    resultsHandler()
+    resultsHandler() 
   },[searchValue, getResults])
 
 
@@ -57,13 +46,13 @@ export const Search = ({page}) => {
           <button className='search-btn'></button>
         </Link>
       </div>        
-      {( page === "home" && searchResult.length) ? (
-      <Employees page={page} searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
+      {page === "home" ? (
+      <Employees page='home' searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
         ) : ''
       }
       </div>
-      {( (page === 'searchResults' || page === 'admin') && searchResult.length) ?(
-      <Employees page={page} searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
+      {((page === 'searchResults' || page === 'admin')) ?(
+      <Employees page='searchResults' searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
         ) : ''
       }
       </div>
