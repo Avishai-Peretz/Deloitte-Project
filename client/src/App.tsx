@@ -1,6 +1,5 @@
-import React, { useEffect, useState} from 'react'
-import { useDispatch } from 'react-redux';
-import { getEmployees } from './actions/employees'
+import React from 'react'
+// import { useDispatch } from 'react-redux';
 import { Routes, Route,Link} from "react-router-dom";
 import './assets/display.css';
 import './assets/fonts.css';
@@ -10,11 +9,6 @@ import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
 
 const App = () => {
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getEmployees());
-  // },[dispatch])
-
   return (
     <div className='app-container column-fs-c'>  
       <Link to='/' >

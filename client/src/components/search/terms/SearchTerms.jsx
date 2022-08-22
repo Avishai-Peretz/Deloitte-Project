@@ -4,12 +4,10 @@ export const SearchTerms = ({ searchTerms, setSearchTerms }) => {
     const [inputType, setInputType] = useState(20)
   const searchByHandler = async (e) => { 
     setSearchTerms([searchTerms[0],e.target.value])
-    console.log(searchTerms)
   }
     const numOfResultsHandler = async (e) => { 
         setInputType(e.target.value)
         setSearchTerms([e.target.value, searchTerms[1]])
-        console.log(searchTerms)
         return e.target.value
     }
     

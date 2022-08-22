@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { searchEmployees } from '../../actions/employees.js'
-import Employee from '../Employees/Employee/Employee.js'
 import Employees from '../Employees/Employees.js';
 import './style.css'
 import { SearchTerms } from './terms/SearchTerms.jsx';
 
 export const Search = ({page}) => {
   const [searchValue,setSearchValue] = useState(String(""))
-  const [searchResult, setSearchResult] = useState(Array())
+  const [searchResult, setSearchResult] = useState([])
   const [searchTerms, setSearchTerms] = useState([20, "Name" ])
   
   const dispatch = useDispatch()
@@ -24,7 +23,6 @@ export const Search = ({page}) => {
 
 
   const resultsHandler = async () => {
-    console.log(getResults)
     searchValue > 0 ? setSearchResult(await getResults) : setSearchResult([]);
   }
   

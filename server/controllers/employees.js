@@ -5,7 +5,6 @@ export const SearchEmployees = async (req, res) => {
     const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];  
     const searchTerms = req.body.searchTerms ? req.body.searchTerms : []; 
     if (searchTerms.length > 0 && searchTerms[1] === 'Name') {
-        console.log(req.body)
         const searchResults = await EmployeeObject.find({ Name: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes } }).limit(searchTerms[0]).exec();
         try { 
             res.status(200).json(searchResults);
