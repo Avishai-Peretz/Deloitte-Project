@@ -16,8 +16,10 @@ const Employees = ({page, searchTerms, searchValue}) => {
   }, [searchValue, getResults])
   
   useEffect(() => {
-    if (page === 'admin') {
-      setEmployees(getEmployees);
+    if (page === 'admin' ) {
+      if (searchValue.length === 0) {
+        setEmployees(getEmployees);
+      }else setEmployees(getResults);
     }
   }, [searchValue,getEmployees])
   
