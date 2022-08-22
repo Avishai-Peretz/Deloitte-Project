@@ -10,11 +10,10 @@ import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
 
 const App = () => {
-  // const [getDummy, setDummy] = useState(0)
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getEmployees());
-  },[dispatch])
+  // useEffect(() => {
+  //   dispatch(getEmployees());
+  // },[dispatch])
 
   return (
     <div className='app-container column-fs-c'>  
@@ -30,3 +29,4 @@ const App = () => {
   )
 }
 export default App;
+
