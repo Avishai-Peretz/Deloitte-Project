@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-const url = 'http://localhost:3002/employees';
+const URI = (() => {
+    if (process.env.NODE_ENV === "production") {
+      return "/employees";
+    } else {
+      return "http://localhost:3002/employees";
+    }
+  })()
 
-export const fetchEmployees = () => axios.get(url);
+export const fetchEmployees = () => axios.get(URI);
 
-export const createEmployee = (newEmployee) => axios.post(url, newEmployee);
+export const createEmployee = (newEmployee) => axios.post(URI, newEmployee);
 
-export const deleteEmployee = (employeeId) => axios.post(url + '/delete', employeeId);
+export const deleteEmployee = (employeeId) => axios.post(URI + '/delete', employeeId);
 
-export const searchEmployees = (searchObject) => axios.post(url+'/search', searchObject);
+export const searchEmployees = (searchObject) => axios.post(URI+'/search', searchObject);
