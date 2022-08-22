@@ -13,6 +13,7 @@ export const Search = ({page}) => {
   
   const dispatch = useDispatch()
   const getResults = useSelector((state) => state.searchResult);
+  const getAutocomplete = useSelector((state) => state.autocomplete);
   
   const searchHandler = (value) => {
     setSearchValue(value)
@@ -29,6 +30,9 @@ export const Search = ({page}) => {
   useEffect(() => {
     resultsHandler() 
   },[searchValue, getResults])
+  useEffect(() => {
+    setSearchValue(getAutocomplete)
+  },[getAutocomplete])
 
 
   

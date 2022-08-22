@@ -18,3 +18,12 @@ export const searchResult = (searchResult = [], action) => {
             return searchResult;            
     }
 }
+
+export const autocomplete = (autocomplete = "", action) => {
+    switch (action.type)  {        
+        case 'AUTOCOMPLETE':          
+            return action.payload;   
+        default: 
+            return autocomplete;            
+    }
+}
