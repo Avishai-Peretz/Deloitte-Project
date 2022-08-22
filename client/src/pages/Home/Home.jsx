@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import { Background } from '../../components/background/Background';
 import { Search } from '../../components/search/Search';
-import deloitteLogo from '../../assets/images/Deloitte_logo_white.png'
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './index.css'
