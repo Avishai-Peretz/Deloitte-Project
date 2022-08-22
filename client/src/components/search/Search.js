@@ -52,7 +52,7 @@ export const Search = ({page}) => {
       }
       </div>
       {((page === 'searchResults' || page === 'admin')) ?(
-      <Employees page='searchResults' searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
+      <Employees page={page} searchResult={searchResult} searchValue={searchValue} searchTerms={searchTerms} />
         ) : ''
       }
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Employee from './Employee/Employee.js'
 import './style.css'
 
@@ -17,7 +17,6 @@ const Employees = ({page, searchTerms, searchValue}) => {
   
   useEffect(() => {
     if (page === 'admin') {
-      console.log('sssssssssss',getEmployees)
       setEmployees(getEmployees);
     }
   }, [searchValue,getEmployees])
