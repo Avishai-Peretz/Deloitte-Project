@@ -36,7 +36,7 @@ export const Search = ({ page }) => {
       <div className='search-container column-c-c'>
         {(page === 'searchResults' || page === 'home')?(<SearchTerms searchTerms={searchTerms} setSearchTerms={setSearchTerms} />):''}
         <input placeholder='Text Area'  value={getSearchValue} onChange={(e) => { searchHandler(e.target.value) }} />
-        <div className='clear-btn' onClick={handleClear}></div>
+        <div className={`clear-btn ${page}`} onClick={handleClear}></div>
         {(page === 'searchResults' || page === 'home') ? (<div className='search-btn-container column-c-c'><Link to='/search-results' ><button className='search-btn'></button></Link></div>) : ''}
         {page === "home" ? (<Employees page='home' searchResult={searchResult} searchTerms={searchTerms} />) : '' }
       </div>

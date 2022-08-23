@@ -19,8 +19,7 @@
 }
 .clear-btn{
     position: absolute;
-    right: 10px;
-    top: 65px;
+    right: 15px;
     width: 15px;
     height: 15px;
     background: url(../../assets/icons/x.png) center center/cover no-repeat;;
@@ -28,6 +27,12 @@
     border-radius: 50%;
     cursor: pointer;
     border: 1px grey solid;
+}
+.clear-btn.home,.clear-btn.searchResults{
+    top: 65px;   
+}
+.clear-btn.admin{
+    top: 15px;   
 }
 .search-btn-container{
     position: absolute;
