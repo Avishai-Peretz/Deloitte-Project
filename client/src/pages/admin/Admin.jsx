@@ -52,7 +52,7 @@ const Admin = () => {
         <input style={{width:'250px'}} name="id"  label='id' placeholder='id' value={deleteEmployeeData.id} onChange={(e) => setDeleteEmployeeData({ _id: e.target.value})} />
         <button className={""} >Submit</button>
       </form>
-      <h4 style={{textAlign:'center'}}>for Auto Complete, mouse click on the employee box or click Enter (you can use tho arrows to navigate) </h4>
+      <h4 style={{textAlign:'center'}}>For auto complete, Mouse click or click Enter on the employee box or click Enter (you can use tho arrows to navigate) </h4>
       <Search page='admin' />
     </div>
   )
