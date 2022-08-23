@@ -1,14 +1,14 @@
-import { useState, useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import FileBase from 'react-file-base64';
-import { useDispatch, useSelector } from 'react-redux';
-import { createEmployee, deleteEmployee } from '../../actions/employees';
+import { useDispatch } from 'react-redux';
+import { createEmployee, deleteEmployee, getEmployees } from '../../actions/employees';
 import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './style.css'
 
 const Admin = () => {
-  
+
   const [createEmployeeData, setCreateEmployeeData] = useState({ ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
   const [deleteEmployeeData, setDeleteEmployeeData] = useState({ id: String("")})
 
@@ -27,6 +27,8 @@ const Admin = () => {
     localStorage.clear()
     e.preventDefault();
   };
+
+  useEffect(() => { dispatch( getEmployees() ) },[]);
   
   return (
     <div className='admin-container column-c-c' >

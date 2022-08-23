@@ -7,10 +7,11 @@ import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
 
 const App = () => {
+
   return (
     <div className='app-container column-fs-c'>  
       <Link to='/' >
-        <img src={deloitteLogo} alt='Deloitte' className='deloitte-logo' />
+        <img src={ deloitteLogo } alt='Deloitte' className='deloitte-logo' />
       </Link>
       <Routes>
         <Route path='/' element={<Home/>} />  
@@ -20,5 +21,6 @@ const App = () => {
     </div>
   )
 }
+
 export default App;
 
