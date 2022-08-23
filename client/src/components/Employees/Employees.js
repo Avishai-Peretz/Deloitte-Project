@@ -10,8 +10,7 @@ const Employees = ({page = "", searchTerms = [], searchValue = "", searchResult 
   
   
   useEffect(() => {
-    if (searchValue.length) {
-      if (page === 'home') {
+    if (page === 'home') {
     searchValue.length > 0 ? setEmployees(getResults) : setEmployees([])
     }
     if (page === 'searchResults') {
@@ -21,7 +20,7 @@ const Employees = ({page = "", searchTerms = [], searchValue = "", searchResult 
       if (searchValue.length === 0) {
         setEmployees(getEmployees);
       }else setEmployees(getResults);
-    }}
+    }
   }, [searchValue, getResults,getEmployees])
   
   
