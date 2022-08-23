@@ -39,7 +39,12 @@ export const Search = ({ page }) => {
     dispatch(setSearchValue({ value: "" }))
     dispatch(searchEmployees({}));
   }
-  const handleSettings = () => { getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true) }
+  const handleSettings = () => {
+    console.log(getSearchSettings)
+    getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true)
+  }
+
+  useEffect(() => {console.log(getSearchSettings)},[])
 
   const displayClear = getSearchValue === "" ? "none" : "";
 
@@ -48,7 +53,7 @@ export const Search = ({ page }) => {
       <div className='search-container column-c-c'>
         <input placeholder='Text Area'  value={getSearchValue} onChange={(e) => { searchHandler(e.target.value) }} />
         <div className={`clear-btn ${page} ${displayClear}`} onClick={handleClear}></div>
-        <div className={getSearchSettings ? 'none' : ''}>
+        <div className={ !getSearchSettings ? 'none' : '' }>
           <SearchTerms  searchTerms={searchTerms} setSearchTerms={setSearchTerms} />
         </div>
         <div className='options-container row-c-se'>

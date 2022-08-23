@@ -281,6 +281,12 @@
     justify-content:flex-end;
 }
 
-.block {display: flex;}
+.block {display: block;}
 
+.flex {display: flex;}
 
+.none { display: none;}
+
+.absolute { display: absolute; }
+
+.hidden { visibility: hidden; }
