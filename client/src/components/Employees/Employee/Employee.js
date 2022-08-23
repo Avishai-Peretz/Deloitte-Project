@@ -18,7 +18,7 @@ const Employee = ({ employee, index }) => {
   
   const itemClick = () => { setAfterClick(true); setTimeout(() => { setAfterClick(false) }, 500);  };
   
-  const handleAutocompleteClick = (isHover) => {
+  const handleAutocompleteClick = () => {
     itemClick();
     if ( employee ) {
       dispatch(autocompleteClick(employee));
