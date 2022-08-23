@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
-import { createEmployee, deleteEmployee, getEmployees } from '../../actions/employees';
+import { createEmployee, deleteEmployee, getEmployees } from '../../actions/useHooks';
 import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';

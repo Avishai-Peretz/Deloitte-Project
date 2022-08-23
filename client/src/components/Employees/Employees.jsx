@@ -1,16 +1,30 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useKeyNavigation } from '../../actions/useHooks.js'
 import Employee from './Employee/Employee.js'
 import './style.css'
 
-const Employees = ({page = "", searchTerms = []}) => {
+export let globalResults = []
+
+const Employees = ({ page = "", searchTerms = [] }) => {
+
   const [employees, setEmployees] = useState([])
+
+  const dispatch = useDispatch()
+
   const getEmployees = useSelector((state) => state.employees);
   const getResults = useSelector((state) => state.searchResult);
-  const getSearchValue = useSelector((state) => state.searchValue);
+  const getSearchValue = useSelector((state) => state.autocomplete.value);
   
+  const arrowUpPress = useKeyNavigation('ArrowUp')
+  const arrowDownPress = useKeyNavigation('ArrowDown')
   
+  useEffect(() => {if (arrowUpPress) { dispatch({ type: 'ARROW_UP' })}}, [arrowUpPress]);
+  useEffect(() => {if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' })}}, [arrowDownPress]);
+  const enterPress = useKeyNavigation('Enter');
+
   useEffect(() => {
+    globalResults = getResults
     if (page === 'home') { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
     if (page === 'searchResults') { setEmployees(getResults) }
     if (page === 'admin') {
@@ -21,9 +35,10 @@ const Employees = ({page = "", searchTerms = []}) => {
     }
   }, [getSearchValue, getResults,getEmployees])
   
+
   const Home = (employee, index) => (
     <div page='home' key={employee._id} className={`employee-${page} row-c-sb`} >
-      <Employee employee={employee} employees={employees} index={index} searchValue={getSearchValue} />
+      <Employee employee={employee} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue}/>
     </div>
   )
   
@@ -36,7 +51,8 @@ const Employees = ({page = "", searchTerms = []}) => {
 
   return (
     <>   
-      <div className={`employees-container ${page}`}>
+      <div className={`employees-container ${page}`}
+      >
           { !employees  ? "" : employees.map((employee, index) =>
             searchTerms[0] > index && (page === 'home' || page === 'searchResults') ? Home(employee, index) :
             searchTerms[0] > index && page === 'admin'? Admin(employee, index) : (<></>))

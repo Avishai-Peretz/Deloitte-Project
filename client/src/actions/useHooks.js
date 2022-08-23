@@ -1,4 +1,6 @@
 import * as api from '../api';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export const getEmployees = () => async (dispatch) => {
     try { const { data } = await api.fetchEmployees(); dispatch({ type : 'FETCH_ALL', payload: data });
@@ -15,7 +17,7 @@ export const deleteEmployee = ( employee ) => async ( dispatch ) => {
     catch (error) {  throw new Error(error);  }
 }
 
-export const searchEmployees = ({ searchValue = "", searchTerms = [] }) => async (dispatch) => {
+export const searchEmployees =({ searchValue = "", searchTerms = [] }) => async (dispatch) => {
     const sortInputFirst = (input, data = []) => {
         let first = []; let others = [];
         for (let i = 0; i < data.length; i++) { if (data[i].Name.toLowerCase().indexOf(input.toLowerCase()) === 0) { first.push(data[i]); }
@@ -56,6 +58,17 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [] }) => async
 }
 
 
-export const setSearchValue = (searchValue) => async (dispatch) => { dispatch({ type: 'SEARCH-VALUE', payload: searchValue }) }
+export const setSearchValue = (searchValue) => async (dispatch) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) }
 export const autocompleteClick = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete }) }
-export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload: autocomplete }) }
+export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload:  autocomplete }) }
+ 
+export const useKeyNavigation = (targetKey) => {
+    const [keyPressed, setKeyPressed] = useState(false);
+    useEffect(
+        () => {const downHandler = ({ key }) => { if (key === targetKey) { setKeyPressed(true); } };
+            const upHandler = ({ key }) => {if (key === targetKey) {setKeyPressed(false);}};
+            window.addEventListener('keydown', downHandler);window.addEventListener('keyup', upHandler);
+            return () => { window.removeEventListener('keydown', downHandler); window.removeEventListener('keyup', upHandler); };
+        }, [targetKey]);
+    return keyPressed;
+};
