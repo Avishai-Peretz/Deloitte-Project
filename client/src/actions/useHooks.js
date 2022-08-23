@@ -8,13 +8,27 @@ export const getEmployees = () => async (dispatch) => {
 }
 
 export const createEmployee = ( employee ) => async ( dispatch ) => {
-    try { const { data } = await api.createEmployee(employee); dispatch( { type : 'CREATE', payload: data } ); }
-    catch (error) { throw new Error( error ); }
+    try {
+        const { data } = await api.createEmployee(employee);
+        dispatch({ type: 'CREATE', payload: data });
+        alert( "Employee created successfully." );
+    }
+    catch (error) {
+        alert( "Unable to create employee. NOTE: Name and Work title must contain at least two characters." );
+        throw new Error(error);
+    }
 }
 
-export const deleteEmployee = ( employee ) => async ( dispatch ) => {
-    try { const { data } = await api.deleteEmployee(employee); dispatch({ type: 'DELETE', payload: data }); }
-    catch (error) {  throw new Error(error);  }
+export const deleteEmployee = (employee) => async (dispatch) => {
+    try {
+        const { data } = await api.deleteEmployee(employee);
+        dispatch({ type: 'DELETE', payload: data });
+        alert( "Employee deleted successfully." );
+    }
+    catch (error) {
+        alert( "Unable to delete employee, Try to validate the Id, you can use the autocomplete in order to do so." );
+        throw new Error(error);
+    }
 }
 
 export const searchEmployees =({ searchValue = "", searchTerms = [] }) => async (dispatch) => {

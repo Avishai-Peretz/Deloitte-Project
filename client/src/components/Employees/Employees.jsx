@@ -12,6 +12,7 @@ const Employees = ({ page , searchTerms }) => {
 
   const dispatch = useDispatch()
 
+  const selectedIndex = useSelector((state) => state.autocompleteKey);
   const getEmployees = useSelector((state) => state.employees);
   const getResults = useSelector((state) => state.searchResult);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
@@ -22,17 +23,25 @@ const Employees = ({ page , searchTerms }) => {
   
   useEffect(() => {if (arrowUpPress) { dispatch({ type: 'ARROW_UP' })}}, [arrowUpPress]);
   useEffect(() => {if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' })}}, [arrowDownPress]);
-
+  
   useEffect(() => {
     globalResults = getResults
     if (page === 'home') { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
     if (page === 'searchResults') { setEmployees(getResults) }
     if (page === 'admin') {  if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
-  }, [getSearchValue, getResults,getEmployees])
+  }, [getSearchValue, getResults, getEmployees])
+  
+  const scroll = () => {
+    const active = document.querySelector(`.employee-${selectedIndex}`)
+    if(active) {active.scrollIntoView({behavior: "auto", block: "end", block: "center"});}
+  }
+  useEffect(() => {
+    scroll()
+  }, [arrowUpPress, arrowDownPress]);
 
   return (
     <>   
-      <div className={`employees-container ${page}`}>
+      <div className={`employees-container ${page}`} tabIndex="100">
           { !employees  ? "" : employees.map((employee, index) =>
             searchTerms[0] > index ?
               <div key={employee._id} className={`employee-${page} row-c-sb`} >

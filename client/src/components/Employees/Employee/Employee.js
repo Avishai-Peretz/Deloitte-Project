@@ -8,8 +8,6 @@ import './style.css'
 
 const Employee = ({ employee, index, page, enterPress }) => {
 
-  // const [clicksCounter, setClicksCounter] = useState(0)
-
   const selectedIndex = useSelector((state) => state.autocompleteKey);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
 
@@ -22,13 +20,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
   };
   
   const handleAutocomplete = async (e) => {
-
     if (e) {
-      // setClicksCounter(clicksCounter + 1);
-      setTimeout(() => {
-        console.log("count")
-        // setClicksCounter(0)
-      }, 4000);
         if (page === 'home') { navigate("/search-results", { replace: true }) }
         if (page === 'searchResults' && window.confirm('Are you sure you want to go to Admin(testing) page?')) {
           navigate("/admin", { replace: true })
@@ -56,7 +48,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
   return (
     <div
       className={`employee-container row-c-sb employee-${index} selected-${selectedIndex === index ? 'true' : 'false'}`}
-      onClick={ handleClickOrEnter} onMouseEnter={handleHover} onMouseLeave={handleHover}
+      onClick={handleClickOrEnter} onMouseEnter={handleHover} onMouseLeave={handleHover}
       >
       <img className='employee-img' src={ employee.ImageUrl } />
       <div className='txt-container column-c-se'>
