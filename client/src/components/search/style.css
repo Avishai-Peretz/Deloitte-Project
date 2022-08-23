@@ -42,7 +42,7 @@
 @media only screen and (max-width: 750px) {
     .search-container {
         min-width: 90vw;
-        max-height: 50vh;
+        max-height: 75vh;
         }
         .search-container > input{
             padding: 0 20px;
