@@ -9,7 +9,7 @@ import './style.css'
 export const Search = ({page}) => {
   const [searchValue,setSearchValue] = useState(String(""))
   const [searchResult, setSearchResult] = useState([])
-  const [searchTerms, setSearchTerms] = useState([20, "Name" ])
+  const [searchTerms, setSearchTerms] = useState([Number(20), String("Name") ])
   const [autocomplete, setAutocomplete] = useState([ Boolean, String("") ])
   
   const dispatch = useDispatch()
