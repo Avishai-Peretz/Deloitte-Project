@@ -15,10 +15,6 @@
     margin-top: 25vh;
 }
 @media only screen and (max-width: 750px) {
-    .app-container{
-        min-height: 700px;
-        height: 100vh;
-    }
     .txt-title {
       font-size: 20px;
     }
@@ -29,3 +25,40 @@
         margin-top: 100px; 
     }
 }
+@media only screen and (max-height: 650px) {
+    .app-container{
+        min-height: 650px;
+        height: 100vh;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .app-container{
+        min-height: 700px;
+        height: 100vh;
+    }
+}
+@media only screen and (max-height: 750px) {
+    .app-container{
+        min-height: 750px;
+        height: 100vh;
+    }
+}
+@media only screen and (max-height: 800px) {
+    .app-container{
+        min-height: 800px;
+        height: 100vh;
+    }
+}
+@media only screen and (max-height: 850px) {
+    .app-container{
+        min-height: 850px;
+        height: 100vh;
+    }
+}
+@media only screen and (max-height: 900px) {
+    .app-container{
+        min-height: 900px;
+        height: 100vh;
+    }
+}
+
