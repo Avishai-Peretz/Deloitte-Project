@@ -12,10 +12,7 @@
 
 }
 .app-container.mobile{
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-
+    display: none;
 }
 .app-container > h1{
     margin-top: 25vh;
@@ -67,7 +64,7 @@
         height: 100vh;
     }
 }
-@media only screen and (max-height: 450px) {
+@media only screen and (max-height: 420px) {
     .app-container{
         display: none;
     }
