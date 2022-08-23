@@ -1,3 +1,4 @@
+
 export const employees = (employees = [], action) => {
     switch (action.type)  {
         case 'FETCH_ALL':
@@ -19,10 +20,18 @@ export const searchResult = (searchResult = [], action) => {
     }
 }
 
-export const autocomplete = (autocomplete = "", action) => {
+export const autocompleteClick = (autocomplete = [], action) => {
     switch (action.type)  {        
-        case 'AUTOCOMPLETE':          
-            return action.payload;   
+        case 'AUTOCOMPLETE_CLICK':      
+            return action.payload;            
+        default: 
+            return autocomplete;            
+    }
+}
+export const autocompleteHover = (autocomplete = [], action) => {
+    switch (action.type)  {        
+        case 'AUTOCOMPLETE_HOVER':      
+            return action.payload;             
         default: 
             return autocomplete;            
     }

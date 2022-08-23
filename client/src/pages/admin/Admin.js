@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import { useState, useEffect} from 'react'
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, deleteEmployee } from '../../actions/employees';
@@ -8,10 +8,12 @@ import '../../assets/fonts.css';
 import './style.css'
 
 const Admin = () => {
-  const [createEmployeeData, setCreateEmployeeData] = useState({  ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
+  
+  const [createEmployeeData, setCreateEmployeeData] = useState({ ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
   const [deleteEmployeeData, setDeleteEmployeeData] = useState({ id: String("")})
 
   const dispatch = useDispatch();
+  const getAutocompleteClick = useSelector((state) => state.autocomplete);
 
   const handleCreateSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +28,10 @@ const Admin = () => {
     localStorage.clear()
     e.preventDefault();
   };
+  
+  useEffect(() => {
+    setDeleteEmployeeData({ id: getAutocompleteClick._id })
+  }, [getAutocompleteClick]);
   
   return (
     <div className='admin-container column-c-c' >

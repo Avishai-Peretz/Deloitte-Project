@@ -1,6 +1,5 @@
 import * as api from '../api';
 
-
 export const getEmployees = () => async (dispatch) => {
     try { 
         const { data } = await api.fetchEmployees()
@@ -29,8 +28,8 @@ export const deleteEmployee = (employee) => async (dispatch) => {
 }
 
 
-export const searchEmployees = ({ searchValue, searchTerms }) => async (dispatch) => {
-    const sortInputFirst = (input, data) => {
+export const searchEmployees = ({ searchValue = "", searchTerms = []}) => async (dispatch) => {
+    const sortInputFirst = (input, data = []) => {
         let first = [];
         let others = [];
         for (let i = 0; i < data.length; i++) {
@@ -76,7 +75,11 @@ export const searchEmployees = ({ searchValue, searchTerms }) => async (dispatch
         throw new Error(error);
     }
 }
- 
-export const autocomplete = (searchResult) => async (dispatch) => {
-    dispatch({ type: 'AUTOCOMPLETE', payload: searchResult })
+
+
+export const autocompleteClick = (autocomplete) => async (dispatch) => {
+    dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete })
+}
+export const autocompleteHover = (autocomplete) => async (dispatch) => {   
+    dispatch({ type: 'AUTOCOMPLETE_HOVER', payload: autocomplete })
 }
