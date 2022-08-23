@@ -13,7 +13,6 @@ const Admin = () => {
   const [deleteEmployeeData, setDeleteEmployeeData] = useState({ id: String("")})
 
   const dispatch = useDispatch();
-  const getAutocompleteClick = useSelector((state) => state.autocomplete);
 
   const handleCreateSubmit = (e) => {
     e.preventDefault();
@@ -28,10 +27,6 @@ const Admin = () => {
     localStorage.clear()
     e.preventDefault();
   };
-  
-  useEffect(() => {
-    setDeleteEmployeeData({ id: getAutocompleteClick._id })
-  }, [getAutocompleteClick]);
   
   return (
     <div className='admin-container column-c-c' >

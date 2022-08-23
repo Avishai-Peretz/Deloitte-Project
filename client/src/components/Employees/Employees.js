@@ -4,25 +4,25 @@ import Employee from './Employee/Employee.js'
 import './style.css'
 
 const Employees = ({page = "", searchTerms = [], searchValue = "", searchResult = []}) => {
-  
   const [employees, setEmployees] = useState([])
   const getEmployees = useSelector((state) => state.employees);
   const getResults = useSelector((state) => state.searchResult);
   
   
   useEffect(() => {
+    if (searchValue.length) {
       if (page === 'home') {
-      searchValue.length > 0 ? setEmployees(getResults) : setEmployees([])
-      }
-      if (page === 'searchResults') {
-        setEmployees(getResults)
-      }
-      if (page === 'admin' ) {
-        if (searchValue.length === 0) {
-          setEmployees(getEmployees);
-        }else setEmployees(getResults);
-      }
-    }, [searchValue, getResults,getEmployees])
+    searchValue.length > 0 ? setEmployees(getResults) : setEmployees([])
+    }
+    if (page === 'searchResults') {
+      setEmployees(getResults)
+    }
+    if (page === 'admin' ) {
+      if (searchValue.length === 0) {
+        setEmployees(getEmployees);
+      }else setEmployees(getResults);
+    }}
+  }, [searchValue, getResults,getEmployees])
   
   
   return (
