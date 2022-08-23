@@ -1,33 +1,40 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { autocompleteClick, autocompleteHover, searchEmployees } from '../../../actions/employees.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { autocompleteClick, autocompleteHover, searchEmployees, setSearchValue } from '../../../actions/employees.js'
 import './style.css'
 
 
 
-const Employee = ({employee, index, searchValue}) => {
+const Employee = ({ employee, index }) => {
   const [savedValue, setSavedValue] = useState()
-  
+  const [afterClick, setAfterClick] = useState(false)
+  const getSearchValue = useSelector((state) => state.searchValue);
   const dispatch = useDispatch()
 
-  const highlight = (searchValue, { Name }) => {
-    const inner = Name.replace( new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
+  const highlight = (getSearchValue, { Name }) => {
+    const inner = Name.replace( new RegExp(getSearchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
     return { __html: inner }
   };
- 
-  const handleAutocompleteClick = () => {
+  
+  const itemClick = () => {
+    setAfterClick(true)
+    setTimeout(() => { setAfterClick(false) }, 200);
+  } 
+  
+  const handleAutocompleteClick = (isHover) => {
+    itemClick()
     if ( employee ) {
-      dispatch(autocompleteClick( employee ))
+      dispatch(autocompleteClick(employee))
+      dispatch(setSearchValue(employee.Name))
       const getSearchTerms = [ 20, "Name" ] 
       const searchValue = employee.Name
       const searchObject = { searchValue: searchValue, searchTerms: getSearchTerms }
-      dispatch( searchEmployees( searchObject ) )
+      dispatch(searchEmployees(searchObject))
   }}
     
   const handleAutocompleteHover = (state) => {
-    if ( state ) { setSavedValue( searchValue ); employee ? dispatch(autocompleteHover( employee )) : dispatch( autocompleteHover("") ); }
-    else if (savedValue) {
-      console.log(savedValue)
+    if ( state ) { setSavedValue( getSearchValue ); employee ? dispatch(autocompleteHover( employee )) : dispatch( autocompleteHover("") ); }
+    else if (savedValue && !afterClick) {
       dispatch(autocompleteHover({ Name: savedValue }))
     }
   }
@@ -41,7 +48,7 @@ const Employee = ({employee, index, searchValue}) => {
       >
         <img className='employee-img' src={ employee.ImageUrl } />
         <div className='txt-container column-c-se'>
-          <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={ highlight( searchValue,employee ) }></h3>
+          <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={ highlight( getSearchValue,employee ) }></h3>
           <h5 className='work-title' >{ employee.WorkTitle }</h5> 
         </div>
     </div>

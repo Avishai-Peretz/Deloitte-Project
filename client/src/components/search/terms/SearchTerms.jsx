@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../../actions/employees.js'
 
-export const SearchTerms = ({ searchTerms, setSearchTerms,setSearchValue }) => {
-  
+export const SearchTerms = ({ searchTerms, setSearchTerms}) => {
+  const dispatch = useDispatch()
   const [inputType, setInputType] = useState(20);
 
   const searchByHandler = async (e) => { 
     setSearchTerms([searchTerms[0], e.target.value]);
-    setSearchValue('');
+    dispatch(setSearchValue(''));
     localStorage.clear();
   }
 

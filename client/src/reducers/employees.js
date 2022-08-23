@@ -20,6 +20,14 @@ export const searchResult = (searchResult = [], action) => {
     }
 }
 
+export const searchValue = (searchValue = "", action) => {
+    switch (action.type)  {        
+        case 'SEARCH-VALUE':        
+            return action.payload;             
+        default: 
+            return searchValue;            
+    }
+}
 export const autocompleteClick = (autocomplete = [], action) => {
     switch (action.type)  {        
         case 'AUTOCOMPLETE_CLICK':      
