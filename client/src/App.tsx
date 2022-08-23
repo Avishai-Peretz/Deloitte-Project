@@ -24,6 +24,7 @@ const App = () => {
         <Link to='/' >
           <img src={ deloitteLogo } alt='Deloitte' className='deloitte-logo' />
         </Link>
+        <h1> Screen size is not compatible !</h1>
         <div className='rotate-img'></div>
       </div>
     </>
