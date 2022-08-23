@@ -18,7 +18,6 @@ export const Search = ({page}) => {
   const getAutocompleteHover = useSelector((state) => state.autocompleteHover);
   
   const searchHandler = (value) => {
-    console.log("searchHandler", getAutocompleteHover)
     setAutocomplete([false, ""])
     setSearchValue(value)
     const getSearchTerms = searchTerms
@@ -28,7 +27,7 @@ export const Search = ({page}) => {
   const resultsHandler = async () => { searchValue ? setSearchResult(await getResults) : setSearchResult([]); }
   
   const handleAutocompleteClick = () => { if (searchValue) { setSearchValue(getAutocompleteClick.Name) } }
-  const handleAutocompleteHover = () => { console.log("handleAutocompleteHover", getAutocompleteHover); setAutocomplete([true, getAutocompleteHover.Name]) };
+  const handleAutocompleteHover = () => { setAutocomplete([true, getAutocompleteHover.Name]) };
 
   useEffect(() => { resultsHandler() }, [ getResults ]);
   useEffect(() => { handleAutocompleteClick() },[ getAutocompleteClick ])
