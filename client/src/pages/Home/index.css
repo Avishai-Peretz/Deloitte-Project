@@ -64,7 +64,7 @@
         height: 100vh;
     }
 }
-@media only screen and (max-height: 420px) {
+@media only screen and (max-height: 500px) and (min-width: 500px) and (orientation: landscape)  {
     .app-container{
         display: none;
     }
@@ -73,10 +73,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: 100vh;
         background-color: #2fadad;
     }
     .rotate-img{
-        min-height: 90vh;
+        height: 90vh;
         width: 100vw;
         background:url(../../assets/images/rotate.png) center center/contain no-repeat ;
     }

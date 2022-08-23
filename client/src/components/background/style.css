@@ -66,25 +66,9 @@ video{
         min-height: 700px;
     }
 }
-
-@media only screen and (max-height: 650px) {
+@media only screen and (max-height: 900px) {
     video{
-        min-height: 650px;
-    }
-}
-@media only screen and (max-height: 700px) {
-    video{
-        min-height: 700px;
-    }
-}
-@media only screen and (max-height: 750px) {
-    video{
-        min-height: 750px;
-    }
-}
-@media only screen and (max-height: 800px) {
-    video{
-        min-height: 800px;
+        min-height: 900px;
     }
 }
 @media only screen and (max-height: 850px) {
@@ -92,8 +76,32 @@ video{
         min-height: 850px;
     }
 }
-@media only screen and (max-height: 900px) {
+@media only screen and (max-height: 800px) {
     video{
-        min-height: 900px;
+        min-height: 800px;
     }
 }
+@media only screen and (max-height: 800px) {
+    video{
+        min-height: 800px;
+    }
+}
+@media only screen and (max-height: 750px) {
+    video{
+        min-height: 750px;
+    }
+}
+@media only screen and (max-height: 700px) {
+    video{
+        min-height: 700px;
+    }
+}
+@media only screen and (max-height: 650px) {
+    video{
+        min-height: 650px;
+    }
+}
+
+
+
+
