@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, deleteEmployee, getEmployees } from '../../actions/useHooks';
 import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
@@ -12,6 +12,7 @@ const Admin = () => {
   const [createEmployeeData, setCreateEmployeeData] = useState({ ImageUrl: String(""), WorkTitle: String(""), Name: String("") })
   const [deleteEmployeeData, setDeleteEmployeeData] = useState({ id: String("")})
 
+  const getCurrentID = useSelector((state) => state.autocomplete.ID);
   const dispatch = useDispatch();
 
   const handleCreateSubmit = (e) => {
@@ -29,17 +30,18 @@ const Admin = () => {
   };
 
   useEffect(() => { dispatch( getEmployees() ) },[]);
+  useEffect(() => { setDeleteEmployeeData({id : getCurrentID}) },[getCurrentID]);
   
   return (
     <div className='admin-container column-c-c' >
       <form style={{margin:'100px 20px 20px 20px'}} className='column-c-c' onSubmit={handleCreateSubmit}>
         <h3 >Create New Employee</h3>
-        <div>
-        <input name="WorkTitle" label='WorkTitle' placeholder='Work Title' value={createEmployeeData.WorkTitle} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, WorkTitle: e.target.value})} />
-        <input name="Name"  label='Name' placeholder='Name' value={createEmployeeData.Name} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, Name: e.target.value})} />
+        <div className='column-c-c'>
+          <input name="WorkTitle" label='WorkTitle' placeholder='Work Title' value={createEmployeeData.WorkTitle} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, WorkTitle: e.target.value})} />
+          <input name="Name"  label='Name' placeholder='Name' value={createEmployeeData.Name} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, Name: e.target.value})} />
         </div>
         <div className='row-c-c'>
-          <div className={""}>
+          <div style={{maxWidth:'170px'}} >
             <FileBase name="ImageUrl" type="file" multiple={false} onDone={({ base64 }) => setCreateEmployeeData({ ...createEmployeeData, ImageUrl: base64 })} />
           </div>
           <button className={""} >Submit</button>
@@ -47,9 +49,10 @@ const Admin = () => {
       </form>
       <form style={{margin:'20px'}} onSubmit={handleDeleteSubmit}>
         <h3 >Delete Employee</h3>
-        <input name="id"  label='id' placeholder='id' value={deleteEmployeeData.id} onChange={(e) => setDeleteEmployeeData({ _id: e.target.value})} />
+        <input style={{width:'250px'}} name="id"  label='id' placeholder='id' value={deleteEmployeeData.id} onChange={(e) => setDeleteEmployeeData({ _id: e.target.value})} />
         <button className={""} >Submit</button>
       </form>
+      <h4 style={{textAlign:'center'}}>for Auto Complete, mouse click on the employee box or click Enter (you can use tho arrows to navigate) </h4>
       <Search page='admin' />
     </div>
   )

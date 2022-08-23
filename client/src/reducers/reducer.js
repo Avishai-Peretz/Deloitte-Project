@@ -29,27 +29,33 @@ export const searchResult = (searchResult = [], action) => {
 //             return searchValue;            
 //     }
 // }
-export const autocomplete = (autocomplete = { bool: false, value: "", index: -1 }, action) => {
+export const autocomplete = (autocomplete = { bool: false, value: "", index: -1, objectId: null }, action) => {
     switch (action.type) {   
         case 'SEARCH_VALUE':        
-        return action.payload;
+            return action.payload;
         case 'AUTOCOMPLETE_CLICK':      
             return action.payload; 
         case 'AUTOCOMPLETE_HOVER':      
             return action.payload;
         case 'INPUT_VALUE':        
             return action.payload; 
+        case 'ID':
+            return action.payload; 
         default: 
             return autocomplete;            
     }
 }
 
-export const autocompleteKey = (autocompleteKey = 0 , action) => {
+export const autocompleteKey = (autocompleteKey = null , action) => {
     switch (action.type) {
         case 'ARROW_UP':
-            return autocompleteKey !== 0 ? autocompleteKey - 1 : globalResults.length - 1;
+            if (autocompleteKey === null) { return 0 }
+            else if (autocompleteKey !== 0) { return autocompleteKey - 1 }
+            else {return globalResults.length - 1;}
         case 'ARROW_DOWN':
-            return autocompleteKey !== globalResults.length - 1 ? autocompleteKey + 1 : 0;
+            if (autocompleteKey === null || autocompleteKey === globalResults.length - 1 ) { return 0}
+            else if (autocompleteKey !== globalResults.length) { return autocompleteKey + 1 }
+            else {return 0}
         case 'SELECT_KEY':       
             return action.payload ;       
         case 'ENTER':

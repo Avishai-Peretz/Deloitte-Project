@@ -58,6 +58,7 @@ export const searchEmployees =({ searchValue = "", searchTerms = [] }) => async 
 }
 
 
+export const setObjectID = (autocomplete) => async (dispatch) => { dispatch({ type: 'ID', payload: autocomplete }) }
 export const setSearchValue = (searchValue) => async (dispatch) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) }
 export const autocompleteClick = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete }) }
 export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload:  autocomplete }) }
@@ -65,9 +66,10 @@ export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatc
 export const useKeyNavigation = (targetKey) => {
     const [keyPressed, setKeyPressed] = useState(false);
     useEffect(
-        () => {const downHandler = ({ key }) => { if (key === targetKey) { setKeyPressed(true); } };
-            const upHandler = ({ key }) => {if (key === targetKey) {setKeyPressed(false);}};
-            window.addEventListener('keydown', downHandler);window.addEventListener('keyup', upHandler);
+        () => {
+            const downHandler = (e) => { if (e.key === targetKey) { e.preventDefault(); setKeyPressed(true); }};
+            const upHandler = (e) => { if (e.key === targetKey) { e.preventDefault(); setKeyPressed(false); } };
+            window.addEventListener('keydown', downHandler) ;window.addEventListener('keyup', upHandler);
             return () => { window.removeEventListener('keydown', downHandler); window.removeEventListener('keyup', upHandler); };
         }, [targetKey]);
     return keyPressed;

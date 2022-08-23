@@ -6,7 +6,7 @@ import './style.css'
 
 export let globalResults = []
 
-const Employees = ({ page = "", searchTerms = [] }) => {
+const Employees = ({ page , searchTerms }) => {
 
   const [employees, setEmployees] = useState([])
 
@@ -18,44 +18,27 @@ const Employees = ({ page = "", searchTerms = [] }) => {
   
   const arrowUpPress = useKeyNavigation('ArrowUp')
   const arrowDownPress = useKeyNavigation('ArrowDown')
+  const enterPress = useKeyNavigation('Enter');
   
   useEffect(() => {if (arrowUpPress) { dispatch({ type: 'ARROW_UP' })}}, [arrowUpPress]);
   useEffect(() => {if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' })}}, [arrowDownPress]);
-  const enterPress = useKeyNavigation('Enter');
 
   useEffect(() => {
     globalResults = getResults
     if (page === 'home') { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
     if (page === 'searchResults') { setEmployees(getResults) }
-    if (page === 'admin') {
-      if (getSearchValue.length === 0) {
-        setEmployees(getEmployees);
-      }
-      else setEmployees(getResults);
-    }
+    if (page === 'admin') {  if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
   }, [getSearchValue, getResults,getEmployees])
-  
-
-  const Home = (employee, index) => (
-    <div page='home' key={employee._id} className={`employee-${page} row-c-sb`} >
-      <Employee employee={employee} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue}/>
-    </div>
-  )
-  
-  const Admin = (employee, index) =>(
-    <div key={employee._id} className={`employee-${page} row-c-sb`} >
-      <Employee page='admin' employee={employee} employees={employees} index={index} searchValue={getSearchValue} />
-      <h6>ID : {employee._id}</h6>
-    </div>
-  )
 
   return (
     <>   
-      <div className={`employees-container ${page}`}
-      >
+      <div className={`employees-container ${page}`}>
           { !employees  ? "" : employees.map((employee, index) =>
-            searchTerms[0] > index && (page === 'home' || page === 'searchResults') ? Home(employee, index) :
-            searchTerms[0] > index && page === 'admin'? Admin(employee, index) : (<></>))
+            searchTerms[0] > index ?
+              <div key={employee._id} className={`employee-${page} row-c-sb`} >
+                <Employee employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue}/>
+              </div>
+            : (<></>))
         }
       </div>
     </>

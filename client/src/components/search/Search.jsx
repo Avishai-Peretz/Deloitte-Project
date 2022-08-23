@@ -10,6 +10,7 @@ export const Search = ({ page }) => {
   
   const [searchResult, setSearchResult] = useState([]);
   const [searchTerms, setSearchTerms] = useState([Number(20), String("Name")]);
+  const [getSearchSettings, setGetSearchSettings] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -23,21 +24,37 @@ export const Search = ({ page }) => {
     dispatch(searchEmployees(searchObject));
   }
   const resultsHandler = async () => { getSearchValue ? setSearchResult(await getResults) : setSearchResult([]); };
-
-  useEffect(() => { resultsHandler() }, [getResults, getSearchValue]);
-  useEffect(() => { if(page === "home") dispatch(setSearchValue({ value: "" })) }, []);
-
+  
+  useEffect(() => {
+    dispatch({ type: 'SELECT_KEY', payload: null }); if (page === "home") dispatch(setSearchValue({ value: "" }));
+  }, []);
+  useEffect(() => {
+    dispatch({ type: 'SELECT_KEY', payload: null });
+  }, [getSearchValue]);
+  useEffect(() => {
+    resultsHandler();
+  }, [getResults, getSearchValue]);
+  
   const handleClear = () => {
     dispatch(setSearchValue({ value: "" }))
     dispatch(searchEmployees({}));
   }
+  const handleSettings = () => { getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true) }
+
+  const displayClear = getSearchValue === "" ? "none" : "";
+
   return (
     <div className={`column-fs-c search-${page}`}>
       <div className='search-container column-c-c'>
-        {(page === 'searchResults' || page === 'home')?(<SearchTerms searchTerms={searchTerms} setSearchTerms={setSearchTerms} />):''}
         <input placeholder='Text Area'  value={getSearchValue} onChange={(e) => { searchHandler(e.target.value) }} />
-        <div className={`clear-btn ${page}`} onClick={handleClear}></div>
-        {(page === 'searchResults' || page === 'home') ? (<div className='search-btn-container column-c-c'><Link to='/search-results' ><button className='search-btn'></button></Link></div>) : ''}
+        <div className={`clear-btn ${page} ${displayClear}`} onClick={handleClear}></div>
+        <div className={getSearchSettings ? 'none' : ''}>
+          <SearchTerms  searchTerms={searchTerms} setSearchTerms={setSearchTerms} />
+        </div>
+        <div className='options-container row-c-se'>
+          <div disable className="settings-btn-container"><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
+          {(page === 'searchResults' || page === 'home') ? (<div className='search-btn-container column-c-c'><Link to='/search-results' ><button className='search-btn'></button></Link></div>) : ''}
+        </div>    
         {page === "home" ? (<Employees page='home' searchResult={searchResult} searchTerms={searchTerms} />) : '' }
       </div>
       {page === 'searchResults'?(<Employees page='searchResults' searchResult={searchResult} searchTerms={searchTerms} />):''}
