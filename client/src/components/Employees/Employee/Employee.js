@@ -11,7 +11,7 @@ const Employee = ({employee, index, searchValue}) => {
   const dispatch = useDispatch()
 
   const highlight = (searchValue, { Name }) => {
-    const inner = Name.replace(new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>`);
+    const inner = Name.replace( new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
     return { __html: inner }
   };
  
@@ -26,7 +26,10 @@ const Employee = ({employee, index, searchValue}) => {
     
   const handleAutocompleteHover = (state) => {
     if ( state ) { setSavedValue( searchValue ); employee ? dispatch(autocompleteHover( employee )) : dispatch( autocompleteHover("") ); }
-    else if (savedValue) { dispatch( autocompleteHover( savedValue ) ) }
+    else if (savedValue) {
+      console.log(savedValue)
+      dispatch(autocompleteHover({ Name: savedValue }))
+    }
   }
   
   return (
