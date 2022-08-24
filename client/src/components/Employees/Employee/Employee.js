@@ -31,7 +31,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
         if (page === 'searchResults' && window.confirm('Are you sure you want to go to Admin(testing) page?')) {
           navigate("/admin", { replace: true })
         }
-    }
+      }
     if (employee) {
       if (searchField === 'Name') {
         dispatch(setSearchValue({value:employee.Name, ID: employee._id}));
