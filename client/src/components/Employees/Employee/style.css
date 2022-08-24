@@ -39,5 +39,6 @@
     color: #4c4f53;
 }
 .marker{
-    background-color: white;
+    background-color:#fff;
+    border: 1px solid gray;
 }

@@ -1,6 +1,6 @@
 import * as api from '../api';
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+
 
 export const getEmployees = () => async (dispatch) => {
     try { const { data } = await api.fetchEmployees(); dispatch({ type : 'FETCH_ALL', payload: data });
@@ -31,7 +31,7 @@ export const deleteEmployee = (employee) => async (dispatch) => {
     }
 }
 
-export const searchEmployees =({ searchValue = "", searchTerms = [] }) => async (dispatch) => {
+export const searchEmployees = ({ searchValue = "", searchTerms = [] }) => async (dispatch) => {
     const sortInputFirst = (input, data = []) => {
         let first = []; let others = [];
         for (let i = 0; i < data.length; i++) { if (data[i].Name.toLowerCase().indexOf(input.toLowerCase()) === 0) { first.push(data[i]); }
@@ -74,6 +74,7 @@ export const searchEmployees =({ searchValue = "", searchTerms = [] }) => async 
 
 export const setObjectID = (autocomplete) => async (dispatch) => { dispatch({ type: 'ID', payload: autocomplete }) }
 export const setSearchValue = (searchValue) => async (dispatch) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) }
+export const setSearchField = (terms) => async (dispatch) => {dispatch({ type: 'SEARCH_FIELD', payload: terms }) }
 export const autocompleteClick = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete }) }
 export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload:  autocomplete }) }
  

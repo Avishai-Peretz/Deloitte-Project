@@ -11,6 +11,7 @@
     flex-flow: column !important;  
     -webkit-box-shadow: 0px 0px 18px -4px rgba(255,255,255,0.75); 
     box-shadow: 0px 0px 18px -4px rgba(255,255,255,0.75);
+    animation: scaler 1s ease-out ;
 }
 
 .search-container > input{
@@ -18,6 +19,16 @@
     padding: 0 20px;
     min-height: 40px;
     border-radius: 2.5vh;
+    /* animation: scaler 5s linear ; */
+}
+@keyframes scaler {
+    from{
+    transform: scaleX(0) ;
+    }
+    to{
+    transform: scaleX(1) ;
+    }
+    
 }
 
 .btn:hover{
@@ -57,7 +68,20 @@
     background: url(../../assets/icons/settings.png) center center/cover no-repeat;;
     border-radius: 50%;
     cursor: pointer;
+    animation: rotate 60s linear infinite;
 }
+@keyframes rotate {
+from{
+    transform: rotate(0deg) ;
+    }
+    to{
+        transform: rotate(359deg) ;
+    }
+    
+} 
+
+
+    
 .settings-btn:hover{
     opacity: 0.7;
 }
@@ -105,3 +129,5 @@
             width: 100vw;
         }
     }
+
+   

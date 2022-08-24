@@ -21,14 +21,6 @@ export const searchResult = (searchResult = [], action) => {
     }
 }
 
-// export const searchValue = (searchValue = "", action) => {
-//     switch (action.type)  {        
-//         case 'SEARCH_VALUE':        
-//             return action.payload;             
-//         default: 
-//             return searchValue;            
-//     }
-// }
 export const autocomplete = (autocomplete = { bool: false, value: "", index: -1, objectId: null }, action) => {
     switch (action.type) {   
         case 'SEARCH_VALUE':        
@@ -43,6 +35,14 @@ export const autocomplete = (autocomplete = { bool: false, value: "", index: -1,
             return action.payload; 
         default: 
             return autocomplete;            
+    }
+}
+export const searchField = (searchField = "Name", action) => {
+    switch (action.type) {   
+        case 'SEARCH_FIELD':        
+            return action.payload; 
+        default: 
+            return searchField;            
     }
 }
 

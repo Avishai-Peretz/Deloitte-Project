@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import {searchEmployees,setObjectID,setSearchValue, useKeyNavigation} from '../../../actions/useHooks.js'
+import {searchEmployees, setSearchValue} from '../../../actions/useHooks.js'
+import { employees } from '../../../reducers/reducer.js'
 import './style.css'
 
 
@@ -10,14 +11,24 @@ const Employee = ({ employee, index, page, enterPress }) => {
 
   const selectedIndex = useSelector((state) => state.autocompleteKey);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
+  const getSearchField = useSelector((state) => state.searchField);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const highlight = (getSearchValue, { Name }) => {
-    const inner = Name.replace( new RegExp(getSearchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
-    return { __html: inner };
-  };
+
+
+  
+  
+  
+  
+  const eName = employee.Name;
+  const job = employee.WorkTitle;
+  
+  const highlight = (searchValue, employee) => {     
+      const inner = employee.replace( new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
+      return { __html: inner };
+    }
   
   const handleAutocomplete = async (e) => {
     if (e) {
@@ -44,6 +55,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
       if (page === 'searchResults' && window.confirm('Are you sure you want to go to Admin(testing) page?')) {navigate("/admin", { replace: true })}
   }} 
   useEffect(() => { handleClickOrEnter() }, [enterPress])
+
   
   return (
     <div
@@ -52,8 +64,8 @@ const Employee = ({ employee, index, page, enterPress }) => {
       >
       <img className='employee-img' src={ employee.ImageUrl } />
       <div className='txt-container column-c-se'>
-        <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={ highlight( getSearchValue,employee ) }></h3>
-        <h5 className='work-title' >{ employee.WorkTitle }</h5> 
+        <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={getSearchField === "Name" ? highlight(getSearchValue, employee.Name ) :{ __html: employee.Name }  }></h3>
+        <h5 className='work-title' dangerouslySetInnerHTML={getSearchField === "WorkTitle" ? highlight(getSearchValue, employee.WorkTitle ) :{ __html: employee.WorkTitle }  }></h5> 
       </div>
       {page === 'admin' ? <h6>ID : {employee._id}</h6> : <></>}
     </div>

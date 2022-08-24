@@ -13,7 +13,7 @@ export const Search = ({ page }) => {
   const [getSearchSettings, setGetSearchSettings] = useState(false);
 
   const dispatch = useDispatch();
-
+  
   const getResults = useSelector((state) => state.searchResult);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
 
