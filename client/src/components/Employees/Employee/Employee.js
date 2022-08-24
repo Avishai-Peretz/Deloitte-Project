@@ -47,7 +47,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
     }
     dispatch({ type: 'ENTER', payload: index });
   }} 
-  useEffect(() => { handleClickOrEnter(null, searchField) }, [enterPress])
+  useEffect(() => { handleClickOrEnter(null, getSearchField) }, [enterPress])
 
   
   return (
