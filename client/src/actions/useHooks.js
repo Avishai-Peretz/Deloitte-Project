@@ -60,7 +60,7 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [] }) => async
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
-        } else { 
+        } else if (filteredValue.length > 1) { 
             const { data } = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: [], searchTerms: searchTerms });
             const sortedData = sortInputFirst( filteredValue, data );
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );

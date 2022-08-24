@@ -39,18 +39,16 @@ const Employees = ({ page , searchTerms }) => {
     scroll()
   }, [arrowUpPress, arrowDownPress]);
 
-  return (
-    <>   
+  return ( 
       <div className={`employees-container ${page}`} tabIndex="100">
           { !employees  ? "" : employees.map((employee, index) =>
             searchTerms[0] > index ?
-              <div key={employee._id} className={`employee-${page} row-c-sb`} >
-                <Employee employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue}/>
+              <div key={index} className={`employee-${page} row-c-sb`} >
+                <Employee key={index} employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue}/>
               </div>
-            : (<></>))
+            : "" )
         }
       </div>
-    </>
   )
 }
 export default Employees;

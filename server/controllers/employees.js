@@ -1,11 +1,10 @@
 import EmployeeObject from "../models/employeeObject.js"
 
-export const SearchEmployees = async (req, res) => { 
-    
+export const SearchEmployees = async (req, res) => {
+    const searchValue = req.body.searchValue? req.body.searchValue.replace( /[&\/\\#,+()$~%'":*?<>{}]/g, '_' ) : '';
+    const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];  
+    const searchTerms = req.body.searchTerms ? req.body.searchTerms : []; 
     if (req.body.searchTerms && req.body.searchTerms[1] === 'Name') {
-        const searchValue = req.body.searchValue.replace( /[&\/\\#,+()$~%'":*?<>{}]/g, '_' )
-        const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];  
-        const searchTerms = req.body.searchTerms ? req.body.searchTerms : []; 
         const searchResults = await EmployeeObject.find({ Name: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes } }).limit(searchTerms[0]).exec();
         try { 
             res.status(200).json(searchResults.sort((a, b) => a.Name.localeCompare(b.Name)));
@@ -14,7 +13,7 @@ export const SearchEmployees = async (req, res) => {
             res.status(409).json({message: error.message});
         }
     }
-    if (req.body.searchTerms.length > 0 && req.body.searchTerms[1] === 'WorkTitle') {
+    if (req.body.searchTerms && req.body.searchTerms[1] === 'WorkTitle') {
         try { 
             const searchResults = await EmployeeObject.find({ WorkTitle: { "$regex": searchValue, "$options": "i" }, _id: {$nin: searchExcludes} }).limit(searchTerms[0]).exec();
             res.status(200).json(searchResults.sort((a, b) => a.WorkTitle.localeCompare(b.WorkTitle)));

@@ -55,15 +55,15 @@ export const Search = ({ page }) => {
         <div className={`clear-btn btn ${page} ${displayClear}`} onClick={handleClear}></div>
         <div className={ !getSearchSettings ? 'none' : '' }><SearchTerms  searchTerms={searchTerms} setSearchTerms={setSearchTerms} /></div>
         <div className='options-container row-c-se'>
-          <div disable className="settings-btn-container btn"><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
+          <div className="settings-btn-container btn"><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
           {(page === 'searchResults' || page === 'home')
             ? (<div className='search-btn-container btn column-c-c'><Link to='/search-results' ><button className='search-btn'></button></Link></div>) : ''
           }
         </div>    
         {page === "home" ? (<Employees page='home' searchResult={searchResult} searchTerms={searchTerms} />) : '' }
       </div>
-      {page === 'searchResults'?(<Employees page='searchResults' searchResult={searchResult} searchTerms={searchTerms} />):''}
-      {page === 'admin'?(<Employees page='admin' searchResult={searchResult} searchTerms={[100, "Name" ]} />):''}
+      {page === 'searchResults'?(<Employees  page='searchResults' searchResult={searchResult} searchTerms={searchTerms} />):''}
+      {page === 'admin'?(<Employees  page='admin' searchResult={searchResult} searchTerms={[100, "Name" ]} />):''}
     </div>
   )
 }
