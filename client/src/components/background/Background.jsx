@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import videoBg from '../../assets/images/deloitteBackground.mp4'
 import './style.css'
 

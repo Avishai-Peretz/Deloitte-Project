@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { searchEmployees , setSearchValue } from '../../actions/useHooks.js'
 import Employees from '../Employees/Employees.jsx';
 import { SearchTerms } from './terms/SearchTerms';
