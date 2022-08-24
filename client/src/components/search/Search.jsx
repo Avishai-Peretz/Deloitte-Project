@@ -40,7 +40,6 @@ export const Search = ({ page }) => {
     dispatch(searchEmployees({}));
   }
   const handleSettings = () => {
-    console.log(getSearchSettings)
     getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true)
   }
 

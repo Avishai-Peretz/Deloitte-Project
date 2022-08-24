@@ -4,7 +4,6 @@
 .search-container {
     position: relative;
     z-index: 2;
-    /* max-width: 40vw; */
     background-color: #d9d9d9 ;
     border-radius: 2.5vh 2.5vh 2.5vh 20px ;
     max-height: 50vh;
@@ -19,7 +18,6 @@
     padding: 0 20px;
     min-height: 40px;
     border-radius: 2.5vh;
-    /* animation: scaler 5s linear ; */
 }
 @keyframes scaler {
     from{

@@ -1,21 +1,10 @@
 .background{
     position: absolute;
-    /* overflow: hidden; */
     min-width: 100vw;
     min-height: 100%;
     z-index: -1;
 }
-/* .background > .back {
-    background-color: black;
-    position: absolute;
-    width: 100vw;
-    min-height: 100vh;
-    object-fit: cover;
-    align-self: center;
-    right: 0;
-    top: 100vh;
-    z-index:0;
-} */
+
 .overlay{
     position: absolute;
     top: 0;

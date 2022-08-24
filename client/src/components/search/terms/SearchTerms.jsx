@@ -10,7 +10,6 @@ export const SearchTerms = ({ searchTerms, setSearchTerms}) => {
   const searchByHandler = async (e) => { 
     setSearchTerms([searchTerms[0], e.target.value]);
     dispatch(setSearchValue({ value: '' }));
-    console.log("ttttttttttttttttttttttt", getSearchField)
     dispatch(setSearchField(e.target.value))
     localStorage.clear();
   }
