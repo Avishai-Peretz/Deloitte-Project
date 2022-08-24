@@ -5,8 +5,6 @@ import {searchEmployees, setSearchValue} from '../../../actions/useHooks.js'
 import { employees } from '../../../reducers/reducer.js'
 import './style.css'
 
-
-
 const Employee = ({ employee, index, page, enterPress }) => {
 
   const selectedIndex = useSelector((state) => state.autocompleteKey);
@@ -16,19 +14,13 @@ const Employee = ({ employee, index, page, enterPress }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-
   
-  
-  
-  
-  const eName = employee.Name;
-  const job = employee.WorkTitle;
-  
-  const highlight = (searchValue, employee) => {     
+  const highlight = (searchValue, employee) => {
+    if (searchValue && searchValue.length > 0) {   
       const inner = employee.replace( new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
       return { __html: inner };
-    }
+    }   
+  }
   
   const handleAutocomplete = async (e) => {
     if (e) {
