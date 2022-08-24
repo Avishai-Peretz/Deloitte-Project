@@ -24,8 +24,9 @@ const Employee = ({ employee, index, page, enterPress }) => {
   const handleHover = (e) => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index }) } 
   
   const handleClickOrEnter = async (e, searchField) => {
+    console.log(enterPress, index === selectedIndex)
     if (index === selectedIndex  && (enterPress||e)) {
-      if (e) {
+      if (enterPress) {
         if (page === 'home') { navigate("/search-results", { replace: true }) }
         if (page === 'searchResults' && window.confirm('Are you sure you want to go to Admin(testing) page?')) {
           navigate("/admin", { replace: true })
