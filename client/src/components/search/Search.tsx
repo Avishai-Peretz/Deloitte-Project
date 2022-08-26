@@ -5,22 +5,23 @@ import { searchEmployees , setSearchValue } from '../../actions/useHooks'
 import EmployeesList from '../Employees/EmployeesList';
 import { TermsBox } from './terms/SearchTerms';
 import './style.css'
-import { SearchEmployees, SearchValue } from '../../interfaces/test';
-import { AnyAction } from 'redux';
+import { Props, SearchEmployees, SearchValue } from '../../types';
 import { RootState } from '../../reducers';
 
-export const Search = ({ page }:any) => {
-  
+export const Search = ({ page }:Props) => {
   const [getSearchSettings, setGetSearchSettings] = useState(false);
 
-  const dispatch:AnyAction|any = useDispatch();
+  const dispatch:RootState = useDispatch();
   
-  const getSearchValue = useSelector((state:RootState) => state.autocomplete.value);
-  const { field, resultsNum} = useSelector((state:RootState) => state.searchTerms)
+  const [getSearchValue , { field, resultsNum }] = [
+    useSelector((state: RootState) => state.autocomplete.value),
+    useSelector((state: RootState) => state.searchTerms)
+  ]
+
   const searchTerms:[number,string] = [resultsNum, field];
 
-  const searchAutocompleteHandler = ({ target: { value } }:any) => {
-    const searchValue:SearchValue = { value: value, ID:'' }
+  const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue: SearchValue = { value: value, ID: '' };
     dispatch(setSearchValue(searchValue));
     const searchObject:SearchEmployees = { searchValue: value, searchTerms:searchTerms, click: false };
     dispatch(searchEmployees(searchObject));
@@ -31,11 +32,11 @@ export const Search = ({ page }:any) => {
   }
 
   const handleClear = () => {
-    dispatch(setSearchValue({ value: "", ID:"" }))
+    dispatch(setSearchValue({ value: "", ID: "" }));
     dispatch(searchEmployees({searchValue: "", searchTerms:[20,"Name"], click:false}));
   }
   const handleSettings = () => {
-    getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true)
+    getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true);
   }
   const displayClear = getSearchValue === "" ? "none" : "";
   

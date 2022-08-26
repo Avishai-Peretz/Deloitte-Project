@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchField, setSearchResultsNum, searchEmployees } from '../../../actions/useHooks'
-import { SearchEmployees, Terms } from '../../../interfaces/test';
+import { SearchEmployees, Terms } from '../../../types';
 import { RootState } from '../../../reducers';
 
 export const TermsBox = () => {
 
   const [inputType, setInputType] = useState(20);
 
-  const dispatch:any = useDispatch()
-  const getSearchValue:string = useSelector((state:RootState) => state.autocomplete.value);
-  const { field, resultsNum } = useSelector((state:RootState) => state.searchTerms);
-  const searchTerms:Terms = [resultsNum, field]
+  const dispatch: RootState = useDispatch()
+  
+  const [getSearchValue , { field, resultsNum }] = [
+    useSelector((state: RootState) => state.autocomplete.value),
+    useSelector((state: RootState) => state.searchTerms)
+  ]
+  const searchTerms: Terms = [resultsNum, field];
 
   const searchByHandler = async (e:React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setSearchField(e.target.value))
+    dispatch(setSearchField(e.target.value));
   }
 
   const numOfResultsHandler = async (e:React.FormEvent<HTMLInputElement>) => {
@@ -24,8 +27,8 @@ export const TermsBox = () => {
 
 
   useEffect(() => {
-    const searchObject:SearchEmployees= { searchValue: getSearchValue, searchTerms: searchTerms, click: true };
-    dispatch(searchEmployees(searchObject));
+    if(getSearchValue > 0) {const searchObject:SearchEmployees= { searchValue: getSearchValue, searchTerms: searchTerms, click: true };
+    dispatch(searchEmployees(searchObject));}
   }, [field]);
 
   return (

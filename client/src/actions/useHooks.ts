@@ -1,30 +1,30 @@
 import * as api from '../api';
 import { useEffect, useState } from "react";
 import { getFilterByValue, sortInputFirst } from './utils';
-import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees } from '../interfaces/test';
-import { AnyAction } from 'redux';
+import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees } from '../types';
+import { RootState } from '../reducers';
 
 
-export const getEmployees = () => async (dispatch: any) => {
+export const getEmployees = () => async (dispatch: RootState) => {
     try {
         const { data } = await api.fetchEmployees();
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch ( error: any ) { throw new Error( error ); }
 }
 
-export const createEmployee = ( employee: any) => async ( dispatch:AnyAction|any) => {
+export const createEmployee = ( employee: EmployeeData) => async ( dispatch: RootState) => {
     try {
         const { data } = await api.createEmployee(employee);
         dispatch({ type: 'CREATE', payload: data });
         alert( "Employee created successfully." );
     }
-    catch (error:any) {
+    catch (error: any) {
         alert( "Unable to create employee. NOTE: Name and Work title must contain at least two characters." );
         throw new Error(error);
     }
 }
 
-export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch:any) => {
+export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: RootState) => {
     try {
         const { data } = await api.deleteEmployee(employee);
         dispatch({ type: 'DELETE', payload: data });
@@ -36,7 +36,7 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch:a
     }
 }
 
-export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: any) => {
+export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: RootState) => {
     const filteredValue: string = searchValue ? searchValue.replace( /[&\/\\#,+()$~%'":*?<>{}]/g, '_' ) : "";
     try { 
         if (localStorage.getItem( 'searchResults' )) {
@@ -65,11 +65,9 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
     catch (error:any) { throw new Error(error); }
 }
 
-export const setSearchValue = (searchValue:{ value: string, ID: string }) => async (dispatch:any) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) }
-export const setSearchField = (terms:string) => async (dispatch:any) => {dispatch({ type: 'SEARCH_FIELD', payload: terms }) }
-export const setSearchResultsNum = (resultsNum:number) => async (dispatch:any) => {dispatch({ type: 'RESULTS_NUM', payload: resultsNum }) }
-export const autocompleteClick = (autocomplete:object) => async (dispatch:any) => { dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete }) }
-export const autocompleteHover = (autocomplete:object) => async (dispatch:any) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload:  autocomplete }) }
+export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) };
+export const setSearchField = (terms: string) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_FIELD', payload: terms }) };
+export const setSearchResultsNum = (resultsNum: number) => async (dispatch: RootState) => { dispatch({ type: 'RESULTS_NUM', payload: resultsNum }) };
  
 export const useKeyNavigation = (targetKey:string) => {
     const [keyPressed, setKeyPressed] = useState(false);

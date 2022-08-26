@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployeesSchema } from '../interfaces/test';
+import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployeesSchema } from '../types';
 
 const URI = (() => { if (process.env.NODE_ENV === "production") { return "/employees"; } else { return "http://localhost:3002/employees"; } })()
 

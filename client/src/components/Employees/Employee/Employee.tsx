@@ -2,28 +2,30 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { searchEmployees, setSearchValue } from '../../../actions/useHooks'
-import { SearchEmployees, Terms } from '../../../interfaces/test'
+import { Props, SearchEmployees, Terms } from '../../../types'
 import { RootState } from '../../../reducers'
 import './style.css'
 
-const Employee = ({ employee, index, page, enterPress }:any) => {
+const Employee = ({ employee, index, page, enterPress }:Props) => {
 
-  const selectedIndex = useSelector((state:RootState) => state.autocompleteKey);
-  const getSearchValue = useSelector((state:RootState) => state.autocomplete.value);
-  const { field } = useSelector((state:RootState) => state.searchTerms);
+  const [ selectedIndex, getSearchValue, { field } ] = [
+    useSelector((state: RootState) => state.autocompleteKey),
+    useSelector((state: RootState) => state.autocomplete.value),
+    useSelector((state:RootState) => state.searchTerms)
+  ]
 
   const navigate = useNavigate();
-  const dispatch:any = useDispatch();
+  const dispatch:RootState = useDispatch();
 
 
   const highlight = (searchValue:string, str:string) => {
     if (searchValue && searchValue.length > 0) {
-      const inner = str.replace(new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>`);
+      const inner = str?.replace(new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>`);
       return { __html: inner };
     } else return { __html: str }
   }
 
-  const handleHover = (e:React.MouseEvent<HTMLDivElement>) => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index }) }
+  const handleHover = (e: React.MouseEvent<HTMLDivElement>) => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
 
   const handleClickOrEnter = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string) => {
     if (index === selectedIndex && (enterPress || e)) {
@@ -58,12 +60,12 @@ const Employee = ({ employee, index, page, enterPress }:any) => {
       className={`employee-container row-c-sb employee-${index} selected-${selectedIndex === index ? 'true' : 'false'}`}
       onClick={(e) => handleClickOrEnter(e, field)} onMouseOver={handleHover} onMouseOut={handleHover}
     >
-      <img className='employee-img' src={employee.ImageUrl} alt="img" />
+      <img className='employee-img' src={employee?.ImageUrl} alt="img" />
       <div className='txt-container column-c-se'>
-        <h3 style={{ color: '#894d5c' }} dangerouslySetInnerHTML={field === "Name" ? highlight(getSearchValue, employee.Name) : { __html: employee.Name }}></h3>
-        <h5 className='work-title' dangerouslySetInnerHTML={field === "WorkTitle" ? highlight(getSearchValue, employee.WorkTitle) : { __html: employee.WorkTitle }}></h5>
+        <h3 style={{ color: '#894d5c' }} dangerouslySetInnerHTML={field === "Name" ? highlight(getSearchValue, employee!.Name) : { __html: employee!.Name }}></h3>
+        <h5 className='work-title' dangerouslySetInnerHTML={field === "WorkTitle" ? highlight(getSearchValue, employee!.WorkTitle) : { __html: employee!.WorkTitle }}></h5>
       </div>
-      {page === 'admin' ? <h6>ID : {employee._id}</h6> : <></>}
+      {page === 'admin' ? <h6>ID : {employee?._id}</h6> : <></>}
     </div>
   )
 }

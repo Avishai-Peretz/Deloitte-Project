@@ -6,30 +6,29 @@ import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './style.css'
-import { DeleteEmployeeData, EmployeeData } from '../../interfaces/test';
-import { AnyAction } from 'redux';
+import { DeleteEmployeeData, EmployeeData } from '../../types';
 import { RootState } from '../../reducers';
 
 const Admin = () => {
 
-  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({ImageUrl: "", WorkTitle: "", Name: "", _id: ""})
-  const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: ""} )
+  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
+  const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
 
-  const getCurrentID = useSelector((state:RootState) => state.autocomplete.ID);
-  const dispatch:AnyAction|any  = useDispatch();
+  const getCurrentID = useSelector((state: RootState) => state.autocomplete.ID);
+  const dispatch:RootState  = useDispatch();
 
-  const handleCreateSubmit = (e:any) => {
+  const handleCreateSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCreateEmployeeData({  ImageUrl: "", WorkTitle: "", Name: "" , _id:""})
+    setCreateEmployeeData({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
     dispatch(createEmployee(createEmployeeData));
     localStorage.clear()
   };
   
-  const handleDeleteSubmit = (e:any) => {
+  const handleDeleteSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(deleteEmployee(deleteEmployeeData));
     setDeleteEmployeeData({_id: ""});
     localStorage.clear()
-    e.preventDefault();
   };
 
   useEffect(() => { dispatch( getEmployees() ) },[]);
@@ -41,7 +40,10 @@ const Admin = () => {
         <h3 >Create New Employee</h3>
         <div className='column-c-c'>
           <label>WorkTitle</label>
-          <input name="WorkTitle" placeholder='Work Title' value={createEmployeeData.WorkTitle} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, WorkTitle: e.target.value})} />
+          <input name="WorkTitle"
+            placeholder='Work Title'
+            value={createEmployeeData.WorkTitle}
+            onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, WorkTitle: e.target.value })} />
           <label>Name</label>
           <input name="Name" placeholder='Name' value={createEmployeeData.Name} onChange={(e) => setCreateEmployeeData({ ...createEmployeeData, Name: e.target.value})} />
         </div>
@@ -55,7 +57,7 @@ const Admin = () => {
       <form style={{margin:'20px'}} onSubmit={handleDeleteSubmit}>
         <h3 >Delete Employee</h3>
           <label>ID</label>
-        <input style={{width:'250px'}} name="id"  placeholder='id' value={deleteEmployeeData._id} onChange={(e:any) => setDeleteEmployeeData({ _id: e.target.value})} />
+        <input style={{width:'250px'}} name="id"  placeholder='id' value={deleteEmployeeData._id} onChange={(e:React.ChangeEvent<HTMLInputElement>) => setDeleteEmployeeData({ _id: e.target.value})} />
         <button className={""} >Submit</button>
       </form>
       <h4 style={{textAlign:'center'}}>For autocomplete, Mouse click or click Enter on the employee box. HINT: you can use the arrows to navigate </h4>

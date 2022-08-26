@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useKeyNavigation } from '../../actions/useHooks'
-import { Terms } from '../../interfaces/test'
+import { EmployeeData, Props, Terms } from '../../types'
 import { RootState } from '../../reducers'
 import Employee from './Employee/Employee'
 import './style.css'
 
 export let globalResults = []
 
-const EmployeesList = ({ page }:any) => {
+const EmployeesList = ({ page }:Props) => {
 
   const [employees, setEmployees] = useState([])
 
-  const dispatch:any = useDispatch()
+  const dispatch:RootState = useDispatch()
 
-  const selectedIndex = useSelector((state:RootState) => state.autocompleteKey);
-  const getEmployees = useSelector((state:RootState) => state.employees);
-  const getSearchValue = useSelector((state:RootState) => state.autocomplete.value);
-  const getResults = useSelector((state:RootState) => state.searchResult);
-  const { field, resultsNum } = useSelector((state:RootState) => state.searchTerms)
-  const searchTerms:Terms = [resultsNum, field];
+const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, resultsNum} ] = [
+    useSelector((state: RootState) => state.autocompleteKey),
+    useSelector((state: RootState) => state.employees),
+    useSelector((state: RootState) => state.autocomplete.value),
+    useSelector((state: RootState) => state.searchResult),
+    useSelector((state:RootState) => state.searchTerms),
+  ];
+ 
+  const searchTerms: Terms = [resultsNum, field];
 
   const arrowUpPress = useKeyNavigation('ArrowUp')
   const arrowDownPress = useKeyNavigation('ArrowDown')
@@ -45,10 +48,10 @@ const EmployeesList = ({ page }:any) => {
 
   return (
     <div className={`employees-container ${page}`} tabIndex={100}>
-      {!employees ? "" : employees.map((employee, index) =>
+      {!employees ? "" : employees.map((employee:EmployeeData, index: number) =>
         searchTerms[0] > index ?
           <div key={index} className={`employee-${page} row-c-sb`} >
-            <Employee key={index} employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue} />
+            <Employee key={index} employee={employee} page={page} enterPress={enterPress}  index={index} />
           </div>
           : "")
       }

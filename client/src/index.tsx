@@ -10,7 +10,10 @@ import './assets/display.css'
 import './assets/fonts.css'
 
 
-const store = configureStore({ reducer: reducers, enhancers: [compose(applyMiddleware(thunk))]});
+const store = configureStore({
+    reducer: reducers,
+    enhancers: [compose(applyMiddleware(thunk))]
+});
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 root.render(

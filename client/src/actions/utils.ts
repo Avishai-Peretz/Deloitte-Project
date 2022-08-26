@@ -1,4 +1,6 @@
-import { EmployeeData, Employees } from "../interfaces/test";
+import { useSelector } from "react-redux";
+import { EmployeeData, Employees, Terms } from "../types";
+import { RootState } from "../reducers";
 
 export const sortInputFirst = (input: string, data: Employees, field: string) => {
     let first: Employees = []; let others: Employees = [];
@@ -14,4 +16,3 @@ export const sortInputFirst = (input: string, data: Employees, field: string) =>
 export const getFilterByValue = (data: Employees, term: string, filteredValue: string) => {
     return data.filter((obj: EmployeeData) => obj[term as keyof EmployeeData].toLowerCase().includes(filteredValue.toLowerCase()))
 }
-
