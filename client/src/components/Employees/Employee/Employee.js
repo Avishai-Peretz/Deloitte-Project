@@ -18,7 +18,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
     if (searchValue && searchValue.length > 0) {   
       const inner = employee.replace( new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>` );
       return { __html: inner };
-    }   
+    } else return { __html: employee } 
   }
    
   const handleHover = (e) => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index }) } 
