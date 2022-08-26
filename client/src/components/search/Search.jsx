@@ -43,8 +43,6 @@ export const Search = ({ page }) => {
     getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true)
   }
 
-  useEffect(() => {console.log(getSearchSettings)},[])
-
   const displayClear = getSearchValue === "" ? "none" : "";
 
   return (
