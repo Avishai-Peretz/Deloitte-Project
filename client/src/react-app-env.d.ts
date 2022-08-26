@@ -10,6 +10,13 @@ declare namespace NodeJS{
     }
 }
 
+declare module 'react-file-base64';
+
+declare module '*.mp4' {
+    const src: string;
+    export default src;
+  }
+
 declare module '*.module.css' { 
     const classes: { readonly [key: string]: string }
     export default classes;

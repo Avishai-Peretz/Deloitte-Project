@@ -1,6 +1,8 @@
-import {globalResults} from "../components/Employees/Employees";
+import {globalResults} from "../components/Employees/EmployeesList";
+import { Autocomplete, Employees, SearchTerms } from "../interfaces/test";
 
-export const employees = (employees = [], action) => {
+
+export const employees = (employees:Employees = [], action: any) => {
     switch (action.type)  {
         case 'FETCH_ALL':
             return action.payload;
@@ -12,7 +14,7 @@ export const employees = (employees = [], action) => {
             return employees;            
     }
 }
-export const searchResult = (searchResult = [], action) => {
+export const searchResult = (searchResult:[] = [], action:any) => {
     switch (action.type)  {        
         case 'SEARCH':          
             return action.payload;   
@@ -21,7 +23,7 @@ export const searchResult = (searchResult = [], action) => {
     }
 }
 
-export const autocomplete = (autocomplete = { bool: false, value: "", index: -1, objectId: null }, action) => {
+export const autocomplete = (autocomplete:Autocomplete = { bool: false, value: "", index: -1}, action:any) => {
     switch (action.type) {   
         case 'SEARCH_VALUE':        
             return action.payload;
@@ -30,14 +32,12 @@ export const autocomplete = (autocomplete = { bool: false, value: "", index: -1,
         case 'AUTOCOMPLETE_HOVER':      
             return action.payload;
         case 'INPUT_VALUE':        
-            return action.payload; 
-        case 'ID':
-            return action.payload; 
+            return action.payload;  
         default: 
             return autocomplete;            
     }
 }
-export const searchTerms = (searchTerms = { field: String('Name'), resultsNum: 20 }, action) => {
+export const searchTerms = (searchTerms: SearchTerms = { field: 'Name', resultsNum: 20 }, action:any) => {
     switch (action.type) {   
         case 'SEARCH_FIELD':        
         return { ...searchTerms, field : action.payload }; 
@@ -48,7 +48,7 @@ export const searchTerms = (searchTerms = { field: String('Name'), resultsNum: 2
     }
 }
 
-export const autocompleteKey = (autocompleteKey = null , action) => {
+export const autocompleteKey = (autocompleteKey:number | null = null , action:any) => {
     switch (action.type) {
         case 'ARROW_UP':
             if (autocompleteKey === null) { return 0 }
