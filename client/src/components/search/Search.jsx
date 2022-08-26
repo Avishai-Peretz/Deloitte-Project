@@ -17,10 +17,13 @@ export const Search = ({ page }) => {
   const getResults = useSelector((state) => state.searchResult);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
 
-  const searchHandler =async (value) => {
+  const searchAutocompleteHandler = (value) => {
     dispatch(setSearchValue({ value: value }));
-    const getSearchTerms = searchTerms;
-    const searchObject = { searchValue: value, searchTerms: getSearchTerms };
+    let searchObject = { searchValue: String(value), searchTerms: Array(...searchTerms), click: false };
+    dispatch(searchEmployees(searchObject));
+  }
+  const searchButtonHandler = () => {
+    let searchObject = { searchValue: String(getSearchValue), searchTerms: Array(...searchTerms), click: true };
     dispatch(searchEmployees(searchObject));
   }
   const resultsHandler = async () => { getSearchValue ? setSearchResult(await getResults) : setSearchResult([]); };
@@ -48,13 +51,16 @@ export const Search = ({ page }) => {
   return (
     <div className={`column-fs-c search-${page}`}>
       <div className='search-container column-c-c'>
-        <input placeholder='Text Area'  value={getSearchValue} onChange={(e) => { searchHandler(e.target.value) }} />
+        <input placeholder='Text Area' value={getSearchValue} onChange={(e) => {
+          searchAutocompleteHandler(e.target.value)
+        }} />
         <div className={`clear-btn btn ${page} ${displayClear}`} onClick={handleClear}></div>
         <div className={ !getSearchSettings ? 'none' : '' }><SearchTerms  searchTerms={searchTerms} setSearchTerms={setSearchTerms} /></div>
         <div className='options-container row-c-se'>
-          <div className="settings-btn-container btn"><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
+          <div className="settings-btn-container btn" ><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
           {(page === 'searchResults' || page === 'home')
-            ? (<div className='search-btn-container btn column-c-c'><Link to='/search-results' ><button className='search-btn'></button></Link></div>) : ''
+            ? (<div className='search-btn-container btn column-c-c' ><Link to='/search-results' ><button className='search-btn'
+              onClick={searchButtonHandler}></button></Link></div>) : ''
           }
         </div>    
         {page === "home" ? (<Employees page='home' searchResult={searchResult} searchTerms={searchTerms} />) : '' }
