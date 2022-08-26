@@ -6,7 +6,9 @@ import { AnyAction } from 'redux';
 
 
 export const getEmployees = () => async (dispatch: any) => {
-    try { const { data } = await api.fetchEmployees(); dispatch({ type : 'FETCH_ALL', payload: data });
+    try {
+        const { data } = await api.fetchEmployees();
+        dispatch({ type: 'FETCH_ALL', payload: data });
     } catch ( error: any ) { throw new Error( error ); }
 }
 

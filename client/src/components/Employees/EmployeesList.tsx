@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useKeyNavigation } from '../../actions/useHooks'
-import { Employees, Terms } from '../../interfaces/test'
+import { Terms } from '../../interfaces/test'
 import { RootState } from '../../reducers'
 import Employee from './Employee/Employee'
 import './style.css'
@@ -48,7 +48,7 @@ const EmployeesList = ({ page }:any) => {
       {!employees ? "" : employees.map((employee, index) =>
         searchTerms[0] > index ?
           <div key={index} className={`employee-${page} row-c-sb`} >
-            <EmployeesList key={index} employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue} />
+            <Employee key={index} employee={employee} page={page} enterPress={enterPress} employees={employees} index={index} searchValue={getSearchValue} />
           </div>
           : "")
       }
