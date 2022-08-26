@@ -37,12 +37,14 @@ export const autocomplete = (autocomplete = { bool: false, value: "", index: -1,
             return autocomplete;            
     }
 }
-export const searchField = (searchField = "Name", action) => {
+export const searchTerms = (searchTerms = { field: String('Name'), resultsNum: 20 }, action) => {
     switch (action.type) {   
         case 'SEARCH_FIELD':        
-            return action.payload; 
+        return { ...searchTerms, field : action.payload }; 
+        case 'RESULTS_NUM':
+            return { ...searchTerms, resultsNum: action.payload }; 
         default: 
-            return searchField;            
+            return searchTerms;            
     }
 }
 

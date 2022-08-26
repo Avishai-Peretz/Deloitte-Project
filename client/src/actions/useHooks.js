@@ -39,8 +39,8 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [], click = fa
             const localData = await JSON.parse(localStorage.getItem('searchResults'))       
             let filterFromLocal = []
             if (searchTerms[1] === 'Name') { filterFromLocal = getFilterByValue(localData, 'Name' ,filteredValue) }
-            if (searchTerms[1] === 'WorkTitle') { filterFromLocal = getFilterByValue(localData, localData.WorkTitle, filteredValue) }
-            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal );
+            if (searchTerms[1] === 'WorkTitle') { filterFromLocal = getFilterByValue(localData, 'WorkTitle', filteredValue) }
+            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal, searchTerms[1] );
             const filterFromLocalId = filterFromLocal.map( employee => employee._id );   
             dispatch( { type: 'SEARCH', payload: [...sortedFromLocal] } );             
             if (filteredValue.length > 1 || (click === true && filteredValue.length > 0)) {
@@ -50,10 +50,9 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [], click = fa
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
-        } else if (filteredValue.length > 1 || click === true ) { 
-            console.log(filteredValue)
+        } else if (filteredValue.length > 1 || click === true ) {
             const { data } = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: [], searchTerms: searchTerms });
-            const sortedData = sortInputFirst( filteredValue, data );
+            const sortedData = sortInputFirst( filteredValue, data, searchTerms[1] );
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
                 const stringifyData =JSON.stringify( [ ...sortedData ] );
                 localStorage.setItem( 'searchResults', stringifyData )
@@ -62,10 +61,10 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [], click = fa
     catch (error) { throw new Error(error); }
 }
 
-
 export const setObjectID = (autocomplete) => async (dispatch) => { dispatch({ type: 'ID', payload: autocomplete }) }
 export const setSearchValue = (searchValue) => async (dispatch) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) }
 export const setSearchField = (terms) => async (dispatch) => {dispatch({ type: 'SEARCH_FIELD', payload: terms }) }
+export const setSearchResultsNum = (terms) => async (dispatch) => {dispatch({ type: 'RESULTS_NUM', payload: terms }) }
 export const autocompleteClick = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_CLICK', payload: autocomplete }) }
 export const autocompleteHover = (autocomplete) => async (dispatch) => { dispatch({ type: 'AUTOCOMPLETE_HOVER', payload:  autocomplete }) }
  

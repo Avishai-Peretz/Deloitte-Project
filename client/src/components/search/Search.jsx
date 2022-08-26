@@ -8,16 +8,15 @@ import './style.css'
 
 export const Search = ({ page }) => {
   
-  const [searchResult, setSearchResult] = useState([]);
-  const [searchTerms, setSearchTerms] = useState([20, "Name"]);
   const [getSearchSettings, setGetSearchSettings] = useState(false);
 
   const dispatch = useDispatch();
   
-  const getResults = useSelector((state) => state.searchResult);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
+  const { field, resultsNum} = useSelector((state) => state.searchTerms)
+  const searchTerms = [resultsNum, field];
 
-  const searchAutocompleteHandler = (value) => {
+  const searchAutocompleteHandler = ({ target: { value } }) => {
     dispatch(setSearchValue({ value: value }));
     let searchObject = { searchValue: String(value), searchTerms: Array(...searchTerms), click: false };
     dispatch(searchEmployees(searchObject));
@@ -26,18 +25,7 @@ export const Search = ({ page }) => {
     let searchObject = { searchValue: String(getSearchValue), searchTerms: Array(...searchTerms), click: true };
     dispatch(searchEmployees(searchObject));
   }
-  const resultsHandler = async () => { getSearchValue ? setSearchResult(await getResults) : setSearchResult([]); };
-  
-  useEffect(() => {
-    dispatch({ type: 'SELECT_KEY', payload: null }); if (page === "home") dispatch(setSearchValue({ value: "" }));
-  }, []);
-  useEffect(() => {
-    dispatch({ type: 'SELECT_KEY', payload: null });
-  }, [getSearchValue]);
-  useEffect(() => {
-    resultsHandler();
-  }, [getResults, getSearchValue]);
-  
+
   const handleClear = () => {
     dispatch(setSearchValue({ value: "" }))
     dispatch(searchEmployees({}));
@@ -45,17 +33,22 @@ export const Search = ({ page }) => {
   const handleSettings = () => {
     getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true)
   }
-
   const displayClear = getSearchValue === "" ? "none" : "";
+  
+  useEffect(() => {
+    if (page === "home") dispatch(setSearchValue({ value: "" }));
+  }, []);
+  useEffect(() => {
+    dispatch({ type: 'SELECT_KEY', payload: null });
+  }, [,getSearchValue]);
+
 
   return (
     <div className={`column-fs-c search-${page}`}>
       <div className='search-container column-c-c'>
-        <input placeholder='Text Area' value={getSearchValue} onChange={(e) => {
-          searchAutocompleteHandler(e.target.value)
-        }} />
+        <input placeholder='Text Area' value={getSearchValue} onChange={searchAutocompleteHandler} />
         <div className={`clear-btn btn ${page} ${displayClear}`} onClick={handleClear}></div>
-        <div className={ !getSearchSettings ? 'none' : '' }><SearchTerms  searchTerms={searchTerms} setSearchTerms={setSearchTerms} /></div>
+        <div className={ !getSearchSettings ? 'none' : '' }><SearchTerms /></div>
         <div className='options-container row-c-se'>
           <div className="settings-btn-container btn" ><div className={`settings-btn ${page} `} onClick={handleSettings}></div></div>
           {(page === 'searchResults' || page === 'home')
@@ -63,10 +56,9 @@ export const Search = ({ page }) => {
               onClick={searchButtonHandler}></button></Link></div>) : ''
           }
         </div>    
-        {page === "home" ? (<Employees page='home' searchResult={searchResult} searchTerms={searchTerms} />) : '' }
+        {page === "home" ? (<Employees page='home' />) : '' }
       </div>
-      {page === 'searchResults'?(<Employees  page='searchResults' searchResult={searchResult} searchTerms={searchTerms} />):''}
-      {page === 'admin'?(<Employees  page='admin' searchResult={searchResult} searchTerms={[100, "Name" ]} />):''}
+      {page === 'searchResults'? (<Employees  page='searchResults'/>) : page === 'admin'?(<Employees  page='admin'/>) : ''}
     </div>
   )
 }

@@ -1,24 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchValue, setSearchField} from '../../../actions/useHooks.js'
+import { setSearchValue, setSearchField, setSearchResultsNum, searchEmployees} from '../../../actions/useHooks.js'
 
-export const SearchTerms = ({ searchTerms, setSearchTerms}) => {
-  const dispatch = useDispatch()
+export const SearchTerms = () => {
+ 
   const [inputType, setInputType] = useState(20);
-  const getSearchField = useSelector((state) => state.searchField);
+  
+  const dispatch = useDispatch()
+  const getSearchValue = useSelector((state) => state.autocomplete.value);
+  const { field, resultsNum } = useSelector((state) => state.searchTerms);
+  const searchTerms = [resultsNum, field]
 
   const searchByHandler = async (e) => { 
-    setSearchTerms([searchTerms[0], e.target.value]);
-    dispatch(setSearchValue({ value: '' }));
     dispatch(setSearchField(e.target.value))
-    localStorage.clear();
   }
 
   const numOfResultsHandler = async (e) => { 
     setInputType(e.target.value);
-    setSearchTerms([e.target.value, searchTerms[1]]);
-    return e.target.value;
+    dispatch(setSearchResultsNum(e.target.value));
   }
+
+
+  useEffect(() => {
+    const searchObject = { searchValue: String(getSearchValue), searchTerms: Array(...searchTerms), click: true };
+    dispatch(searchEmployees(searchObject));
+  }, [field]);
     
   return (
       <div className="terms">
@@ -30,7 +36,7 @@ export const SearchTerms = ({ searchTerms, setSearchTerms}) => {
         </div>
         <div className='row-c-c term'> Number of results : 
           <input type="range" min="1" max="50" value={inputType} className='search-options' onChange={numOfResultsHandler} />
-          {searchTerms[0]}
+          {resultsNum}
           </div>
       </div>
   )

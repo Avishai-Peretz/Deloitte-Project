@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import { searchResult, employees, autocomplete, autocompleteKey, searchField } from './reducer';
+import { searchResult, employees, autocomplete, autocompleteKey, searchTerms } from './reducer';
 
-export default combineReducers({ employees, searchResult, autocomplete, autocompleteKey, searchField });
+export default combineReducers({ employees, searchResult, autocomplete, autocompleteKey, searchTerms });

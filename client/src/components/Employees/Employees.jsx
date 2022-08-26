@@ -6,7 +6,7 @@ import './style.css'
 
 export let globalResults = []
 
-const Employees = ({ page , searchTerms }) => {
+const Employees = ({ page }) => {
 
   const [employees, setEmployees] = useState([])
 
@@ -14,9 +14,11 @@ const Employees = ({ page , searchTerms }) => {
 
   const selectedIndex = useSelector((state) => state.autocompleteKey);
   const getEmployees = useSelector((state) => state.employees);
-  const getResults = useSelector((state) => state.searchResult);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
-  
+  const getResults = useSelector((state) => state.searchResult);
+  const { field, resultsNum} = useSelector((state) => state.searchTerms)
+  const searchTerms = [resultsNum, field];
+
   const arrowUpPress = useKeyNavigation('ArrowUp')
   const arrowDownPress = useKeyNavigation('ArrowDown')
   const enterPress = useKeyNavigation('Enter');

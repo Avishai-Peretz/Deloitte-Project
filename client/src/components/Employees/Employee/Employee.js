@@ -8,7 +8,7 @@ const Employee = ({ employee, index, page, enterPress }) => {
 
   const selectedIndex = useSelector((state) => state.autocompleteKey);
   const getSearchValue = useSelector((state) => state.autocomplete.value);
-  const getSearchField = useSelector((state) => state.searchField);
+  const {field} = useSelector((state) => state.searchTerms);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,18 +47,18 @@ const Employee = ({ employee, index, page, enterPress }) => {
     }
     dispatch({ type: 'ENTER', payload: index });
   }} 
-  useEffect(() => { handleClickOrEnter(null, getSearchField) }, [enterPress])
+  useEffect(() => { handleClickOrEnter(null, field) }, [enterPress])
 
   
   return (
     <div
       className={`employee-container row-c-sb employee-${index} selected-${selectedIndex === index ? 'true' : 'false'}`}
-      onClick={(e)=>handleClickOrEnter(e, getSearchField)} onMouseEnter={handleHover} onMouseLeave={handleHover}
+      onClick={(e)=>handleClickOrEnter(e, field)} onMouseEnter={handleHover} onMouseLeave={handleHover}
       >
       <img className='employee-img' src={ employee.ImageUrl } />
       <div className='txt-container column-c-se'>
-        <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={getSearchField === "Name" ? highlight(getSearchValue, employee.Name ) :{ __html: employee.Name }  }></h3>
-        <h5 className='work-title' dangerouslySetInnerHTML={getSearchField === "WorkTitle" ? highlight(getSearchValue, employee.WorkTitle ) :{ __html: employee.WorkTitle }  }></h5> 
+        <h3 style={ { color:'#894d5c' } } dangerouslySetInnerHTML={field === "Name" ? highlight(getSearchValue, employee.Name ) :{ __html: employee.Name }  }></h3>
+        <h5 className='work-title' dangerouslySetInnerHTML={field === "WorkTitle" ? highlight(getSearchValue, employee.WorkTitle ) :{ __html: employee.WorkTitle }  }></h5> 
       </div>
       {page === 'admin' ? <h6>ID : {employee._id}</h6> : <></>}
     </div>
