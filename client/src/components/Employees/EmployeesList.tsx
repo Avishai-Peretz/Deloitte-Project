@@ -47,7 +47,7 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, result
   }, [arrowUpPress, arrowDownPress]);
 
   return (
-    <div className={`employees-container ${page}`} tabIndex={100}>
+    <div className={`employees-container ${page}`} tabIndex={1}>
       {!employees ? "" : employees.map((employee:EmployeeData, index: number) =>
         searchTerms[0] > index ?
           <div key={index} className={`employee-${page} row-c-sb`} >
