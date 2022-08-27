@@ -36,8 +36,8 @@ export const TermsBox = () => {
     <div className="terms">
       <div className='row-c-c term'> Search  By:
         <select className='search-options' onChange={searchByHandler} >
-          <option value='Name'>Name</option>
-          <option value='WorkTitle'>Work Title</option>
+          <option selected={field==="Name" ? true : false} value='Name'>Name</option>
+          <option selected={field==="WorkTitle" ? true : false} value='WorkTitle'>Work Title</option>
         </select>
       </div>
       <div className='row-c-c term'> Number of results :
