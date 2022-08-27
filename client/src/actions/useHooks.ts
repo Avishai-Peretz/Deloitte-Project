@@ -37,7 +37,7 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
 }
 
 export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: RootState) => {
-    const filteredValue: string = searchValue ? searchValue.replace( /[&/\\#,+()$~%'":*?<>{}]/g, '_' ) : "";
+    const filteredValue: string = searchValue ? searchValue.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '') : "";
     try { 
         if (localStorage.getItem( 'searchResults' )) {
             const localData = await JSON.parse( localStorage.getItem('searchResults') || "")       
@@ -65,7 +65,12 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
     catch (error:any) { throw new Error(error); }
 }
 
-export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_VALUE', payload: searchValue }) };
+export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => {
+    const filteredValue = searchValue.value.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '')
+    console.log(filteredValue)
+    const setForDispatch = { value: filteredValue, ID: searchValue.ID }
+    dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
+};
 export const setSearchField = (terms: string) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_FIELD', payload: terms }) };
 export const setSearchResultsNum = (resultsNum: number) => async (dispatch: RootState) => { dispatch({ type: 'RESULTS_NUM', payload: resultsNum }) };
  

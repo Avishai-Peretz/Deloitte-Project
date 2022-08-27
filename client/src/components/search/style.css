@@ -14,7 +14,9 @@
 .search-home{
     animation: scaler 1s ease-out ;
 }
-
+.search-searchResults{
+    margin-bottom: 50px;
+}
 .search-container > input{
     width: 50vw;
     padding: 0 20px;

@@ -28,6 +28,7 @@ const App = () => {
           <Route path='/search-results' element={<SearchResults/>} />  
           <Route path='/admin' element={<Admin/>} />  
         </Routes>
+        <h3 className='bold txt_white txt_align rights'> Deloitte Project | &copy; Avishai Peretz</h3>
       </div>
       <div className='app-container mobile column-fs-c'>  
         <Link to='/' >
@@ -35,6 +36,7 @@ const App = () => {
         </Link>
         <h1> Screen dimensions is not compatible !</h1>
         <div className='rotate-img'></div>
+        <h3 className='bold txt_white txt_align rights'> Deloitte Project | &copy; Avishai Peretz</h3>
       </div>
     </>
   )
