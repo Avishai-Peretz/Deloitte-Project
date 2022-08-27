@@ -19,7 +19,7 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, result
     useSelector((state: RootState) => state.employees),
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchResult),
-    useSelector((state:RootState) => state.searchTerms),
+    useSelector((state: RootState) => state.searchTerms),
   ];
  
   const searchTerms: Terms = [resultsNum, field];
@@ -28,21 +28,21 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, result
   const arrowDownPress = useKeyNavigation('ArrowDown')
   const enterPress = useKeyNavigation('Enter');
 
-  useEffect(() => { if (arrowUpPress) { dispatch({ type: 'ARROW_UP' }) } }, [arrowUpPress]);
-  useEffect(() => { if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' }) } }, [arrowDownPress]);
+  useEffect(():void => { if (arrowUpPress) { dispatch({ type: 'ARROW_UP' }) } }, [arrowUpPress]);
+  useEffect(():void => { if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' }) } }, [arrowDownPress]);
 
-  useEffect(() => {
+  useEffect(():void => {
     globalResults = getResults
     if (page === 'home') { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
     if (page === 'searchResults') { setEmployees(getResults) }
     if (page === 'admin') { if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
   }, [getSearchValue, getResults, getEmployees])
 
-  const scroll = () => {
+  const scroll = ():void => {
     const active = document.querySelector(`.employee-${selectedIndex}`)
     if (active) { active.scrollIntoView({ behavior: "auto", block: "center" }); }
   }
-  useEffect(() => {
+  useEffect(():void => {
     scroll()
   }, [arrowUpPress, arrowDownPress]);
 

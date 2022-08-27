@@ -20,30 +20,30 @@ export const Search = ({ page }:Props) => {
 
   const searchTerms:[number,string] = [resultsNum, field];
 
-  const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>) => {
+  const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>):void => {
     const searchValue: SearchValue = { value: value, ID: '' };
     dispatch(setSearchValue(searchValue));
     const searchObject:SearchEmployees = { searchValue: value, searchTerms:searchTerms, click: false };
     dispatch(searchEmployees(searchObject));
   }
-  const searchButtonHandler = () => {
+  const searchButtonHandler = ():void => {
     const searchObject = { searchValue: String(getSearchValue), searchTerms: searchTerms, click: true };
     dispatch(searchEmployees(searchObject));
   }
 
-  const handleClear = () => {
+  const handleClear = ():void => {
     dispatch(setSearchValue({ value: "", ID: "" }));
     dispatch(searchEmployees({searchValue: "", searchTerms:[20,"Name"], click:false}));
   }
-  const handleSettings = () => {
+  const handleSettings = ():void => {
     getSearchSettings ? setGetSearchSettings(false) : setGetSearchSettings(true);
   }
   const displayClear = getSearchValue === "" ? "none" : "";
   
-  useEffect(() => {
+  useEffect(():void => {
     if (page === "home") dispatch(setSearchValue({ value: "" , ID:""}));
   }, []);
-  useEffect(() => {
+  useEffect(():void => {
     dispatch({ type: 'SELECT_KEY', payload: null });
   }, [,getSearchValue]);
 

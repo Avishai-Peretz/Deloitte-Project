@@ -5,7 +5,10 @@ export const SearchEmployees = async (req, res) => {
     const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];  
     const searchTerms = req.body.searchTerms ? req.body.searchTerms : []; 
     if (req.body.searchTerms && req.body.searchTerms[1] === 'Name') {
-        const searchResults = await EmployeeObject.find({ Name: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes } }).limit(searchTerms[0]).exec();
+        const searchResults = await EmployeeObject.find({
+            Name: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes },
+            fields: {__v:0}
+        }).limit(searchTerms[0]).exec();
         try { 
             res.status(200).json(searchResults.sort((a, b) => a.Name.localeCompare(b.Name)));
         }

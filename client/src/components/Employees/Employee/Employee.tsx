@@ -11,7 +11,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
   const [ selectedIndex, getSearchValue, { field } ] = [
     useSelector((state: RootState) => state.autocompleteKey),
     useSelector((state: RootState) => state.autocomplete.value),
-    useSelector((state:RootState) => state.searchTerms)
+    useSelector((state: RootState) => state.searchTerms)
   ]
 
   const navigate = useNavigate();
@@ -25,9 +25,9 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
     } else return { __html: str }
   }
 
-  const handleHover = (e: React.MouseEvent<HTMLDivElement>) => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
+  const handleHover = (e: React.MouseEvent<HTMLDivElement>):void => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
 
-  const handleClickOrEnter = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string) => {
+  const handleClickOrEnter = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string):Promise<void> => {
     if (index === selectedIndex && (enterPress || e)) {
       if (enterPress) {
         if (page === 'home') { navigate("/search-results", { replace: true }) }
@@ -52,7 +52,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
       dispatch({ type: 'ENTER', payload: index });
     }
   }
-  useEffect(() => { handleClickOrEnter(null, field) }, [enterPress])
+  useEffect(():void => { handleClickOrEnter(null, field) }, [enterPress])
 
 
   return (
