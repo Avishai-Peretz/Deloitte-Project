@@ -67,7 +67,6 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
 
 export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => {
     const filteredValue = searchValue.value.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '')
-    console.log(filteredValue)
     const setForDispatch = { value: filteredValue, ID: searchValue.ID }
     dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
 };
