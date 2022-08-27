@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
@@ -27,7 +28,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
 
   const handleHover = (e: React.MouseEvent<HTMLDivElement>):void => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
 
-  const handleClickOrEnter = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string):Promise<void> => {
+  const handleClickOrEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string):void => {
     if (index === selectedIndex && (enterPress || e)) {
       if (enterPress) {
         if (page === 'home') { navigate("/search-results", { replace: true }) }
@@ -52,6 +53,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
       dispatch({ type: 'ENTER', payload: index });
     }
   }
+  
   useEffect(():void => { handleClickOrEnter(null, field) }, [enterPress])
 
 

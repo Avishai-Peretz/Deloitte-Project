@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchField, setSearchResultsNum, searchEmployees } from '../../../actions/useHooks'

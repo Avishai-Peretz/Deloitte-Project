@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
