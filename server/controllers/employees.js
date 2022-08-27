@@ -53,7 +53,7 @@ export const createEmployee = async (req, res) => {
 }
 export const deleteEmployee = async (req, res) => { 
     try { 
-        const employeeId = req.body.id.replace( /[^ \w]+/g, ' ' );  
+        const employeeId = req.body._id.replace( /[^ \w]+/g, ' ' );  
         await EmployeeObject.deleteOne({ _id: employeeId }); 
         const employeeObject = await EmployeeObject.find();
         res.status(200).json(employeeObject);

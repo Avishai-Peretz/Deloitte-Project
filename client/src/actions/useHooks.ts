@@ -37,7 +37,7 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
 }
 
 export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: RootState) => {
-    const filteredValue: string = searchValue ? searchValue.replace( /[&\/\\#,+()$~%'":*?<>{}]/g, '_' ) : "";
+    const filteredValue: string = searchValue ? searchValue.replace( /[&/\\#,+()$~%'":*?<>{}]/g, '_' ) : "";
     try { 
         if (localStorage.getItem( 'searchResults' )) {
             const localData = await JSON.parse( localStorage.getItem('searchResults') || "")       
