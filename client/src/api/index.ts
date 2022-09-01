@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployeesSchema } from '../types';
+import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployeesSchema, SearchTerms } from '../types';
 
 const URI = (():string => { if (process.env.NODE_ENV === "production") { return "/employees"; } else { return "http://localhost:3002/employees"; } })()
+const termsURI = (():string => { if (process.env.NODE_ENV === "production") { return "/terms"; } else { return "http://localhost:3002/terms"; } })()
 
 export const fetchEmployees = ():Promise<AxiosResponse<Employees, any>> => axios.get<Employees>(URI);
 
@@ -13,3 +14,5 @@ export const deleteEmployee = (employeeId: DeleteEmployeeData):Promise<AxiosResp
 
 export const searchEmployees = (searchObject: SearchEmployeesSchema):Promise<AxiosResponse<Employees, any>> =>
     axios.post<Employees>(URI + '/search', searchObject);
+
+export const getTerms = ():Promise<AxiosResponse<SearchTerms, any>> => axios.get<SearchTerms>(termsURI);

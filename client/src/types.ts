@@ -17,7 +17,8 @@ export interface Autocomplete {
 
 export interface SearchTerms {
     'field': string,
-    'resultsNum': number | null
+    'resultsNum': number | null,
+    'charsToStart'?: number 
 };
 
 export interface Terms {
@@ -39,7 +40,6 @@ export interface SearchValue {
 export interface SearchEmployeesSchema {
     'searchValue': string,
     'searchExcludes': string[],
-    'searchTerms': Terms
 };
 
 export type Props = {

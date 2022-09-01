@@ -1,7 +1,7 @@
 import * as api from '../api';
 import { useEffect, useState } from "react";
 import { getFilterByValue, sortInputFirst } from './utils';
-import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees } from '../types';
+import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms } from '../types';
 import { RootState } from '../reducers';
 
 
@@ -37,25 +37,24 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
 }
 
 export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: RootState) => {
-    const filteredValue: string = searchValue ? searchValue.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '') : "";
+    const filteredValue: string = searchValue ? searchValue : "";
+    const { data : { field = 'Name&WorkTitle', charsToStart = 1} } : {data: SearchTerms} = await api.getTerms();
     try { 
         if (localStorage.getItem( 'searchResults' )) {
             const localData = await JSON.parse( localStorage.getItem('searchResults') || "")       
-            let filterFromLocal:Employees = [] 
-            if (searchTerms[1] === 'Name') { filterFromLocal = getFilterByValue(localData, 'Name' ,filteredValue) }
-            if (searchTerms[1] === 'WorkTitle') { filterFromLocal = getFilterByValue(localData, 'WorkTitle', filteredValue) }
-            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal, searchTerms[1] );
-            const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
+            const filterFromLocal:Employees = getFilterByValue(localData, field ,filteredValue)
+            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal, field );
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
-            if (filteredValue.length > 1 || (click === true && filteredValue.length > 0)) {
-                const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: filterFromLocalId, searchTerms: searchTerms});
+            if (filteredValue.length > charsToStart || (click === true && filteredValue.length > 0)) {
+                const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
+                const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: filterFromLocalId });
                 const resultsData = [ ...sortedFromLocal,...data ]
                 dispatch( { type: 'SEARCH', payload: resultsData} );
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
         } else if (filteredValue.length > 1 || click === true ) {
-            const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: [], searchTerms: searchTerms });
+            const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: []});
             const sortedData = sortInputFirst( filteredValue, data, searchTerms[1] );
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
                 const stringifyData =JSON.stringify( [ ...sortedData ] );
@@ -66,7 +65,7 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
 }
 
 export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => {
-    const filteredValue = searchValue.value.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '')
+    const filteredValue = searchValue.value.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '_')
     const setForDispatch = { value: filteredValue, ID: searchValue.ID }
     dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
 };

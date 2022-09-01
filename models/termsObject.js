@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const searchSchema = mongoose.Schema({
-    searchBy: "Name" | "WorkTitle" | "Name&WorkTitle",
+    field: "Name" | "WorkTitle" | "Name&WorkTitle",
     resultsNum: Number,
     charsToStart: Number
 })

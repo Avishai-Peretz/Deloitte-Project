@@ -3,7 +3,7 @@ import Terms from "../models/termsObject.js";
 export const editTerms = async (req, res) => {
     try {
         const searchTerms = {
-            searchBy: req.body.searchBy ? req.body.searchBy : 'Name',
+            field: req.body.searchBy ? req.body.searchBy : 'Name',
             resultsNum: req.body.resultsNum ? req.body.resultsNum : 20,
             charsToStart: req.body.charsToStart ? req.body.charsToStart : 1
         }
