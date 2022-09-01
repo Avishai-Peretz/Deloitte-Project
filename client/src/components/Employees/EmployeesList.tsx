@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useKeyNavigation } from '../../actions/useHooks'
-import { EmployeeData, Props } from '../../types'
+import { EmployeeData, Keys, Pages, Props } from '../../types'
 import { RootState } from '../../reducers'
 import Employee from './Employee/Employee'
 import './style.css'
@@ -23,18 +23,18 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { resultsNum } 
     useSelector((state: RootState) => state.searchTerms),
   ];
 
-  const arrowUpPress = useKeyNavigation('ArrowUp')
-  const arrowDownPress = useKeyNavigation('ArrowDown')
-  const enterPress = useKeyNavigation('Enter');
+  const arrowUpPress = useKeyNavigation(Keys.navUp)
+  const arrowDownPress = useKeyNavigation(Keys.navDown)
+  const enterPress = useKeyNavigation(Keys.navSelect);
 
   useEffect(():void => { if (arrowUpPress) { dispatch({ type: 'ARROW_UP' }) } }, [arrowUpPress]);
   useEffect(():void => { if (arrowDownPress) { dispatch({ type: 'ARROW_DOWN' }) } }, [arrowDownPress]);
 
   useEffect(():void => {
     globalResults = getResults
-    if (page === 'home') { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
-    if (page === 'searchResults') { setEmployees(getResults) }
-    if (page === 'admin') { if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
+    if (page === Pages.home) { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
+    if (page === Pages.searchResults) { setEmployees(getResults) }
+    if (page === Pages.admin) { if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
   }, [getSearchValue, getResults, getEmployees])
 
   const scroll = ():void => {

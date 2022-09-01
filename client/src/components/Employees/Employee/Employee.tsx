@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { searchEmployees, setSearchValue } from '../../../actions/useHooks'
-import { Props, SearchEmployees } from '../../../types'
+import { DefaultStrings, Pages, Props, SearchEmployees } from '../../../types'
 import { RootState } from '../../../reducers'
 import './style.css'
 
@@ -31,8 +31,8 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
   const handleClickOrEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null):void => {
     if (index === selectedIndex && (enterPress || e)) {
       if (enterPress) {
-        if (page === 'home') { navigate("/search-results", { replace: true }) }
-        if (page === 'searchResults' && window.confirm('Are you sure you want to go to Admin(testing) page?')) {
+        if (page === Pages.home) { navigate("/search-results", { replace: true }) }
+        if (page === Pages.searchResults && window.confirm(DefaultStrings.leaveToAdmin)) {
           navigate("/admin", { replace: true })
         }
       }
@@ -58,7 +58,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
         <h3 style={{ color: '#894d5c' }} dangerouslySetInnerHTML={highlight(getSearchValue, employee!.Name)}></h3>
         <h5 className='work-title' dangerouslySetInnerHTML={highlight(getSearchValue, employee!.WorkTitle)}></h5>
       </div>
-      {page === 'admin' ? <h6>ID : {employee?._id}</h6> : <></>}
+      {page === Pages.admin ? <h6>ID : {employee?._id}</h6> : <></>}
     </div>
   )
 }

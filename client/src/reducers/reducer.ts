@@ -1,5 +1,5 @@
 import {globalResults} from "../components/Employees/EmployeesList";
-import { Autocomplete, Default, Employees, SearchTerms } from "../types";
+import { Autocomplete, DefaultNumbers, DefaultStrings, Employees, SearchTerms } from "../types";
 
 
 export const employees = (employees:Employees = [], action: any) => {
@@ -32,9 +32,9 @@ export const autocomplete = (autocomplete:Autocomplete = { value: "", ID: null},
     }
 }
 export const searchTerms = (searchTerms: SearchTerms = {
-    resultsNum: Default.resultsNum,
-    charsToStart: Default.charsToStart,
-    timer: Default.timer
+    resultsNum: DefaultNumbers.resultsNum,
+    charsToStart: DefaultNumbers.charsToStart,
+    timer: DefaultNumbers.timer
 }, action: any) => {
     switch (action.type) {   
         case 'SEARCH_TERMS':

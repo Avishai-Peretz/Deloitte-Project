@@ -17,7 +17,7 @@ export interface Autocomplete {
 export interface SearchTerms {
     'resultsNum': number,
     'charsToStart': number 
-    'timer' : number,
+    'timer'?: number,
 };
 
 
@@ -38,8 +38,9 @@ export interface SearchEmployeesSchema {
     'searchExcludes': string[],
 };
 
+
 export type Props = {
-    "page"?: 'admin' | 'home' | 'searchResults',
+    "page"?: Pages.admin | Pages.home | Pages.searchResults,
     "employee"?: EmployeeData,
     "index"?: number,
     "enterPress"?: boolean
@@ -47,8 +48,36 @@ export type Props = {
 
 export type Timer = NodeJS.Timeout | number | undefined;
 
-export enum Default {
+export enum DefaultNumbers {
     resultsNum = 20,
     charsToStart = 2,
     timer =  1000,
+}
+
+export enum Pages { 
+    home = 'home',
+    searchResults = 'searchResults',
+    admin = 'admin'
+}
+
+export enum DefaultStrings {
+    localName = 'searchResults',
+    createdMSG = 'Employee created successfully.',
+    unableToCreateMSG = 'Unable to create employee. NOTE: Name and Work title must contain at least two characters.',
+    deletedMSG = 'Employee deleted successfully.',
+    unableToDeletedMSG = 'Unable to delete employee, Try to validate the Id, you can use the autocomplete in order to do so.',
+    leaveToAdmin = 'Are you sure you want to go to Admin(testing) page?'
+}
+
+
+export enum HTMLTitles {
+    homeMain = 'LOOKING FOR AN EMPLOYEE?',
+    homeSecondary = 'Click on the search bar to learn our suggestions',
+    resultsMain = 'Search Results'
+}
+
+export enum Keys {
+    navUp = 'ArrowUp',
+    navDown = 'ArrowDown',
+    navSelect = 'Enter'
 }

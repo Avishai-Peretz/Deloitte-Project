@@ -1,9 +1,8 @@
 import * as api from '../api';
 import { useEffect, useState } from "react";
 import { getFilterByValue, sortInputFirst } from './utils';
-import { Default, DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms, Timer } from '../types';
+import { DefaultNumbers, DefaultStrings, DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms, Timer } from '../types';
 import { RootState } from '../reducers';
-import { useSelector } from 'react-redux';
 
 
 export const getEmployees = () => async (dispatch: RootState) => {
@@ -17,10 +16,10 @@ export const createEmployee = ( employee: EmployeeData) => async ( dispatch: Roo
     try {
         const { data } : {data: EmployeeData} = await api.createEmployee(employee);
         dispatch({ type: 'CREATE', payload: data });
-        alert( "Employee created successfully." );
+        alert( DefaultStrings.createdMSG );
     }
     catch (error: any) {
-        alert( "Unable to create employee. NOTE: Name and Work title must contain at least two characters." );
+        alert( DefaultStrings.unableToCreateMSG );
         throw new Error(error);
     }
 }
@@ -29,20 +28,25 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
     try {
         const { data } : {data: EmployeeData} = await api.deleteEmployee(employee);
         dispatch({ type: 'DELETE', payload: data });
-        alert( "Employee deleted successfully." );
+        alert( DefaultStrings.deletedMSG );
     }
     catch (error:any) {
-        alert( "Unable to delete employee, Try to validate the Id, you can use the autocomplete in order to do so." );
+        alert( DefaultStrings.unableToDeletedMSG );
         throw new Error(error);
     }
 }
 let timer: Timer;
 
-export const searchEmployees = ({ searchValue = "", click = false, charsToStart = Default.charsToStart, time = Default.timer }:SearchEmployees) => async (dispatch: RootState) => {
+export const searchEmployees = ({
+    searchValue = "",
+    click = false,
+    charsToStart = DefaultNumbers.charsToStart,
+    time = DefaultNumbers.timer
+}: SearchEmployees) => async (dispatch: RootState) => {
     const filteredValue: string = searchValue ? searchValue : "";
     try { 
-        if (localStorage.getItem( 'searchResults' )) {
-            const localData = await JSON.parse( localStorage.getItem('searchResults') || "")       
+        if (localStorage.getItem( DefaultStrings.localName )) {
+            const localData = await JSON.parse( localStorage.getItem(DefaultStrings.localName) || "")       
             const filterFromLocal:Employees = getFilterByValue(localData, filteredValue)
             const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
@@ -56,7 +60,7 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
                 const resultsData = [ ...sortedFromLocal,...data ]
                 dispatch( { type: 'SEARCH', payload: resultsData} );
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
-                localStorage.setItem( 'searchResults', stringifyData )
+                localStorage.setItem( DefaultStrings.localName, stringifyData )
             }
         } else if (filteredValue.length >= charsToStart || click === true) {
             if (!click) {
@@ -67,7 +71,7 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
             const sortedData = sortInputFirst( filteredValue, data);
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
                 const stringifyData =JSON.stringify( [ ...sortedData ] );
-                localStorage.setItem( 'searchResults', stringifyData )
+                localStorage.setItem( DefaultStrings.localName, stringifyData )
         }
     }
     catch (error:any) { throw new Error(error); }

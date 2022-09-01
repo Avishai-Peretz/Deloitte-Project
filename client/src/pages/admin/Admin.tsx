@@ -7,17 +7,22 @@ import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './style.css'
-import { Default, DeleteEmployeeData, EmployeeData, SearchTerms } from '../../types';
+import { DefaultNumbers, DefaultStrings, DeleteEmployeeData, EmployeeData, Pages, SearchTerms } from '../../types';
 import { RootState } from '../../reducers';
 import axios from 'axios';
 import { termsURI } from '../../api';
 
 const Admin = () => {
 
-  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
+  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({
+    ImageUrl: "",
+    WorkTitle: "",
+    Name: "",
+    _id: ""
+  });
   const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
   const [searchTerms, setSearchTerms] = useState<SearchTerms>({
-    resultsNum: Default.resultsNum, charsToStart: Default.charsToStart, timer: Default.timer
+    resultsNum: DefaultNumbers.resultsNum, charsToStart: DefaultNumbers.charsToStart, timer: DefaultNumbers.timer
   });
 
   const getCurrentID = useSelector((state: RootState) => state.autocomplete.ID);
@@ -25,7 +30,12 @@ const Admin = () => {
 
   const handleCreateSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCreateEmployeeData({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
+    setCreateEmployeeData({
+      ImageUrl: "",
+      WorkTitle: "",
+      Name: "",
+      _id: ""
+    });
     dispatch(createEmployee(createEmployeeData));
     localStorage.clear()
   };
@@ -41,6 +51,7 @@ const Admin = () => {
     axios.put<SearchTerms>(termsURI,{
       "resultsNum": searchTerms.resultsNum,
       "charsToStart": searchTerms.charsToStart,
+      "timer": searchTerms.timer
     });
   };
 
@@ -92,7 +103,7 @@ const Admin = () => {
         <button className={""} >Submit</button>
       </form>
       <h4 style={{textAlign:'center'}}>For autocomplete, Mouse click or click Enter on the employee box. HINT: you can use the arrows to navigate </h4>
-      <Search page='admin' />
+      <Search page={Pages.admin} />
     </div>
   )
 }

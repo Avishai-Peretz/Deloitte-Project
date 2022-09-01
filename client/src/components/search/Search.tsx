@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { searchEmployees , setSearchValue } from '../../actions/useHooks'
 import EmployeesList from '../Employees/EmployeesList';
 import './style.css'
-import { Props, SearchEmployees, SearchValue } from '../../types';
+import { Pages, Props, SearchEmployees, SearchValue } from '../../types';
 import { RootState } from '../../reducers';
 
 export const Search = ({ page }:Props) => {
@@ -38,7 +38,7 @@ export const Search = ({ page }:Props) => {
   const displayClear = getSearchValue === "" ? "none" : "";
   
   useEffect(():void => {
-    if (page === "home") dispatch(setSearchValue({ value: "", ID: "" }));
+    if (page === Pages.home) dispatch(setSearchValue({ value: "", ID: "" }));
   }, []);
   useEffect(():void => {
     dispatch({ type: 'SELECT_KEY', payload: null });
@@ -51,14 +51,14 @@ export const Search = ({ page }:Props) => {
         <input placeholder='Text Area' value={getSearchValue} onChange={searchAutocompleteHandler} />
         <div className={`clear-btn btn ${page} ${displayClear}`} onClick={handleClear}></div>
         <div className='options-container row-c-se'>
-          {(page === 'searchResults' || page === 'home')
+          {(page === Pages.searchResults || page === Pages.home)
             ? (<div className='search-btn-container btn column-c-c' ><Link to='/search-results' ><button className='search-btn'
               onClick={searchButtonHandler}></button></Link></div>) : ''
           }
         </div>    
-        {page === "home" ? (<EmployeesList page='home' />) : '' }
+        {page === Pages.home ? (<EmployeesList page={Pages.home} />) : '' }
       </div>
-      {page === 'searchResults'? (<EmployeesList  page='searchResults'/>) : page === 'admin'?(<EmployeesList  page='admin'/>) : ''}
+      {page === Pages.searchResults? (<EmployeesList  page={Pages.searchResults}/>) : page === Pages.admin?(<EmployeesList  page={Pages.admin}/>) : ''}
     </div>
   )
 }
