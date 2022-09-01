@@ -9,7 +9,7 @@ import './style.css'
 
 const Employee = ({ employee, index, page, enterPress }:Props) => {
 
-  const [ selectedIndex, getSearchValue, { charsToStart } ] = [
+  const [ selectedIndex, getSearchValue, { charsToStart, timer } ] = [
     useSelector((state: RootState) => state.autocompleteKey),
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchTerms)
@@ -38,7 +38,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
       }
       if (employee) {
           dispatch(setSearchValue({ ID: employee._id }));
-        const searchObject: SearchEmployees = { searchValue: employee.WorkTitle, click: false, charsToStart: charsToStart };
+        const searchObject: SearchEmployees = { searchValue: employee.WorkTitle, click: false, charsToStart: charsToStart, time:timer };
           dispatch(searchEmployees(searchObject));
       }
       dispatch({ type: 'ENTER', payload: index });

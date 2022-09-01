@@ -9,12 +9,11 @@ import './style.css'
 import { Props, SearchEmployees, SearchValue } from '../../types';
 import { RootState } from '../../reducers';
 
-
 export const Search = ({ page }:Props) => {
 
   const dispatch:RootState = useDispatch();
   
-  const [getSearchValue , { resultsNum, charsToStart }] = [
+  const [getSearchValue , { resultsNum, charsToStart, timer }] = [
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchTerms)
   ]
@@ -24,17 +23,17 @@ export const Search = ({ page }:Props) => {
   const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>):void => {
     const searchValue: SearchValue = { value: value, ID: '' };
     dispatch(setSearchValue(searchValue));
-    const searchObject:SearchEmployees = { searchValue: value, click: false, charsToStart: charsToStart };
-    dispatch(searchEmployees(searchObject));
+    const searchObject: SearchEmployees = { searchValue: value, click: false, charsToStart: charsToStart, time:timer }; 
+      dispatch(searchEmployees(searchObject));
   }
   const searchButtonHandler = ():void => {
-    const searchObject = { searchValue: String(getSearchValue), searchTerms: searchTerms, click: true, charsToStart: charsToStart  };
+    const searchObject = { searchValue: String(getSearchValue), searchTerms: searchTerms, click: true, charsToStart: charsToStart, time:timer  };
     dispatch(searchEmployees(searchObject));
   }
 
   const handleClear = ():void => {
     dispatch(setSearchValue({ value: "", ID: "" }));
-    dispatch(searchEmployees({searchValue: "", click:false, charsToStart: charsToStart }));
+    dispatch(searchEmployees({searchValue: "", click:false, charsToStart: charsToStart, time:timer }));
   }
   const displayClear = getSearchValue === "" ? "none" : "";
   

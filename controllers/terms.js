@@ -4,7 +4,8 @@ export const editTerms = async (req, res) => {
     try {
         const searchTerms = {
             resultsNum: req.body.resultsNum ? req.body.resultsNum : 20,
-            charsToStart: req.body.charsToStart || req.body.charsToStart === 0 ? req.body.charsToStart : 2
+            charsToStart: req.body.charsToStart || req.body.charsToStart === 0 ? req.body.charsToStart : 2,
+            timer: req.body.timer ? req.body.timer : 1000,
         }
         await Terms.findOneAndUpdate({}, searchTerms);
         const terms = await Terms.find();
@@ -20,7 +21,8 @@ export const getTerms = async (req, res) => {
         if (!await Terms.findOne()) {
             const terms = {
                 resultsNum: 20,
-                charsToStart: 2
+                charsToStart: 2, 
+                timer: 1000,
             }
             const setTerms = new Terms(terms);
             await setTerms.save();

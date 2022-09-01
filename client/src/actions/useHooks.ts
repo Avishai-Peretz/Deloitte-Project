@@ -1,7 +1,7 @@
 import * as api from '../api';
 import { useEffect, useState } from "react";
 import { getFilterByValue, sortInputFirst } from './utils';
-import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms } from '../types';
+import { Default, DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms, Timer } from '../types';
 import { RootState } from '../reducers';
 import { useSelector } from 'react-redux';
 
@@ -36,8 +36,9 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
         throw new Error(error);
     }
 }
+let timer: Timer;
 
-export const searchEmployees = ({ searchValue = "", click = false, charsToStart = 2 }:SearchEmployees) => async (dispatch: RootState) => {
+export const searchEmployees = ({ searchValue = "", click = false, charsToStart = Default.charsToStart, time = Default.timer }:SearchEmployees) => async (dispatch: RootState) => {
     const filteredValue: string = searchValue ? searchValue : "";
     try { 
         if (localStorage.getItem( 'searchResults' )) {
@@ -45,6 +46,10 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
             const filterFromLocal:Employees = getFilterByValue(localData, filteredValue)
             const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
+            if (!click) {
+                if (timer) clearTimeout(timer);
+                await new Promise((resolve) => { timer = setTimeout(resolve, time); });
+            }
             if (filteredValue.length >= charsToStart || (click === true && filteredValue.length > 0)) {
                 const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
                 const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: filterFromLocalId });
@@ -53,7 +58,11 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
-        } else if (filteredValue.length >= charsToStart || click === true ) {
+        } else if (filteredValue.length >= charsToStart || click === true) {
+            if (!click) {
+                if (timer) clearTimeout(timer);
+                await new Promise((resolve) => { timer = setTimeout(resolve, time); });
+            }
             const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: []});
             const sortedData = sortInputFirst( filteredValue, data);
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
@@ -70,8 +79,7 @@ export const setSearchValue = (searchValue: { value?: string, ID: string }) => a
     dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
 };
 
-export const setSearchResultsNum = (resultsNum: number) => async (dispatch: RootState) => { dispatch({ type: 'RESULTS_NUM', payload: resultsNum }) };
-export const setSearchCharsToStart = (charsToStart: number) => async (dispatch: RootState) => { dispatch({ type: 'CHARTS', payload: charsToStart }) };
+export const setSearchResultsNum = (searchTerms: SearchTerms) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_TERMS', payload: searchTerms }) };
  
 export const useKeyNavigation = (targetKey:string) => {
     const [keyPressed, setKeyPressed] = useState(false);

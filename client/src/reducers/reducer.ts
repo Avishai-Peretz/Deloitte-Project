@@ -31,12 +31,14 @@ export const autocomplete = (autocomplete:Autocomplete = { value: "", ID: null},
             return autocomplete;            
     }
 }
-export const searchTerms = (searchTerms: SearchTerms = { resultsNum: Default.resultsNum, charsToStart: Default.charsToStart }, action:any) => {
+export const searchTerms = (searchTerms: SearchTerms = {
+    resultsNum: Default.resultsNum,
+    charsToStart: Default.charsToStart,
+    timer: Default.timer
+}, action: any) => {
     switch (action.type) {   
-        case 'RESULTS_NUM':
-            return { ...searchTerms, resultsNum: action.payload }; 
-        case 'CHARTS':
-            return { ...searchTerms, charsToStart: action.payload }; 
+        case 'SEARCH_TERMS':
+            return {charsToStart: action.payload.charsToStart, resultsNum: action.payload.resultsNum, timer: action.payload.timer }; 
         default: 
             return searchTerms;            
     }

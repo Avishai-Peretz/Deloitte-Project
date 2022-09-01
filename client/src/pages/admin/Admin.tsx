@@ -7,7 +7,7 @@ import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './style.css'
-import { DeleteEmployeeData, EmployeeData, SearchTerms } from '../../types';
+import { Default, DeleteEmployeeData, EmployeeData, SearchTerms } from '../../types';
 import { RootState } from '../../reducers';
 import axios from 'axios';
 import { termsURI } from '../../api';
@@ -16,7 +16,9 @@ const Admin = () => {
 
   const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
   const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
-  const [searchTerms, setSearchTerms] = useState<SearchTerms>({ resultsNum: 20, charsToStart: 1});
+  const [searchTerms, setSearchTerms] = useState<SearchTerms>({
+    resultsNum: Default.resultsNum, charsToStart: Default.charsToStart, timer: Default.timer
+  });
 
   const getCurrentID = useSelector((state: RootState) => state.autocomplete.ID);
   const dispatch:RootState  = useDispatch();
@@ -77,11 +79,15 @@ const Admin = () => {
         <h3 >Edit Terms</h3>
         <label>Set number of results</label>
         <input type="number" style={{width:'100px'}} name="resultsNum"  value={searchTerms.resultsNum} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setSearchTerms({ resultsNum: +e.target.value, charsToStart: searchTerms.charsToStart })
+          setSearchTerms({ resultsNum: +e.target.value, charsToStart: searchTerms.charsToStart, timer: searchTerms.timer})
         }} />
         <label>Set number of character to start search</label>
         <input type="number" style={{width:'100px'}} name="charsToStart"  value={searchTerms.charsToStart} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setSearchTerms({ charsToStart: +e.target.value, resultsNum: searchTerms.resultsNum })
+          setSearchTerms({ charsToStart: +e.target.value, resultsNum: searchTerms.resultsNum, timer: searchTerms.timer })
+        }} />
+        <label>Set time from type to search (milliseconds)</label>
+        <input type="number" style={{width:'100px'}} name="timer"  value={searchTerms.timer} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchTerms({ timer: +e.target.value, resultsNum: searchTerms.resultsNum, charsToStart: searchTerms.charsToStart })
         }} />
         <button className={""} >Submit</button>
       </form>

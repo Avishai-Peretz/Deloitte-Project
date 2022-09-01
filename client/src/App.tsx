@@ -5,10 +5,10 @@ import Home from './pages/Home/Home';
 import SearchResults from './pages/SearchResults/SearchResults';
 import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
-import { setSearchCharsToStart, setSearchResultsNum } from "./actions/useHooks";
+import { setSearchResultsNum } from "./actions/useHooks";
 import { useDispatch } from "react-redux";
 import { RootState } from "./reducers";
-import { Default, SearchTerms } from "./types";
+import { SearchTerms } from "./types";
 import { getTerms } from "./api";
 import { useEffect } from "react";
 
@@ -16,13 +16,9 @@ const App = () => {
 
   const dispatch: RootState = useDispatch();
   
-  const logoClickHandler = () => {
-    dispatch(setSearchResultsNum(Default.resultsNum));
-  }
   const fetchTerms = async () => {
     const { data }: { data: SearchTerms } = await getTerms();
-    dispatch(setSearchResultsNum(data.resultsNum));
-    dispatch(setSearchCharsToStart(data.charsToStart));
+    dispatch(setSearchResultsNum({resultsNum: data.resultsNum, charsToStart:data.charsToStart , timer: data.timer}));
   }
 
   useEffect( () => {fetchTerms()}, [] );
@@ -30,7 +26,7 @@ const App = () => {
     <>
       <div className='app-container column-fs-c'>  
         <Link to='/' >
-          <img src={ deloitteLogo } alt='Deloitte' className='deloitte-logo' onClick={logoClickHandler} />
+          <img src={ deloitteLogo } alt='Deloitte' className='deloitte-logo' />
         </Link>
         <Routes>
           <Route path='/' element={<Home/>} />  

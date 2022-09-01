@@ -17,6 +17,7 @@ export interface Autocomplete {
 export interface SearchTerms {
     'resultsNum': number,
     'charsToStart': number 
+    'timer' : number,
 };
 
 
@@ -24,6 +25,7 @@ export interface SearchEmployees {
     'charsToStart'?: SearchTerms['charsToStart'],
     'searchValue': Autocomplete['value'],
     'click': boolean
+    'time':number,
 };
 
 export interface SearchValue {
@@ -43,7 +45,10 @@ export type Props = {
     "enterPress"?: boolean
 }
 
+export type Timer = NodeJS.Timeout | number | undefined;
+
 export enum Default {
     resultsNum = 20,
     charsToStart = 2,
+    timer =  1000,
 }
