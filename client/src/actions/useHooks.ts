@@ -45,7 +45,7 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
             const filterFromLocal:Employees = getFilterByValue(localData, filteredValue)
             const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
-            if (filteredValue.length > charsToStart || (click === true && filteredValue.length > 0)) {
+            if (filteredValue.length >= charsToStart || (click === true && filteredValue.length > 0)) {
                 const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
                 const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: filterFromLocalId });
                 const resultsData = [ ...sortedFromLocal,...data ]
@@ -53,7 +53,7 @@ export const searchEmployees = ({ searchValue = "", click = false, charsToStart 
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
-        } else if (filteredValue.length > charsToStart || click === true ) {
+        } else if (filteredValue.length >= charsToStart || click === true ) {
             const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: []});
             const sortedData = sortInputFirst( filteredValue, data);
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
