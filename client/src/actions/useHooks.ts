@@ -37,7 +37,7 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
     }
 }
 
-export const searchEmployees = ({ searchValue = "", click = false, charsToStart = 1 }:SearchEmployees) => async (dispatch: RootState) => {
+export const searchEmployees = ({ searchValue = "", click = false, charsToStart = 2 }:SearchEmployees) => async (dispatch: RootState) => {
     const filteredValue: string = searchValue ? searchValue : "";
     try { 
         if (localStorage.getItem( 'searchResults' )) {

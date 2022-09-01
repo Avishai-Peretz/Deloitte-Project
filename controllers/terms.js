@@ -4,7 +4,7 @@ export const editTerms = async (req, res) => {
     try {
         const searchTerms = {
             resultsNum: req.body.resultsNum ? req.body.resultsNum : 20,
-            charsToStart: req.body.charsToStart || req.body.charsToStart === 0 ? req.body.charsToStart : 1
+            charsToStart: req.body.charsToStart || req.body.charsToStart === 0 ? req.body.charsToStart : 2
         }
         await Terms.findOneAndUpdate({}, searchTerms);
         const terms = await Terms.find();

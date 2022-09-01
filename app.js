@@ -18,7 +18,7 @@ app.use('/employees', postEmployees);
     if ((await Terms.find()).length < 1) {
         const terms = {
             resultsNum: 20,
-            charsToStart: 1
+            charsToStart: 2
         }
         const setTerms = new Terms(terms);
         await setTerms.save();

@@ -31,7 +31,7 @@ export const autocomplete = (autocomplete:Autocomplete = { bool: false, value: "
             return autocomplete;            
     }
 }
-export const searchTerms = (searchTerms: SearchTerms = { resultsNum: 20, charsToStart: 1 }, action:any) => {
+export const searchTerms = (searchTerms: SearchTerms = { resultsNum: 20, charsToStart: 2 }, action:any) => {
     switch (action.type) {   
         case 'RESULTS_NUM':
             return { ...searchTerms, resultsNum: action.payload }; 
