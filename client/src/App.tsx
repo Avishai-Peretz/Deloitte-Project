@@ -5,7 +5,7 @@ import Home from './pages/Home/Home';
 import SearchResults from './pages/SearchResults/SearchResults';
 import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
-import { setSearchResultsNum } from "./actions/useHooks";
+import { setSearchTerms } from "./actions/useHooks";
 import { useDispatch } from "react-redux";
 import { RootState } from "./reducers";
 import { SearchTerms } from "./types";
@@ -18,7 +18,7 @@ const App = () => {
   
   const fetchTerms = async () => {
     const { data }: { data: SearchTerms } = await getTerms();
-    dispatch(setSearchResultsNum({resultsNum: data.resultsNum, charsToStart:data.charsToStart , timer: data.timer}));
+    dispatch(setSearchTerms({resultsNum: data.resultsNum, charsToStart:data.charsToStart , timer: data.timer}));
   }
 
   useEffect( () => {fetchTerms()}, [] );

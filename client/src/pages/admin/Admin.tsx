@@ -76,7 +76,7 @@ const Admin = () => {
         <button className={""} >Submit</button>
       </form>
       <form style={{margin:'20px'}} className='column-c-c' onSubmit={handleTermsSubmit}>
-        <h3 >Edit Terms</h3>
+        <h3 >Edit Search Terms</h3>
         <label>Set number of results</label>
         <input type="number" style={{width:'100px'}} name="resultsNum"  value={searchTerms.resultsNum} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setSearchTerms({ resultsNum: +e.target.value, charsToStart: searchTerms.charsToStart, timer: searchTerms.timer})

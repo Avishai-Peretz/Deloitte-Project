@@ -79,7 +79,7 @@ export const setSearchValue = (searchValue: { value?: string, ID: string }) => a
     dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
 };
 
-export const setSearchResultsNum = (searchTerms: SearchTerms) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_TERMS', payload: searchTerms }) };
+export const setSearchTerms = (searchTerms: SearchTerms) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_TERMS', payload: searchTerms }) };
  
 export const useKeyNavigation = (targetKey:string) => {
     const [keyPressed, setKeyPressed] = useState(false);
