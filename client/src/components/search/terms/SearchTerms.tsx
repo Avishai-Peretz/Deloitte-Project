@@ -28,7 +28,8 @@ export const TermsBox = () => {
 
 
   useEffect(() => {
-    if(getSearchValue > 0) {const searchObject:SearchEmployees= { searchValue: getSearchValue, searchTerms: searchTerms, click: true };
+    if (getSearchValue > 0) {
+    const searchObject: SearchEmployees = { searchValue: getSearchValue, searchTerms: searchTerms, click: true };
     dispatch(searchEmployees(searchObject));}
   }, [field]);
 

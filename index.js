@@ -1,5 +1,5 @@
 import express from 'express';
-import { app } from "./server/app.js";
+import { app } from "./app.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
