@@ -7,13 +7,16 @@ import { Search } from '../../components/search/Search';
 import '../../assets/display.css';
 import '../../assets/fonts.css';
 import './style.css'
-import { DeleteEmployeeData, EmployeeData } from '../../types';
+import { DeleteEmployeeData, EmployeeData, SearchTerms } from '../../types';
 import { RootState } from '../../reducers';
+import axios from 'axios';
+import { termsURI } from '../../api';
 
 const Admin = () => {
 
   const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({ ImageUrl: "", WorkTitle: "", Name: "", _id: "" });
   const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
+  const [searchTerms, setSearchTerms] = useState<SearchTerms>({ resultsNum: 20, charsToStart: 1});
 
   const getCurrentID = useSelector((state: RootState) => state.autocomplete.ID);
   const dispatch:RootState  = useDispatch();
@@ -31,6 +34,15 @@ const Admin = () => {
     setDeleteEmployeeData({_id: ""});
     localStorage.clear()
   };
+  const handleTermsSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios.put<SearchTerms>(termsURI,{
+      "resultsNum": searchTerms.resultsNum,
+      "charsToStart": searchTerms.charsToStart,
+    });
+  };
+
+
 
   useEffect(() => { dispatch( getEmployees() ) },[]);
   useEffect(() => { setDeleteEmployeeData({_id : getCurrentID}) },[getCurrentID]);
@@ -58,7 +70,19 @@ const Admin = () => {
       <form style={{margin:'20px'}} onSubmit={handleDeleteSubmit}>
         <h3 >Delete Employee</h3>
           <label>ID</label>
-        <input style={{width:'250px'}} name="id"  placeholder='id' value={deleteEmployeeData._id} onChange={(e:React.ChangeEvent<HTMLInputElement>) => setDeleteEmployeeData({ _id: e.target.value})} />
+        <input style={{ width: '250px' }} name="id" placeholder='id' value={deleteEmployeeData._id} onChange={(e:React.ChangeEvent<HTMLInputElement>) => setDeleteEmployeeData({ _id: e.target.value})} />
+        <button className={""} >Submit</button>
+      </form>
+      <form style={{margin:'20px'}} className='column-c-c' onSubmit={handleTermsSubmit}>
+        <h3 >Edit Terms</h3>
+        <label>Set number of results</label>
+        <input type="number" style={{width:'100px'}} name="resultsNum"  value={searchTerms.resultsNum} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchTerms({ resultsNum: +e.target.value, charsToStart: searchTerms.charsToStart })
+        }} />
+        <label>Set number of character to start search</label>
+        <input type="number" style={{width:'100px'}} name="charsToStart"  value={searchTerms.charsToStart} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchTerms({ charsToStart: +e.target.value, resultsNum: searchTerms.resultsNum })
+        }} />
         <button className={""} >Submit</button>
       </form>
       <h4 style={{textAlign:'center'}}>For autocomplete, Mouse click or click Enter on the employee box. HINT: you can use the arrows to navigate </h4>

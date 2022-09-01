@@ -1,11 +1,9 @@
-import { useSelector } from "react-redux";
-import { EmployeeData, Employees, Terms } from "../types";
-import { RootState } from "../reducers";
+import { EmployeeData, Employees } from "../types";
 
-export const sortInputFirst = (input: string, data: Employees, field: string) => {
+export const sortInputFirst = (input: string, data: Employees) => {
     let first: Employees = []; let others: Employees = [];
     for (let i: number = 0; i < data.length; i++) {
-        if (data[i][field as keyof EmployeeData].toLowerCase().indexOf(input.toLowerCase()) === 0) { first.push(data[i]); }
+        if (data[i]['WorkTitle' || 'Name'].toLowerCase().indexOf(input.toLowerCase()) === 0) { first.push(data[i]); }
         else { others.push(data[i]); }
     }
     first.sort(); others.sort();
@@ -13,6 +11,7 @@ export const sortInputFirst = (input: string, data: Employees, field: string) =>
     return sorted;
 }
 
-export const getFilterByValue = (data: Employees, term: string, filteredValue: string) => {
-    return data.filter((obj: EmployeeData) => obj[term as keyof EmployeeData].toLowerCase().includes(filteredValue.toLowerCase()))
+export const getFilterByValue = (data: Employees, filteredValue: string) => {
+    return data.filter((obj: EmployeeData) => obj.WorkTitle.toLowerCase().includes(filteredValue.toLowerCase()) || obj.Name.toLowerCase().includes(filteredValue.toLowerCase())
+   )
 }

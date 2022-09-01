@@ -5,18 +5,27 @@ import Home from './pages/Home/Home';
 import SearchResults from './pages/SearchResults/SearchResults';
 import Admin from './pages/admin/Admin';
 import deloitteLogo from './assets/images/Deloitte_logo_white.png'
-import { setSearchField, setSearchResultsNum } from "./actions/useHooks";
+import { setSearchCharsToStart, setSearchResultsNum } from "./actions/useHooks";
 import { useDispatch } from "react-redux";
 import { RootState } from "./reducers";
+import { SearchTerms } from "./types";
+import { getTerms } from "./api";
+import { useEffect } from "react";
 
 const App = () => {
 
-  const dispatch:RootState = useDispatch()
+  const dispatch: RootState = useDispatch();
+  
   const logoClickHandler = () => {
-    dispatch(setSearchField("Name"));
     dispatch(setSearchResultsNum(20));
   }
+  const fetchTerms = async () => {
+    const { data }: { data: SearchTerms } = await getTerms();
+    dispatch(setSearchResultsNum(data.resultsNum));
+    dispatch(setSearchCharsToStart(data.charsToStart));
+  }
 
+  useEffect( () => {fetchTerms()}, [] );
   return (
     <>
       <div className='app-container column-fs-c'>  

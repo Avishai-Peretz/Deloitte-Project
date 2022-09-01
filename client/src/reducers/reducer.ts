@@ -31,12 +31,12 @@ export const autocomplete = (autocomplete:Autocomplete = { bool: false, value: "
             return autocomplete;            
     }
 }
-export const searchTerms = (searchTerms: SearchTerms = { field: 'Name', resultsNum: 20 }, action:any) => {
+export const searchTerms = (searchTerms: SearchTerms = { resultsNum: 20, charsToStart: 1 }, action:any) => {
     switch (action.type) {   
-        case 'SEARCH_FIELD':        
-        return { ...searchTerms, field : action.payload }; 
         case 'RESULTS_NUM':
             return { ...searchTerms, resultsNum: action.payload }; 
+        case 'CHARTS':
+            return { ...searchTerms, charsToStart: action.payload }; 
         default: 
             return searchTerms;            
     }

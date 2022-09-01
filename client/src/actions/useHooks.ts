@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getFilterByValue, sortInputFirst } from './utils';
 import { DeleteEmployeeData, EmployeeData, Employees, SearchEmployees, SearchTerms } from '../types';
 import { RootState } from '../reducers';
+import { useSelector } from 'react-redux';
 
 
 export const getEmployees = () => async (dispatch: RootState) => {
@@ -36,14 +37,13 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
     }
 }
 
-export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], click = false }:SearchEmployees) => async (dispatch: RootState) => {
+export const searchEmployees = ({ searchValue = "", click = false, charsToStart = 1 }:SearchEmployees) => async (dispatch: RootState) => {
     const filteredValue: string = searchValue ? searchValue : "";
-    const { data : { field = 'Name&WorkTitle', charsToStart = 1} } : {data: SearchTerms} = await api.getTerms();
     try { 
         if (localStorage.getItem( 'searchResults' )) {
             const localData = await JSON.parse( localStorage.getItem('searchResults') || "")       
-            const filterFromLocal:Employees = getFilterByValue(localData, field ,filteredValue)
-            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal, field );
+            const filterFromLocal:Employees = getFilterByValue(localData, filteredValue)
+            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
             if (filteredValue.length > charsToStart || (click === true && filteredValue.length > 0)) {
                 const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
@@ -53,9 +53,9 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( 'searchResults', stringifyData )
             }
-        } else if (filteredValue.length > 1 || click === true ) {
+        } else if (filteredValue.length > charsToStart || click === true ) {
             const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: []});
-            const sortedData = sortInputFirst( filteredValue, data, searchTerms[1] );
+            const sortedData = sortInputFirst( filteredValue, data);
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
                 const stringifyData =JSON.stringify( [ ...sortedData ] );
                 localStorage.setItem( 'searchResults', stringifyData )
@@ -64,13 +64,14 @@ export const searchEmployees = ({ searchValue = "", searchTerms = [20,"Name"], c
     catch (error:any) { throw new Error(error); }
 }
 
-export const setSearchValue = (searchValue: { value: string, ID: string }) => async (dispatch: RootState) => {
-    const filteredValue = searchValue.value.replace(/[&/\\#,|+()$~%'"[\]:*?<>;{}^]/g, '_')
+export const setSearchValue = (searchValue: { value?: string, ID: string }) => async (dispatch: RootState) => {
+    const filteredValue = searchValue.value ? searchValue.value : "";
     const setForDispatch = { value: filteredValue, ID: searchValue.ID }
     dispatch({ type: 'SEARCH_VALUE', payload: setForDispatch })
 };
-export const setSearchField = (terms: string) => async (dispatch: RootState) => { dispatch({ type: 'SEARCH_FIELD', payload: terms }) };
+
 export const setSearchResultsNum = (resultsNum: number) => async (dispatch: RootState) => { dispatch({ type: 'RESULTS_NUM', payload: resultsNum }) };
+export const setSearchCharsToStart = (charsToStart: number) => async (dispatch: RootState) => { dispatch({ type: 'CHARTS', payload: charsToStart }) };
  
 export const useKeyNavigation = (targetKey:string) => {
     const [keyPressed, setKeyPressed] = useState(false);

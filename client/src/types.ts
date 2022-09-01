@@ -16,19 +16,15 @@ export interface Autocomplete {
 };
 
 export interface SearchTerms {
-    'field': string,
-    'resultsNum': number | null,
-    'charsToStart'?: number 
+    'resultsNum': number,
+    'charsToStart': number 
 };
 
-export interface Terms {
-    [0]: number,
-    [1]: string
-};
 
 export interface SearchEmployees {
+    'charsToStart'?: number,
     'searchValue': string,
-    'searchTerms'?: Terms,
+    'searchTerms'?: number,
     'click': boolean
 };
 

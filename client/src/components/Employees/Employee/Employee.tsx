@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { searchEmployees, setSearchValue } from '../../../actions/useHooks'
-import { Props, SearchEmployees, Terms } from '../../../types'
+import { Props, SearchEmployees } from '../../../types'
 import { RootState } from '../../../reducers'
 import './style.css'
 
 const Employee = ({ employee, index, page, enterPress }:Props) => {
 
-  const [ selectedIndex, getSearchValue, { field } ] = [
+  const [ selectedIndex, getSearchValue, { field, charsToStart } ] = [
     useSelector((state: RootState) => state.autocompleteKey),
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchTerms)
@@ -37,18 +37,9 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
         }
       }
       if (employee) {
-        if (searchField === 'Name') {
-          dispatch(setSearchValue({ value: employee.Name, ID: employee._id }));
-          const getSearchTerms:Terms = [20, searchField];
-          const searchObject:SearchEmployees = { searchValue: employee.Name, searchTerms: getSearchTerms, click: false };
+          dispatch(setSearchValue({ ID: employee._id }));
+        const searchObject: SearchEmployees = { searchValue: employee.WorkTitle, click: false, charsToStart: charsToStart };
           dispatch(searchEmployees(searchObject));
-        }
-        if (searchField === 'WorkTitle') {
-          dispatch(setSearchValue({ value: employee.WorkTitle, ID: employee._id }));
-          const getSearchTerms:Terms = [20, searchField];
-          const searchObject:SearchEmployees = { searchValue: employee.WorkTitle, searchTerms: getSearchTerms, click: false };
-          dispatch(searchEmployees(searchObject));
-        }
       }
       dispatch({ type: 'ENTER', payload: index });
     }
@@ -64,8 +55,8 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
     >
       <img className='employee-img' src={employee?.ImageUrl} alt="img" />
       <div className='txt-container column-c-se'>
-        <h3 style={{ color: '#894d5c' }} dangerouslySetInnerHTML={field === "Name" ? highlight(getSearchValue, employee!.Name) : { __html: employee!.Name }}></h3>
-        <h5 className='work-title' dangerouslySetInnerHTML={field === "WorkTitle" ? highlight(getSearchValue, employee!.WorkTitle) : { __html: employee!.WorkTitle }}></h5>
+        <h3 style={{ color: '#894d5c' }} dangerouslySetInnerHTML={highlight(getSearchValue, employee!.Name)}></h3>
+        <h5 className='work-title' dangerouslySetInnerHTML={highlight(getSearchValue, employee!.WorkTitle)}></h5>
       </div>
       {page === 'admin' ? <h6>ID : {employee?._id}</h6> : <></>}
     </div>

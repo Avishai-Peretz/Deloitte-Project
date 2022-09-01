@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useKeyNavigation } from '../../actions/useHooks'
-import { EmployeeData, Props, Terms } from '../../types'
+import { EmployeeData, Props } from '../../types'
 import { RootState } from '../../reducers'
 import Employee from './Employee/Employee'
 import './style.css'
@@ -15,15 +15,13 @@ const EmployeesList = ({ page }:Props) => {
 
   const dispatch:RootState = useDispatch()
 
-const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, resultsNum} ] = [
+const [ selectedIndex, getEmployees, getSearchValue ,getResults, { resultsNum } ] = [
     useSelector((state: RootState) => state.autocompleteKey),
     useSelector((state: RootState) => state.employees),
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchResult),
     useSelector((state: RootState) => state.searchTerms),
   ];
- 
-  const searchTerms: Terms = [resultsNum, field];
 
   const arrowUpPress = useKeyNavigation('ArrowUp')
   const arrowDownPress = useKeyNavigation('ArrowDown')
@@ -50,7 +48,7 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { field, result
   return (
     <div className={`employees-container ${page}`} tabIndex={1}>
       {!employees ? "" : employees.map((employee:EmployeeData, index: number) =>
-        searchTerms[0] > index ?
+        resultsNum > index ?
           <div key={index} className={`employee-${page} row-c-sb`} >
             <Employee key={index} employee={employee} page={page} enterPress={enterPress}  index={index} />
           </div>

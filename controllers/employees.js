@@ -1,21 +1,23 @@
 import EmployeeObject from "../models/employeeObject.js"
+import Terms from "../models/termsObject.js";
 
 export const SearchEmployees = async (req, res) => {
-    const searchValue = req.body.searchValue ? req.body.searchValue.replace(/[&\/\\#+()$~%'":*?<>{}]/g, '_') : '';
     const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];
-    const searchTerms = req.body.searchTerms ? req.body.searchTerms : [];
-    if (req.body.searchTerms[1]) {
-        const searchResults = await EmployeeObject.find({
-            [req.body.searchTerms[1]]: { "$regex": searchValue, "$options": "i" }, _id: { $nin: searchExcludes },
-            fields: { __v: 0 }
-        }).limit(searchTerms[0]).exec();
-        try {
-            res.status(200).json(searchResults.sort((a, b) => a[req.body.searchTerms[1]].localeCompare(b.Name)));
-        }
-        catch (error) {
-            res.status(409).json({ message: error.message });
-        }
+    const searchTerms = await Terms.findOne()
+    const searchValue = req.body.searchValue ? req.body.searchValue : '';
+    if (!searchValue.match(/[&\/\\.#+()$~%'":.*?<>{}]/g))
+    try {
+    const searchResults = await EmployeeObject.find({
+        $or: [{'Name': { "$regex": searchValue, "$options": "i" }},{'WorkTitle': { "$regex": searchValue, "$options": "i" }} ],
+        _id: { $nin: searchExcludes },
+        fields: { __v: 0 }
+    }).limit(searchTerms.resultsNum).exec();
+
+        res.status(200).json(searchResults.sort((a, b) => a["Name"].localeCompare(b.Name)));
     }
+    catch (error) {
+        res.status(404).json({ message: error.message });
+    } else res.status(406).json({ message: "Search value is not valid, please use only letters" });
 }
 
 export const getEmployees = async (req, res) => {

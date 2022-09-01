@@ -17,7 +17,6 @@ app.use('/employees', postEmployees);
 (async () => {
     if ((await Terms.find()).length < 1) {
         const terms = {
-            field:  "Name&WorkTitle",
             resultsNum: 20,
             charsToStart: 1
         }
