@@ -10,9 +10,8 @@ export interface Employees extends Array<EmployeeData> { };
 export interface DeleteEmployeeData { "_id": string };
 
 export interface Autocomplete {
-    'bool'?: boolean,
     'value'?: string,
-    'index'?: number | null
+    'ID'?: number | null,
 };
 
 export interface SearchTerms {
@@ -22,9 +21,8 @@ export interface SearchTerms {
 
 
 export interface SearchEmployees {
-    'charsToStart'?: number,
-    'searchValue': string,
-    'searchTerms'?: number,
+    'charsToStart'?: SearchTerms['charsToStart'],
+    'searchValue': Autocomplete['value'],
     'click': boolean
 };
 
@@ -43,4 +41,9 @@ export type Props = {
     "employee"?: EmployeeData,
     "index"?: number,
     "enterPress"?: boolean
+}
+
+export enum Default {
+    resultsNum = 20,
+    charsToStart = 2,
 }

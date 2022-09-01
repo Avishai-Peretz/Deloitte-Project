@@ -1,5 +1,5 @@
 import {globalResults} from "../components/Employees/EmployeesList";
-import { Autocomplete, Employees, SearchTerms } from "../types";
+import { Autocomplete, Default, Employees, SearchTerms } from "../types";
 
 
 export const employees = (employees:Employees = [], action: any) => {
@@ -23,7 +23,7 @@ export const searchResult = (searchResult:Employees = [], action:any) => {
     }
 }
 
-export const autocomplete = (autocomplete:Autocomplete = { bool: false, value: "", index: -1}, action:any) => {
+export const autocomplete = (autocomplete:Autocomplete = { value: "", ID: null}, action:any) => {
     switch (action.type) {   
         case 'SEARCH_VALUE':        
             return action.payload; 
@@ -31,7 +31,7 @@ export const autocomplete = (autocomplete:Autocomplete = { bool: false, value: "
             return autocomplete;            
     }
 }
-export const searchTerms = (searchTerms: SearchTerms = { resultsNum: 20, charsToStart: 2 }, action:any) => {
+export const searchTerms = (searchTerms: SearchTerms = { resultsNum: Default.resultsNum, charsToStart: Default.charsToStart }, action:any) => {
     switch (action.type) {   
         case 'RESULTS_NUM':
             return { ...searchTerms, resultsNum: action.payload }; 

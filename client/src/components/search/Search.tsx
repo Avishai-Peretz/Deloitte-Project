@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { searchEmployees , setSearchValue } from '../../actions/useHooks'
 import EmployeesList from '../Employees/EmployeesList';
 import './style.css'
-import { Props, SearchEmployees, SearchTerms, SearchValue } from '../../types';
+import { Props, SearchEmployees, SearchValue } from '../../types';
 import { RootState } from '../../reducers';
-import { getTerms } from '../../api';
+
 
 export const Search = ({ page }:Props) => {
 
@@ -24,7 +24,7 @@ export const Search = ({ page }:Props) => {
   const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>):void => {
     const searchValue: SearchValue = { value: value, ID: '' };
     dispatch(setSearchValue(searchValue));
-    const searchObject:SearchEmployees = { searchValue: value, searchTerms:searchTerms, click: false, charsToStart: charsToStart };
+    const searchObject:SearchEmployees = { searchValue: value, click: false, charsToStart: charsToStart };
     dispatch(searchEmployees(searchObject));
   }
   const searchButtonHandler = ():void => {
@@ -34,7 +34,7 @@ export const Search = ({ page }:Props) => {
 
   const handleClear = ():void => {
     dispatch(setSearchValue({ value: "", ID: "" }));
-    dispatch(searchEmployees({searchValue: "", searchTerms:20, click:false, charsToStart: charsToStart }));
+    dispatch(searchEmployees({searchValue: "", click:false, charsToStart: charsToStart }));
   }
   const displayClear = getSearchValue === "" ? "none" : "";
   

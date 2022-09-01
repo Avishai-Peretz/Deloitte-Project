@@ -8,7 +8,7 @@ import deloitteLogo from './assets/images/Deloitte_logo_white.png'
 import { setSearchCharsToStart, setSearchResultsNum } from "./actions/useHooks";
 import { useDispatch } from "react-redux";
 import { RootState } from "./reducers";
-import { SearchTerms } from "./types";
+import { Default, SearchTerms } from "./types";
 import { getTerms } from "./api";
 import { useEffect } from "react";
 
@@ -17,7 +17,7 @@ const App = () => {
   const dispatch: RootState = useDispatch();
   
   const logoClickHandler = () => {
-    dispatch(setSearchResultsNum(20));
+    dispatch(setSearchResultsNum(Default.resultsNum));
   }
   const fetchTerms = async () => {
     const { data }: { data: SearchTerms } = await getTerms();

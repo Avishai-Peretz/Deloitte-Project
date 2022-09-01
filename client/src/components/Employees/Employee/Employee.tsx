@@ -9,7 +9,7 @@ import './style.css'
 
 const Employee = ({ employee, index, page, enterPress }:Props) => {
 
-  const [ selectedIndex, getSearchValue, { field, charsToStart } ] = [
+  const [ selectedIndex, getSearchValue, { charsToStart } ] = [
     useSelector((state: RootState) => state.autocompleteKey),
     useSelector((state: RootState) => state.autocomplete.value),
     useSelector((state: RootState) => state.searchTerms)
@@ -28,7 +28,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
 
   const handleHover = (e: React.MouseEvent<HTMLDivElement>):void => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
 
-  const handleClickOrEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null, searchField: string):void => {
+  const handleClickOrEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null):void => {
     if (index === selectedIndex && (enterPress || e)) {
       if (enterPress) {
         if (page === 'home') { navigate("/search-results", { replace: true }) }
@@ -45,13 +45,13 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
     }
   }
   
-  useEffect(():void => { handleClickOrEnter(null, field) }, [enterPress])
+  useEffect(():void => { handleClickOrEnter(null) }, [enterPress])
 
 
   return (
     <div
       className={`employee-container row-c-sb employee-${index} selected-${selectedIndex === index ? 'true' : 'false'}`}
-      onClick={(e) => handleClickOrEnter(e, field)} onMouseOver={handleHover} onMouseOut={handleHover}
+      onClick={handleClickOrEnter} onMouseOver={handleHover} onMouseOut={handleHover}
     >
       <img className='employee-img' src={employee?.ImageUrl} alt="img" />
       <div className='txt-container column-c-se'>
