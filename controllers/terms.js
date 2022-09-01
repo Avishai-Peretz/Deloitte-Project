@@ -17,8 +17,16 @@ export const editTerms = async (req, res) => {
 
 export const getTerms = async (req, res) => {
     try {
-       const terms =await Terms.findOne()
-       return res.status(200).json(terms);
+        if (!await Terms.findOne()) {
+            const terms = {
+                resultsNum: 20,
+                charsToStart: 2
+            }
+            const setTerms = new Terms(terms);
+            await setTerms.save();
+        }
+        const terms = await Terms.findOne()
+        return res.status(200).json(terms);
     }
     catch (error) {
         res.status(409).json({ message: error.message });

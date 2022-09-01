@@ -14,16 +14,6 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(corse());
 app.use('/terms', searchTerms);
 app.use('/employees', postEmployees);
-(async () => {
-    if ((await Terms.find()).length < 1) {
-        const terms = {
-            resultsNum: 20,
-            charsToStart: 2
-        }
-        const setTerms = new Terms(terms);
-        await setTerms.save();
-    }
-})()
 
 
 const CONNECTION_URL = process.env.NODE_ENV_CONNECTION_URL 
