@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { searchEmployees , setSearchValue } from '../../actions/useHooks'
 import EmployeesList from '../Employees/EmployeesList';
 import './style.css'
-import { Pages, Props, SearchEmployees, SearchValue } from '../../types';
+import { DefaultSearchValue, Pages, Props, SearchEmployees, SearchValue } from '../../types';
 import { RootState } from '../../reducers';
 
 export const Search = ({ page }:Props) => {
@@ -20,25 +20,31 @@ export const Search = ({ page }:Props) => {
 
   const searchTerms:number = resultsNum ;
 
-  const searchAutocompleteHandler = ({ target: { value } }:React.ChangeEvent<HTMLInputElement>):void => {
-    const searchValue: SearchValue = { value: value, ID: '' };
+  const searchAutocompleteHandler = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>): void => {
+    const filteredValue:string = value.replace(/[\\[\]]/g, '') 
+    const searchValue: SearchValue = { value: filteredValue, ID: DefaultSearchValue.ID };
     dispatch(setSearchValue(searchValue));
-    const searchObject: SearchEmployees = { searchValue: value, click: false, charsToStart: charsToStart, time:timer }; 
+    const searchObject: SearchEmployees = { searchValue: filteredValue, click: false, charsToStart: charsToStart, time:timer }; 
       dispatch(searchEmployees(searchObject));
   }
   const searchButtonHandler = ():void => {
-    const searchObject = { searchValue: String(getSearchValue), searchTerms: searchTerms, click: true, charsToStart: charsToStart, time:timer  };
+    const searchObject = {
+      searchValue: String(getSearchValue),
+      searchTerms: searchTerms,
+      click: true, charsToStart:
+      charsToStart, time: timer
+    };
     dispatch(searchEmployees(searchObject));
   }
 
   const handleClear = ():void => {
-    dispatch(setSearchValue({ value: "", ID: "" }));
+    dispatch(setSearchValue(DefaultSearchValue));
     dispatch(searchEmployees({searchValue: "", click:false, charsToStart: charsToStart, time:timer }));
   }
   const displayClear = getSearchValue === "" ? "none" : "";
   
   useEffect(():void => {
-    if (page === Pages.home) dispatch(setSearchValue({ value: "", ID: "" }));
+    if (page === Pages.home) dispatch(setSearchValue(DefaultSearchValue));
   }, []);
   useEffect(():void => {
     dispatch({ type: 'SELECT_KEY', payload: null });
@@ -58,7 +64,11 @@ export const Search = ({ page }:Props) => {
         </div>    
         {page === Pages.home ? (<EmployeesList page={Pages.home} />) : '' }
       </div>
-      {page === Pages.searchResults? (<EmployeesList  page={Pages.searchResults}/>) : page === Pages.admin?(<EmployeesList  page={Pages.admin}/>) : ''}
+      {
+        page === Pages.searchResults ?
+        (<EmployeesList page={Pages.searchResults} />) :
+        page === Pages.admin ? (<EmployeesList page={Pages.admin} />) : ''
+      }
     </div>
   )
 }

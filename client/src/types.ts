@@ -4,7 +4,12 @@ export interface EmployeeData {
     "Name": string,
     "_id": string,
 };
-
+export enum DefaultEmployeeData {
+    ImageUrl= "",
+    WorkTitle= "",
+    Name= "",
+    _id= ""
+}
 export interface Employees extends Array<EmployeeData> { };
 
 export interface DeleteEmployeeData { "_id": string };
@@ -28,9 +33,20 @@ export interface SearchEmployees {
     'time':number,
 };
 
+export interface DefaultSearchEmployees { 
+    searchValue: "",
+    click: boolean | false,
+    charsToStart: DefaultNumbers.charsToStart,
+    time: DefaultNumbers.timer,
+};
+
 export interface SearchValue {
     'value': string,
     'ID': string
+};
+export enum DefaultSearchValue {
+    value = "",
+    ID = "",
 };
 
 export interface SearchEmployeesSchema {
@@ -81,3 +97,17 @@ export enum Keys {
     navDown = 'ArrowDown',
     navSelect = 'Enter'
 }
+
+export enum Routes {
+    localhost = 'http://localhost:3002',
+    production = 'production',
+    employees = '/employees',
+    terms = '/terms',
+    delete = '/delete',
+    search = '/search',
+    searchResults = '/search-results',
+    admin = '/admin',
+}
+
+
+  

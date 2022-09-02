@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { searchEmployees, setSearchValue } from '../../../actions/useHooks'
-import { DefaultStrings, Pages, Props, SearchEmployees } from '../../../types'
+import { DefaultStrings, Pages, Props, Routes, SearchEmployees } from '../../../types'
 import { RootState } from '../../../reducers'
 import './style.css'
 
@@ -26,18 +26,18 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
     } else return { __html: str }
   }
 
-  const handleHover = (e: React.MouseEvent<HTMLDivElement>):void => { e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })}
+  const handleHover = (e: React.MouseEvent<HTMLDivElement>): void => {
+    e.preventDefault(); dispatch({ type: 'SELECT_KEY', payload: index })
+  }
 
   const handleClickOrEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>|null):void => {
-    if (index === selectedIndex && (enterPress || e)) {
-      if (enterPress) {
-        if (page === Pages.home) { navigate("/search-results", { replace: true }) }
+    if (index === selectedIndex && (enterPress || e)) { 
+        if (page === Pages.home) { navigate(Routes.searchResults, { replace: true }) }
         if (page === Pages.searchResults && window.confirm(DefaultStrings.leaveToAdmin)) {
-          navigate("/admin", { replace: true })
+          navigate(Routes.admin, { replace: true })
         }
-      }
       if (employee) {
-          dispatch(setSearchValue({ ID: employee._id }));
+          dispatch(setSearchValue({value: employee.Name, ID: employee._id }));
         const searchObject: SearchEmployees = { searchValue: employee.WorkTitle, click: false, charsToStart: charsToStart, time:timer };
           dispatch(searchEmployees(searchObject));
       }

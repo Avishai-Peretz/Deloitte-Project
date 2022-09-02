@@ -4,22 +4,18 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee, deleteEmployee, getEmployees } from '../../actions/useHooks';
 import { Search } from '../../components/search/Search';
-import '../../assets/display.css';
-import '../../assets/fonts.css';
-import './style.css'
-import { DefaultNumbers, DefaultStrings, DeleteEmployeeData, EmployeeData, Pages, SearchTerms } from '../../types';
+import { DefaultNumbers, DefaultEmployeeData, DeleteEmployeeData, EmployeeData, Pages, SearchTerms } from '../../types';
 import { RootState } from '../../reducers';
 import axios from 'axios';
 import { termsURI } from '../../api';
+import '../../assets/display.css';
+import '../../assets/fonts.css';
+import './style.css'
 
 const Admin = () => {
 
-  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>({
-    ImageUrl: "",
-    WorkTitle: "",
-    Name: "",
-    _id: ""
-  });
+  const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>(DefaultEmployeeData);
+  console.log(createEmployeeData);
   const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
   const [searchTerms, setSearchTerms] = useState<SearchTerms>({
     resultsNum: DefaultNumbers.resultsNum, charsToStart: DefaultNumbers.charsToStart, timer: DefaultNumbers.timer
@@ -30,12 +26,7 @@ const Admin = () => {
 
   const handleCreateSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCreateEmployeeData({
-      ImageUrl: "",
-      WorkTitle: "",
-      Name: "",
-      _id: ""
-    });
+    setCreateEmployeeData(DefaultEmployeeData );
     dispatch(createEmployee(createEmployeeData));
     localStorage.clear()
   };
