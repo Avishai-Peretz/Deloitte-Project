@@ -42,33 +42,32 @@ export const searchEmployees = ({
     click = false,
     charsToStart = DefaultNumbers.charsToStart,
     time = DefaultNumbers.timer
-}: SearchEmployees) => async (dispatch: RootState) => {
-    const filteredValue: string = searchValue ? searchValue : "";
+    }: SearchEmployees) => async (dispatch: RootState) => {
     try { 
         if (localStorage.getItem( DefaultStrings.localName )) {
             const localData = await JSON.parse( localStorage.getItem(DefaultStrings.localName) || "")       
-            const filterFromLocal:Employees = getFilterByValue(localData, filteredValue)
-            const sortedFromLocal = sortInputFirst( filteredValue, filterFromLocal);
+            const filterFromLocal:Employees = getFilterByValue(localData, searchValue)
+            const sortedFromLocal = sortInputFirst( searchValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
             if (!click) {
                 if (timer) clearTimeout(timer);
                 await new Promise((resolve) => { timer = setTimeout(resolve, time); });
             }
-            if (filteredValue.length >= charsToStart || (click === true && filteredValue.length > 0)) {
+            if (searchValue.length >= charsToStart || (click === true && searchValue.length > 0)) {
                 const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
-                const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: filterFromLocalId });
+                const { data }: { data:Employees} = await api.searchEmployees({ searchValue: searchValue, searchExcludes: filterFromLocalId });
                 const resultsData = [ ...sortedFromLocal,...data ]
                 dispatch( { type: 'SEARCH', payload: resultsData} );
                 const stringifyData =JSON.stringify( [ ...localData,...data ] );
                 localStorage.setItem( DefaultStrings.localName, stringifyData )
             }
-        } else if (filteredValue.length >= charsToStart || click === true) {
+        } else if (searchValue.length >= charsToStart || click === true) {
             if (!click) {
                 if (timer) clearTimeout(timer);
                 await new Promise((resolve) => { timer = setTimeout(resolve, time); });
             }
-            const { data }: { data:Employees} = await api.searchEmployees({ searchValue: filteredValue, searchExcludes: []});
-            const sortedData = sortInputFirst( filteredValue, data);
+            const { data }: { data:Employees} = await api.searchEmployees({ searchValue: searchValue, searchExcludes: []});
+            const sortedData = sortInputFirst( searchValue, data);
                 dispatch( { type: 'SEARCH', payload: [...sortedData] } );
                 const stringifyData =JSON.stringify( [ ...sortedData ] );
                 localStorage.setItem( DefaultStrings.localName, stringifyData )
