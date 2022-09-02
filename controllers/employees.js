@@ -4,17 +4,18 @@ import Terms from "../models/termsObject.js";
 export const SearchEmployees = async (req, res) => {
     const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];
     const searchTerms = await Terms.findOne()
-    const searchValue = req.body.searchValue ? req.body.searchValue.replace(/[&\/\\#+()$~%'":*?<>{}]/g, '').replace(/[.]/g, '\\.'): '';
-    console.log(searchValue)
+    const filteredSearchValue = req.body.searchValue ? req.body.searchValue.replace(/[&\/\\#+()$~%'":*?<>{}]/g, '').replace(/[.]/g, '\\.'): '';
     try {
-    const searchResults = await EmployeeObject.find({
-        $or: [{'Name': { "$regex": searchValue, "$options": "i" }},{'WorkTitle': { "$regex": searchValue, "$options": "i" }} ],
-        _id: { $nin: searchExcludes },
-        fields: { __v: 0 }
-    }).limit(searchTerms.resultsNum).exec();
-
+        const searchResults = await EmployeeObject.find({
+            $or: [
+                { 'Name': { "$regex": filteredSearchValue, "$options": "i" } },
+                { 'WorkTitle': { "$regex": filteredSearchValue, "$options": "i" } }
+            ],
+            _id: { $nin: searchExcludes },
+            fields: { __v: 0 }
+        }).limit(searchTerms.resultsNum).exec();
         res.status(200).json(searchResults.sort((a, b) => a["Name"].localeCompare(b.Name)));
-    }
+        }
     catch (error) {
         res.status(404).json({ message: error.message });
     }
