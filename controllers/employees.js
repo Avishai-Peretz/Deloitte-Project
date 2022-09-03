@@ -14,7 +14,7 @@ export const SearchEmployees = async (req, res) => {
             _id: { $nin: searchExcludes },
             fields: { __v: 0 }
         }).limit(searchTerms.resultsNum).exec();
-        res.status(200).json(searchResults.sort((a, b) => a["Name"].localeCompare(b.Name)));
+        res.status(200).json(searchResults.sort((a, b) => a.WorkTitle.localeCompare(b.WorkTitle)));
         }
     catch (error) {
         res.status(404).json({ message: error.message });

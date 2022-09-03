@@ -35,6 +35,7 @@ const [ selectedIndex, getEmployees, getSearchValue ,getResults, { resultsNum } 
     if (page === Pages.home) { getSearchValue.length > 0 ? setEmployees(getResults) : setEmployees([]) }
     if (page === Pages.searchResults) { setEmployees(getResults) }
     if (page === Pages.admin) { if (!getSearchValue) { setEmployees(getEmployees); } else setEmployees(getResults); }
+    console.log(employees)
   }, [getSearchValue, getResults, getEmployees])
 
   const scroll = ():void => {

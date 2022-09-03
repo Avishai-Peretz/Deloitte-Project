@@ -21,7 +21,7 @@ const Employee = ({ employee, index, page, enterPress }:Props) => {
 
   const highlight = (searchValue:string, str:string) => {
     if (searchValue && searchValue.length > 0) {
-      const inner = str?.replace(new RegExp(searchValue, 'gi'), (str) => `<span class="marker">${str}</span>`);
+      const inner = str?.replace(new RegExp(searchValue, 'i'), (str) => `<span class="marker">${str}</span>`);
       return { __html: inner };
     } else return { __html: str }
   }

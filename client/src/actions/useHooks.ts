@@ -35,8 +35,8 @@ export const deleteEmployee = (employee:DeleteEmployeeData) => async (dispatch: 
         throw new Error(error);
     }
 }
-let timer: Timer;
 
+let timer: Timer;
 export const searchEmployees = ({
     searchValue = "",
     click = false,
@@ -56,9 +56,9 @@ export const searchEmployees = ({
             if (searchValue.length >= charsToStart || (click === true && searchValue.length > 0)) {
                 const filterFromLocalId = filterFromLocal.map((employee:{_id: string}) => employee._id);
                 const { data }: { data:Employees} = await api.searchEmployees({ searchValue: searchValue, searchExcludes: filterFromLocalId });
-                const resultsData = [ ...sortedFromLocal,...data ]
-                dispatch( { type: 'SEARCH', payload: resultsData} );
-                const stringifyData =JSON.stringify( [ ...localData,...data ] );
+                const sortedResultsData = sortInputFirst( searchValue,[ ...sortedFromLocal,...data ]);
+                dispatch( { type: 'SEARCH', payload: sortedResultsData} );
+                const stringifyData =JSON.stringify( [ ...sortedResultsData ] );
                 localStorage.setItem( DefaultStrings.localName, stringifyData )
             }
         } else if (searchValue.length >= charsToStart || click === true) {

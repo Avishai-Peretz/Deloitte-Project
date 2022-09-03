@@ -1,13 +1,32 @@
 import { EmployeeData, Employees } from "../types";
 
 export const sortInputFirst = (input: string, data: Employees) => {
-    let first: Employees = []; let others: Employees = [];
+    let sortPreparation = []
     for (let i: number = 0; i < data.length; i++) {
-        if (data[i]['WorkTitle' || 'Name'].toLowerCase().indexOf(input.toLowerCase()) === 0) { first.push(data[i]); }
-        else { others.push(data[i]); }
+        const indexOfInputByName: number = data[i]['Name'].toLowerCase().indexOf(input.toLowerCase())
+        const indexOfInputByWorkTitle: number = data[i]['WorkTitle'].toLowerCase().indexOf(input.toLowerCase())
+        const indexedEmployee = { ...data[i], indexOfInputByName: indexOfInputByName, indexOfInputByWorkTitle:indexOfInputByWorkTitle  }
+        sortPreparation.push(indexedEmployee)
     }
-    first.sort(); others.sort();
-    const sorted: Employees = first.concat(others)
+    const sortByNameAndWorkTitle = sortPreparation.filter(employee => employee.indexOfInputByName >= 0 && employee.indexOfInputByWorkTitle >= 0 )
+    const sortByName = sortPreparation.filter(employee => employee.indexOfInputByName >= 0 && employee.indexOfInputByWorkTitle < 0 )
+    const sortByWorkTitle = sortPreparation.filter(employee => employee.indexOfInputByName < 0 && employee.indexOfInputByWorkTitle >= 0 )
+    sortByNameAndWorkTitle.sort((first: EmployeeData, sec:EmployeeData) => {
+        const firstInputIndex : number = first.indexOfInputByName! + first.indexOfInputByWorkTitle!
+        const secInputIndex : number = sec.indexOfInputByName! + sec.indexOfInputByWorkTitle!
+        return firstInputIndex - secInputIndex
+    })
+    sortByName.sort((first: EmployeeData, sec:EmployeeData) => {
+        const firstInputIndex : number = first.indexOfInputByName!
+        const secInputIndex : number = sec.indexOfInputByName!
+        return firstInputIndex - secInputIndex
+    })
+    sortByWorkTitle.sort((first: EmployeeData, sec:EmployeeData) => {
+        const firstInputIndex : number =first.indexOfInputByWorkTitle!
+        const secInputIndex : number =sec.indexOfInputByWorkTitle!
+        return firstInputIndex - secInputIndex
+    })
+    const sorted = [...sortByWorkTitle, ...sortByName, ...sortByNameAndWorkTitle]
     return sorted;
 }
 

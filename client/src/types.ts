@@ -3,6 +3,8 @@ export interface EmployeeData {
     "WorkTitle": string,
     "Name": string,
     "_id": string,
+    "indexOfInputByName"?: number,
+    "indexOfInputByWorkTitle"?: number,
 };
 export enum DefaultEmployeeData {
     ImageUrl= "",
@@ -67,7 +69,7 @@ export type Timer = NodeJS.Timeout | number | undefined;
 export enum DefaultNumbers {
     resultsNum = 20,
     charsToStart = 2,
-    timer =  1000,
+    timer =  500,
 }
 
 export enum Pages { 
