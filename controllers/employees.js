@@ -1,7 +1,5 @@
-import  { Request, Response }  from 'express';
 import EmployeeObject from "../models/employeeObject.js"
 import Terms from "../models/termsObject.js";
-import { SearchEmployeesSchema, SearchTerms } from '../types.js';
 
 export const SearchEmployees = async (req, res) => {
     const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];

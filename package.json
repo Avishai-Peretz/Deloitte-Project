@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "client": "npm start --prefix client",
-    "server": "nodemon -I --exec node --experimental-specifier-resolution=node  --loader ts-node/esm index.ts",
+    "server": "nodemon index.ts",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "copy": "cp -r client/build server",
     "full-build": "npm i && cd ./client && npm i && cd ../ && concurrently \"npm run server\" \"npm run client\"",

@@ -1,4 +1,3 @@
-import  { Request, Response }  from 'express';
 import Terms from "../models/termsObject.js";
 
 export const editTerms = async (req, res) => {
