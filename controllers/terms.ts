@@ -1,6 +1,7 @@
+import  { Request, Response }  from 'express';
 import Terms from "../models/termsObject.js";
 
-export const editTerms = async (req, res) => {
+export const editTerms = async (req: Request, res: Response) => {
     try {
         const searchTerms = {
             resultsNum: req.body.resultsNum ? req.body.resultsNum : 20,
@@ -11,12 +12,12 @@ export const editTerms = async (req, res) => {
         const terms = await Terms.find();
         res.status(200).json(terms);
     }
-    catch (error) {
+    catch (error:any) {
         res.status(409).json({ message: error.message });
     }
 }
 
-export const getTerms = async (req, res) => {
+export const getTerms = async (req: Request, res: Response) => {
     try {
         if (!await Terms.findOne()) {
             const terms = {
@@ -30,7 +31,7 @@ export const getTerms = async (req, res) => {
         const terms = await Terms.findOne()
         return res.status(200).json(terms);
     }
-    catch (error) {
+    catch (error:any) {
         res.status(409).json({ message: error.message });
     }
 }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const searchSchema = mongoose.Schema({
+const searchSchema = new mongoose.Schema({
     resultsNum: Number,
     charsToStart: Number,
     timer: Number,

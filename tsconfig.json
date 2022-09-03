@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "sourceMap": true,
+    "allowJs": true,
+    "moduleResolution":"Node",                                 /* Specify an output folder for all emitted files. */
+    "esModuleInterop": true,                        /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
+    "forceConsistentCasingInFileNames": true, 
+    "strict": true,                   /* Skip type checking .d.ts files that are included with TypeScript. */
+    "skipLibCheck": true ,
+  },
+  "exclude": ["./client", "node_modules"]
+}
