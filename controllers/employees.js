@@ -3,10 +3,10 @@ import EmployeeObject from "../models/employeeObject.js"
 import Terms from "../models/termsObject.js";
 import { SearchEmployeesSchema, SearchTerms } from '../types.js';
 
-export const SearchEmployees = async (req: Request, res: Response) => {
-    const searchExcludes : SearchEmployeesSchema["SearchExcludes"] = req.body.searchExcludes ? req.body.searchExcludes : [];
-    const searchTerms: SearchTerms|null = await Terms.findOne()
-    const filteredSearchValue : SearchEmployeesSchema["SearchValue"] = req!.body.searchValue! ? req.body.searchValue.replace(/[&\/\\#+()$~%'":*?<>{}]/g, '').replace(/[.]/g, '\\.'): '';
+export const SearchEmployees = async (req, res) => {
+    const searchExcludes = req.body.searchExcludes ? req.body.searchExcludes : [];
+    const searchTerms = await Terms.findOne()
+    const filteredSearchValue = req.body.searchValue ? req.body.searchValue.replace(/[&\/\\#+()$~%'":*?<>{}]/g, '').replace(/[.]/g, '\\.'): '';
     try {
         const searchResults = await EmployeeObject.find({
             $or: [
@@ -15,24 +15,24 @@ export const SearchEmployees = async (req: Request, res: Response) => {
             ],
             _id: { $nin: searchExcludes },
             fields: { __v: 0 }
-        }).limit(searchTerms!.resultsNum!).exec();
-        res.status(200).json(searchResults.sort((a, b) => a["Name"]!.localeCompare(b.Name!)));
+        }).limit(searchTerms.resultsNum).exec();
+        res.status(200).json(searchResults.sort((a, b) => a["Name"].localeCompare(b.Name)));
         }
-    catch (error:any) {
+    catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
-export const getEmployees = async (req: Request, res: Response) => {
+export const getEmployees = async (req, res) => {
     try {
         const employeeObject = await EmployeeObject.find();
         return res.status(200).json(employeeObject);
     }
-    catch (error:any) {
+    catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
-export const createEmployee = async (req: Request, res: Response) => {
+export const createEmployee = async (req, res) => {
     if (req.body.Name.length < 1) { return res.status(409).json({ message: "invalid Name" }) }
     try {
         const Name = req.body.Name.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, ' ')
@@ -43,18 +43,18 @@ export const createEmployee = async (req: Request, res: Response) => {
         await newEmployee.save();
         res.status(201).json(newEmployee);
     }
-    catch (error:any) {
+    catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
-export const deleteEmployee = async (req: Request, res: Response) => {
+export const deleteEmployee = async (req, res) => {
     try {
         const employeeId = req.body._id.replace(/[^ \w]+/g, ' ');
         await EmployeeObject.deleteOne({ _id: employeeId });
         const employeeObject = await EmployeeObject.find();
         res.status(200).json(employeeObject);
     }
-    catch (error:any) {
+    catch (error) {
         res.status(409).json({ message: error.message });
     }
 }

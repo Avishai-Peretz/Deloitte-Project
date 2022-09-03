@@ -10,7 +10,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const PORT: number = +process.env.PORT! || 3002;
+const PORT = +process.env.PORT || 3002;
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.get("*", (req, res) => {

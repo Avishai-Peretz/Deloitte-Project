@@ -14,6 +14,6 @@ app.use('/terms', searchTerms);
 app.use('/employees', employees);
 
 
-const CONNECTION_URL : string = process.env.NODE_ENV_CONNECTION_URL! 
+const CONNECTION_URL = process.env.NODE_ENV_CONNECTION_URL 
 mongoose.connect(CONNECTION_URL)
 
