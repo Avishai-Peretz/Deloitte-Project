@@ -43,9 +43,9 @@ export const searchEmployees = ({
     charsToStart = DefaultNumbers.charsToStart,
     time = DefaultNumbers.timer
     }: SearchEmployees) => async (dispatch: RootState) => {
+    const localData = await JSON.parse( localStorage.getItem(DefaultStrings.localName) || "")       
     try { 
-        if (localStorage.getItem( DefaultStrings.localName )) {
-            const localData = await JSON.parse( localStorage.getItem(DefaultStrings.localName) || "")       
+        if (localData.searchValue) {
             const filterFromLocal:Employees = getFilterByValue(localData, searchValue)
             const sortedFromLocal = sortInputFirst( searchValue, filterFromLocal);
             dispatch(  { type: 'SEARCH', payload: [...sortedFromLocal] } );             
