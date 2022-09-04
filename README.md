@@ -1,5 +1,5 @@
 # Deloitte-Project - Avishai Peretz
-
+# Summary version
 For install & Run just type in cmd "npm run full-build"
 
 <h1>Wabsite <a href="https://deloitte-project.herokuapp.com/">Link</a></h1>
