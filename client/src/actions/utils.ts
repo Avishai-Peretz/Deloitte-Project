@@ -1,14 +1,7 @@
 import { EmployeeData, Employees } from "../types";
 
 export const sortInputFirst = (input: string, data: Employees) => {
-    // let sortPreparation = []
-    
-    // for (let i: number = 0; i < data.length; i++) {
-    //     const indexOfInputByName: number = data[i]['Name'].toLowerCase().indexOf(input.toLowerCase())
-    //     const indexOfInputByWorkTitle: number = data[i]['WorkTitle'].toLowerCase().indexOf(input.toLowerCase())
-    //     const indexedEmployee = { ...data[i], indexOfInputByName: indexOfInputByName, indexOfInputByWorkTitle:indexOfInputByWorkTitle  }
-    //     sortPreparation.push(indexedEmployee)
-    // }
+
     const sortPreparation = data.map((employee) => {
         return {
             ...employee,

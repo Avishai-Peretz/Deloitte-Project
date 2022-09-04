@@ -15,7 +15,6 @@ import './style.css'
 const Admin = () => {
 
   const [createEmployeeData, setCreateEmployeeData] = useState<EmployeeData>(DefaultEmployeeData);
-  console.log(createEmployeeData);
   const [deleteEmployeeData, setDeleteEmployeeData] = useState<DeleteEmployeeData>({ _id: "" });
   const [searchTerms, setSearchTerms] = useState<SearchTerms>({
     resultsNum: DefaultNumbers.resultsNum, charsToStart: DefaultNumbers.charsToStart, timer: DefaultNumbers.timer
