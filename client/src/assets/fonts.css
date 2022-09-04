@@ -1,0 +1,123 @@
+     h1{
+        font-size: 40px;
+        margin: 10px;
+    }    
+    h4 {
+        margin: 5px;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .fw_2 {
+        font-weight: 200;
+    }
+    
+    .fw_2_italic {
+        font-weight: 200;
+        font-style: italic;
+    }
+    
+    .fw_5_italic {
+        font-weight: 500;
+        font-style: italic;
+    }
+    
+    .fw_4 {
+        font-weight: 400;
+    }
+    .fw_5 {
+        font-weight: 500;
+    }
+    
+    .fw_7 {
+        font-weight: 700;
+    }
+
+    .fw_7_italic {
+        font-style: italic;
+        font-weight: 700;
+    }
+    
+    .txt_deco {
+        text-decoration: none;
+    }  
+    
+    /* Font Size */
+    .txt-10 {
+        font-size: 10px;
+    }
+    .txt-11 {
+        font-size: 11px;
+    }
+    .txt-12 {
+        font-size: 12px;
+    }
+    .txt-13 {
+        font-size: 13px;
+    }
+    .txt-14{
+       font-size: 14px;
+    }
+    .txt-17{
+        font-size: 17px;
+    }
+    .txt-24{
+        font-size: 24px;
+    }
+    .txt-28{
+        font-size: 28px;
+    }
+    .txt-40{
+        font-size: 40px;
+    }
+        
+    .txt_deco {
+        text-decoration: none;
+    }
+    
+    .txt_align {
+        text-align: center;
+    }
+
+     /* Text colors */
+    .txt_white {
+        color: white;
+    }
+    .txt-title-blue{
+        color: #2fadad;
+    }
+    .txt_red {
+        color: darkred;
+    }
+    
+    .txt_orange {
+        color: #c7511f;
+    }
+    
+    .txt_orange_extra_light {
+        color: #e47911;
+    }
+    
+    .txt_orange_extra_light {
+        color: #e47911;
+    }
+    
+    .txt_orange_light {
+        color: #cc6600;
+    }
+
+    .txt_blue {
+        color: #007185;
+    }
+    .txt_green {
+        color: #168342;
+    }
+
+    .txt_black {
+        color: #0f1111;
+    }
+
+    .txt_gray {
+        color: #565959;
+    }
+
