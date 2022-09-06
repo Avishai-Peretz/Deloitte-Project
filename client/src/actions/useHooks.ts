@@ -42,8 +42,8 @@ export const searchEmployees = ({
     click = false,
     charsToStart = DefaultNumbers.charsToStart,
     time = DefaultNumbers.timer
-    }: SearchEmployees) => async (dispatch: RootState) => {
-    const localData = await JSON.parse( localStorage.getItem(DefaultStrings.localName) || "")       
+}: SearchEmployees) => async (dispatch: RootState) => {
+        const localData = await JSON.parse(localStorage.getItem(DefaultStrings.localName) || '{"local": "none"}')       
     try { 
         if (localData.searchValue) {
             const filterFromLocal:Employees = getFilterByValue(localData, searchValue)
